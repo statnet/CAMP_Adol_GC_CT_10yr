@@ -90,20 +90,20 @@ condom_use <- mat3(c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
 ##########################################################################
 # Init bookkeeping
 
-nf_init_hsa <- nf_init * sexdeb_init_f
-nm_init_hsa <- nm_init * sexdeb_init_m 
+#nf_init_hsa <- nf_init * sexdeb_init_f
+#nm_init_hsa <- nm_init * sexdeb_init_m 
 
-num_f <- num_m <- array(dim=c(11,6,3))
-num_f[,1] <- nf_init
-num_m[,1] <- nm_init
+#num_f <- num_m <- array(dim=c(11,6,3))
+#num_f[,1] <- nf_init
+#num_m[,1] <- nm_init
 
 ##########################################################################
 # Advancement
 
-for (i in 1:10) {
-  num_f[2:6,i+1] <- num_f[1:5,i] + PERC_DEBUTING * NUM_HET_F_UNDEBUTED - num_f[,i]*asmr_f
-  num_m[2:6,i+1] <- num_m[1:5,i] + PERC_DEBUTING * NUM_HET_M_UNDEBUTED - num_m[,i]*asmr_m
-}
+#for (i in 1:10) {
+#  num_f[2:6,i+1] <- num_f[1:5,i] + PERC_DEBUTING * NUM_HET_F_UNDEBUTED - num_f[,i]*asmr_f
+#  num_m[2:6,i+1] <- num_m[1:5,i] + PERC_DEBUTING * NUM_HET_M_UNDEBUTED - num_m[,i]*asmr_m
+#}
 
 
 
