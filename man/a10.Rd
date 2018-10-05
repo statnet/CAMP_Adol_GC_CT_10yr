@@ -4,16 +4,45 @@
 \alias{a10}
 \title{Main a10 function}
 \usage{
-a10(nf_init, nm_init, sexdeb_init_f, sexdeb_init_m, init_prev_f, init_prev_m,
-  beta_m2f, beta_f2m, pc_debuting_f, pc_debuting_m, coital_acts_pp_f,
-  coital_acts_pp_m, condom_use_f, condom_use_m, ann_chg_npartners,
-  ann_chg_coital, ann_chg_condoms)
+a10(n_f, n_m, sexdeb_f, sexdeb_m, init_prev_f, init_prev_m, beta_m2f,
+  beta_f2m, newppy_f, newppy_m, coital_acts_pp_f, coital_acts_pp_m,
+  condom_use_f, condom_use_m)
 }
 \arguments{
-\item{x}{A vector}
+\item{n_f}{A 3x6x11 array indicating the population size for females, by race/eth by age by year}
+
+\item{n_m}{A 3x6x11 array indicating the population size for males, by race/eth by age by year}
+
+\item{sexdeb_f}{A 3x6x11 matrix inidicating the % of females debuted (as FSM), by race/eth by age by year}
+
+\item{sexdeb_m}{A 3x6x11 matrix inidicating the % of males debuted (as FSM), by race/eth by age by year}
+
+\item{init_prev_f}{A 3x6 matrix indicating the initial STI prevalence among females who have sexually debuted, by race/eth by age}
+
+\item{init_prev_m}{A 3x6 matrix indicating the initial STI prevalence among males who have sexually debuted, by race/eth by age}
+
+\item{beta_m2f}{Per-act transmission probability from male to female}
+
+\item{beta_f2m}{Per-act transmission probability from female to male}
+
+\item{newppy_f}{A 3x6 matrix indicating the mean new partners per year for debuted females, by race/eth by age}
+
+\item{newppy_m}{A 3x6 matrix indicating the mean new partners per year for debuted males, by race/eth by age}
+
+\item{coital_acts_pp_f}{A 3x6 matrix indicating the mean coital acts per partner for females, by race/eth by age}
+
+\item{coital_acts_pp_m}{A 3x6 matrix indicating the mean coital acts per partner for males, by race/eth by age}
+
+\item{condom_use_f, }{A 3x6x11 matrix inidicating % condom use for females, by race/eth by age by year}
+
+\item{condom_use_m, }{A 3x6x11 matrix inidicating % condom use for males, by race/eth by age by year}
 }
 \value{
-A matrix with 3 rows containing the values from x filled in by row
+A list comprising two arrays of dimensions [3,6,11], containing the estimated number of 
+  incident cases of STI per age per year. The three rows represent the 
+  three race/ethnicity groups (B, H, W); the six columns represent the ages (13:18);
+  the 11 layers represent the years (baseline, years 1:10). The first array in the list is F,
+  and the second M.
 }
 \description{
 Main a10 function
