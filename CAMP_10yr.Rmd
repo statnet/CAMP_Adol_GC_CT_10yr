@@ -1,0 +1,50 @@
+---
+title: "Running record of the CAMP adol 10-year extension project"
+output:
+  html_document:
+    df_print: paged
+    theme: cosmo
+    css: tablestyle.css
+  pdf_document: default
+  word_document: default
+---
+
+## Introduction
+
+This document is initiated on October 5, 2018.  Many documents laying out the basic aspects of the project trace back to the initial establishment of the cooperative agreement between the CDC and Emory/UW.  More recent douments are found in a Google Drive folder shared by the team called CAMP E4 - 10 year projection.  This file is meant to represent a running documentation of all decisions we make regarding the tool.
+
+__Basic components:__  
+
+* MSW and WSM only (no MSM, WSW)
+* Paper 1 = GC and CT only (no HIV); paper 2 = pregnancy
+* Main data structure follows the Excel tool developed over the last two years, but re-written in R for easy compounding over 10 years.
+* Main data source = YRBS 10-year trend analysis
+
+### Oct 5, 2018
+
+Insights from email chain commencing 10/2/2018, subject "CAMP 10-year tool extensions":
+
+__Q. Where are the main analyses?__  
+A. Some are published in Youth Risk Behavior Survey Data Summary & Trends Report, 2007-2017, available online and in the Google Drive.  More detailed data can be found in 
+"2017XXH Trend Report 10 Years.pdf:" and "2017XXH Detail Tables.pdf", both in the YRBS folder of the Google Drive; these are not to be shared.
+
+__Q. Where do we turn for help with these analyses, or for additional analyses?__  
+A. DASH's Durveillance Branch (SBSB)
+
+__Q. Can we get mean number of lifetime partners rather than % with 4+ partners?__  
+A. Yes, detailed tables should help, or reach out to SBSB.
+
+__Q: Where should be get info on race mixing from?__  
+A.  Li Yan suggested an AddHealth analysis by Manhart (2007).  Aral seems less promising (older, convenience sample). Both are in the Google Drive lit folder.
+
+__Q. Should we include groups other than White/Latinx/Black?__  
+A. Li Yan says we can if the pops are large enough; if they don't have a strong resaon to, I think we should not add the work.
+
+__Next steps:__  
+* Steve will go through YRBS trend repots and two in-house docs in detail and decide on list of questions for SBSB.  This includes keeping an eye on both race and age groups.
+* Steve will look at Manhart (2007) and.or think about other options.
+
+
+
+
+
