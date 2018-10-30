@@ -33,9 +33,9 @@ a10(n_f, n_m, sexdeb_f, sexdeb_m, init_prev_f, init_prev_m, beta_m2f,
 
 \item{coital_acts_pp_m}{A 3x6 matrix indicating the mean coital acts per partner for males, by race/eth by age}
 
-\item{condom_use_f, }{A 3x6x11 matrix inidicating % condom use for females, by race/eth by age by year}
+\item{condom_use_f, }{A 3x6x11 matrix indicating % condom use for females, by race/eth by age by year}
 
-\item{condom_use_m, }{A 3x6x11 matrix inidicating % condom use for males, by race/eth by age by year}
+\item{condom_use_m, }{A 3x6x11 matrix indicating % condom use for males, by race/eth by age by year}
 }
 \value{
 A list comprising two arrays of dimensions [3,6,11], containing the estimated number of 

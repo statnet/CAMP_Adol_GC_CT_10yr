@@ -29,7 +29,7 @@ A. Some are published in Youth Risk Behavior Survey Data Summary & Trends Report
 "2017XXH Trend Report 10 Years.pdf:" and "2017XXH Detail Tables.pdf", both in the YRBS folder of the Google Drive; these are not to be shared.
 
 __Q. Where do we turn for help with these analyses, or for additional analyses?__  
-A. DASH's Durveillance Branch (SBSB)
+A. DASH's Surveillance Branch (SBSB)
 
 __Q. Can we get mean number of lifetime partners rather than % with 4+ partners?__  
 A. Yes, detailed tables should help, or reach out to SBSB.
@@ -41,8 +41,32 @@ __Q. Should we include groups other than White/Latinx/Black?__
 A. Li Yan says we can if the pops are large enough; if they don't have a strong resaon to, I think we should not add the work.
 
 __Next steps:__  
-* Steve will go through YRBS trend repots and two in-house docs in detail and decide on list of questions for SBSB.  This includes keeping an eye on both race and age groups.
+* Steve will go through YRBS trend reports and two in-house docs in detail and decide on list of questions for SBSB.  This includes keeping an eye on both race and age groups.
 * Steve will look at Manhart (2007) and.or think about other options.
+
+### Oct 29, 2018
+
+Beginning to go through reports.
+
+We will need to confirm with SBSB whether they can run numbers for us that are just for FSM/MSF, or will they be for F/M.
+
+We are going to want to confirm up front that we want for MSF/FSM ; Black/Hispanic/White (as defined in survey); for each age 13-18
+
+We are going to want:
+
+Two SPG (or sex)-specific 2-way tables: by year, by age, by race:
+  - # of respondents total
+  - # of respondents who have ever had sex
+  - # of respondents who used a condom at last intercourse
+
+Two sets of SPG/sex-specific matrices:
+
+For each race, for each survey year:
+  - Two matrices, each with current age in the rows and age of first intercourse in the columns
+        - The first matrix lists the number of respondents with that current age and age of first intercourse
+        - The second matrix lists the mean lifetime number of parterns for those respondents with that current age and age of first intercourse
+        
+I think we will be able to do this second part a bit differently than we did in the 1-year tool by leveraging the multiple waves.  that is, we can subtract the LNOPs for 15 year olds in one survey from that of 17 year olds in the next survey, to determine the average number of new partners over the two years - something like that.
 
 
 
