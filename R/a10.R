@@ -5,7 +5,7 @@
 #' @param n_f A 3x6x11 array indicating the population size for females, by race/eth by age by year
 #' @param n_m A 3x6x11 array indicating the population size for males, by race/eth by age by year
 #' @param sexdeb_f A 3x6x11 matrix inidicating the % of females debuted (as FSM), by race/eth by age by year
-#' @param sexdeb_m A 3x6x11 matrix inidicating the % of males debuted (as FSM), by race/eth by age by year
+#' @param sexdeb_m A 3x6x11 matrix inidicating the % of males debuted (as MSF), by race/eth by age by year
 #' @param beta_f2m Per-act transmission probability from female to male
 #' @param beta_m2f Per-act transmission probability from male to female
 #' @param init_prev_f A 3x6 matrix indicating the initial STI prevalence among females who have sexually debuted, by race/eth by age
@@ -47,16 +47,26 @@ a10 <- function(n_f, n_m,
   # Dimensional error checking
   if (dim(n_f) != c(3,6,11)) stop("n_f must be an array with dimensions c(3,6,11).")
   if (dim(n_m) != c(3,6,11)) stop("n_m must be an array with dimensions c(3,6,11).")
+  # More to do.
   
   ##########################################################################
   # Init bookkeeping
   
+  # Calc # who have seuxally debuted
   n_sexdeb_f <- n_f * sexdeb_f
   n_sexdeb_m <- n_m * sexdeb_m
-  n_inf_f <- n_inf_m <- array(dim=c(3,6,11))
-  n_inf_f[,,1] <- n_sexdeb_f[,,1] * init_prev_f
-  n_inf_m[,,1] <- n_sexdeb_m[,,1] * init_prev_m
   
+  # Create arrays to store number of prevalent cases in the cross-section
+  n_prev_f <- n_prev_m <- array(dim=c(3,6,11))
+  n_prev_f[,,1] <- n_sexdeb_f[,,1] * init_prev_f
+  n_prev_m[,,1] <- n_sexdeb_m[,,1] * init_prev_m
+  
+  # Create arrays to store number of incident cases per year
+  n_inc_f <- n_inc_m <- array(dim=c(3,6,11))
+  n_inc_f[,,1] <- NA
+  n_inc_m[,,1] <- NA
+
+    #
   cl_acts_f <- newppy_f * coital_acts_pp_f * (1-condom_use_f)
   cl_acts_m <- newppy_m * coital_acts_pp_m * (1-condom_use_m)
   

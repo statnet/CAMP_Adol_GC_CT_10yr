@@ -68,6 +68,9 @@ For each race, for each survey year:
         
 I think we will be able to do this second part a bit differently than we did in the 1-year tool by leveraging the multiple waves.  that is, we can subtract the LNOPs for 15 year olds in one survey from that of 17 year olds in the next survey, to determine the average number of new partners over the two years - something like that.
 
+Initiated conversation with Li Yan about getting the data from SBSB.
+
+
 
 
 

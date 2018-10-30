@@ -15,7 +15,7 @@ a10(n_f, n_m, sexdeb_f, sexdeb_m, init_prev_f, init_prev_m, beta_m2f,
 
 \item{sexdeb_f}{A 3x6x11 matrix inidicating the % of females debuted (as FSM), by race/eth by age by year}
 
-\item{sexdeb_m}{A 3x6x11 matrix inidicating the % of males debuted (as FSM), by race/eth by age by year}
+\item{sexdeb_m}{A 3x6x11 matrix inidicating the % of males debuted (as MSF), by race/eth by age by year}
 
 \item{init_prev_f}{A 3x6 matrix indicating the initial STI prevalence among females who have sexually debuted, by race/eth by age}
 

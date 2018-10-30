@@ -73,11 +73,52 @@ condom_use_m <- mat3(c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
                        0.5, 0.5, 0.5, 0.5, 0.5, 0.5))
 
 #######################################
+# Diagnoses and duration parameters
+
+diags_f <- mat3(c(50, 100, 150, 200, 250, 300,
+                  50, 100, 150, 200, 250, 300,
+                  100, 200, 300, 400, 500, 600))
+
+diags_m <- mat3(c(50, 100, 150, 200, 250, 300,
+                  50, 100, 150, 200, 250, 300,
+                  100, 200, 300, 400, 500, 600))
+
+perc_diag_f <- mat3(c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                      0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+                      0.5, 0.5, 0.5, 0.5, 0.5, 0.5))
+  
+perc_diag_m <- mat3(c(0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
+                      0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
+                      0.2, 0.2, 0.2, 0.2, 0.2, 0.2))
+
+infdur_f <- mat3(c(0.48, 0.48, 0.48, 0.48, 0.48, 0.48,
+                      0.48, 0.48, 0.48, 0.48, 0.48, 0.48,
+                      0.48, 0.48, 0.48, 0.48, 0.48, 0.48))
+
+infdur_m <- mat3(c(0.24, 0.24, 0.24, 0.24, 0.24, 0.24,
+                   0.24, 0.24, 0.24, 0.24, 0.24, 0.24,
+                   0.24, 0.24, 0.24, 0.24, 0.24, 0.24))
+
+#######################################
 # Change parameters
 
 ann_chg_npartners <- c(-0.01, -0.01, -0.01)
 ann_chg_coital <- c(0, 0, 0)
 ann_chg_condoms <- c(0.01, 0.01, 0.01)
+
+##############################################################
+# Calculate initial prevalence form diagnoses and duration data
+
+a10_init_prev_f <- initPrev_calc(diags_f, perc_diag_f,infdur_f)
+a10_init_prev_m <- initPrev_calc(diags_m, perc_diag_m,infdur_m)
+
+##############################################################
+# Back-calculate new partners per year usung ppy_calc
+
+
+
+##############################################################
+# Run the main model
 
 a10_gc01 <- a10(nf_init=nf_init, 
     nm_init=nm_init,
@@ -99,3 +140,8 @@ a10_gc01 <- a10(nf_init=nf_init,
 )
 
 
+##### TO DO
+# Fill in ppy_calc
+# Do basic logic in a10
+# Think about whether change paraneters should be done that way, or just as absolutes
+# So much more
