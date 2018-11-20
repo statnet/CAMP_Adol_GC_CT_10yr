@@ -9,7 +9,7 @@
 # Init conditions
 
 # Num femls, by race/eth by age by year
-n_f <- mat3(c(13000, 13000, 13000, 13000, 13000, 13000,
+init_n_f <- mat3(c(13000, 13000, 13000, 13000, 13000, 13000,
                   18000, 18000, 18000, 18000, 18000, 18000,
                   67000, 67000, 67000, 67000, 67000, 67000))
 
@@ -24,9 +24,9 @@ init_sexdeb_f <- mat3(c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
                         0.1, 0.2, 0.3, 0.4, 0.5, 0.6))  
 
 # Proportion M sexually debuted (as MSF) at start of model (by race/eth and sex)
-init_sexdeb_m <- mat3(c(0.01, 0.02, 0.03, 0.04, 0.05, 0.06,
-                        0.01, 0.02, 0.03, 0.04, 0.05, 0.06,
-                        0.01, 0.02, 0.03, 0.04, 0.05, 0.06))
+init_sexdeb_m <- mat3(c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
+                        0.1, 0.2, 0.3, 0.4, 0.5, 0.6,
+                        0.1, 0.2, 0.3, 0.4, 0.5, 0.6))
 
 # Initial STI prevalence among those who have sexually debuted (by race/eth by age)
 init_prev_f <- mat3(c(0.003, 0.006, 0.011, 0.021, 0.038, 0.050,
@@ -46,40 +46,49 @@ beta_f2m <- 0.25
 ##########################################################################
 # Sex behavior
 
-pc_debuting_f <- mat3(c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-                        0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-                        0.1, 0.1, 0.1, 0.1, 0.1, 0.1))
+## Percent debuting? is this how we will do this???
+# Or use back-calcuation?
+# These are initial values, then it gets changed with the change values below
+# So may be worth calling these init
+#pc_debuting_f <- mat3(c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+#                        0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+#                        0.1, 0.1, 0.1, 0.1, 0.1, 0.1))
+#
+#pc_debuting_m <- mat3(c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+#                        0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+#                        0.1, 0.1, 0.1, 0.1, 0.1, 0.1))
 
-pc_debuting_m <- mat3(c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-                        0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-                        0.1, 0.1, 0.1, 0.1, 0.1, 0.1))
+##### New partners per year? 
+# Same question - I think use back-calculation
 
-##### New partners per year? Or somehow use the 
-
-coital_acts_pp_f <- mat3(c(0.001, 0.002, 0.003, 0.005, 0.007, 0.010,
+# Coital acts
+# These are initial values, then it gets changed with the change values below
+init_coital_acts_pp_f <- mat3(c(0.001, 0.002, 0.003, 0.005, 0.007, 0.010,
                         0.001, 0.002, 0.003, 0.005, 0.007, 0.010,
                         0.001, 0.002, 0.003, 0.005, 0.007, 0.010))
 
-coital_acts_pp_m <- mat3(c(0.001, 0.002, 0.003, 0.005, 0.007, 0.010,
+init_coital_acts_pp_m <- mat3(c(0.001, 0.002, 0.003, 0.005, 0.007, 0.010,
                         0.001, 0.002, 0.003, 0.005, 0.007, 0.010,
                         0.001, 0.002, 0.003, 0.005, 0.007, 0.010))
 
-condom_use_f <- mat3(c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+# Condom use
+# These are initial values, then it gets changed with the change values below
+init_condom_use_f <- mat3(c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
                      0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
                      0.5, 0.5, 0.5, 0.5, 0.5, 0.5))
 
-condom_use_m <- mat3(c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+init_condom_use_m <- mat3(c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
                        0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
                        0.5, 0.5, 0.5, 0.5, 0.5, 0.5))
 
 #######################################
 # Diagnoses and duration parameters
 
-diags_f <- mat3(c(50, 100, 150, 200, 250, 300,
+init_diags_f <- mat3(c(50, 100, 150, 200, 250, 300,
                   50, 100, 150, 200, 250, 300,
                   100, 200, 300, 400, 500, 600))
 
-diags_m <- mat3(c(50, 100, 150, 200, 250, 300,
+init_diags_m <- mat3(c(50, 100, 150, 200, 250, 300,
                   50, 100, 150, 200, 250, 300,
                   100, 200, 300, 400, 500, 600))
 
@@ -109,39 +118,38 @@ ann_chg_condoms <- c(0.01, 0.01, 0.01)
 ##############################################################
 # Calculate initial prevalence form diagnoses and duration data
 
-a10_init_prev_f <- initPrev_calc(diags_f, perc_diag_f,infdur_f)
-a10_init_prev_m <- initPrev_calc(diags_m, perc_diag_m,infdur_m)
+a10_init_prev_f <- initPrev_calc(init_diags_f, perc_diag_f,infdur_f)
+a10_init_prev_m <- initPrev_calc(init_diags_m, perc_diag_m,infdur_m)
 
 ##############################################################
 # Back-calculate new partners per year usung ppy_calc
 
-
+#nnppy_f <-
+#nnppy_m <-
 
 ##############################################################
 # Run the main model
 
-a10_gc01 <- a10(nf_init=nf_init, 
-    nm_init=nm_init,
-    sexdeb_init_f=sexdeb_init_f,
-    sexdeb_init_m=sexdeb_init_m,
-    init_prev_f=init_prev_f,
-    init_prev_m=init_prev_m,
-    beta_m2f=beta_m2f,
-    beta_f2m=beta_f2m,
-    pc_debuting_f=pc_debuting_f,
-    pc_debuting_m=pc_debuting_m,
-    coital_acts_pp_f=coital_acts_pp_f,
-    coital_acts_pp_m=coital_acts_pp_m,
-    condom_use_f=condom_use_f,
-    condom_use_m=condom_use_m,
-    ann_chg_npartners=ann_chg_npartners,
-    ann_chg_coital=ann_chg_coital,
-    ann_chg_condoms=ann_chg_condoms
+a10_gc01 <- a10(init_prev_f=init_prev_f, 
+                init_prev_m=init_prev_m,
+                init_sexdeb_f=init_sexdeb_f,
+                init_sexdeb_m=init_sexdeb_m,
+                beta_m2f=beta_m2f,
+                beta_f2m=beta_f2m,
+                pc_debuting_f=pc_debuting_f,
+                pc_debuting_m=pc_debuting_m,
+                coital_acts_pp_f=coital_acts_pp_f,
+                coital_acts_pp_m=coital_acts_pp_m,
+                condom_use_f=condom_use_f,
+                condom_use_m=condom_use_m,
+                ann_chg_npartners=ann_chg_npartners,
+                ann_chg_coital=ann_chg_coital,
+                ann_chg_condoms=ann_chg_condoms
 )
-
 
 ##### TO DO
 # Fill in ppy_calc
 # Do basic logic in a10
-# Think about whether change paraneters should be done that way, or just as absolutes
+# Think about whether change parameters should be done that way, or just as absolutes
+# How to do percent debuting from given data?
 # So much more
