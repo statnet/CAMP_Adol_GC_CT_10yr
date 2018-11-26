@@ -70,8 +70,23 @@ I think we will be able to do this second part a bit differently than we did in 
 
 Initiated conversation with Li Yan about getting the data from SBSB.
 
+### Nov 20, 2018
 
+We have determined that we can get all the data we need from the online combined data sets. Elizabeth has been working on that. She has send a single year of data (2007) with all the numbers in a set of five different files.  I am going to work now on the code to import these, and she will continue working on the other years.
 
+I can already see that the numbers are very small (e.g. no 13-year-old Hisp males at all in 2007). So we will most certainly need to do some parametric models rather than full 4-way (sex/age/race/year) stratified numbers.  Indeed, with the age of debut in there, it begins to become 5-way stratified. At this point I am hoping we can do these analyses in R with the numbers that she sends as fully stratified, but we shall see.
 
+I have created a data folder in the project, and placed the files from Elizabeth in them, in a subfolder named 2007_test.
 
+## Nov 25, 2018
 
+Elizebeth has now sent the numbers for all years.  They came as a single .zip file ("yrbs_10yr.zip"), which I have placed in the data folder, and then also extracted in that folder.
+
+### Nov 26, 2018
+
+* Today I wrote the file that does all the data import.
+* I also began thinking about how I am going to handle these analyses parametrically:
+    + actual pop sizes will need to come from YRBS / census school survey / etc, eeping in mind the time of year issue
+    + YRBS gives us weights, not pop sizes per se
+    + those weights need to be used in all regressions
+    + will probably use multiple linear regression for generating the predicted values of debut /condom use etc.  Tested this on condom use, which is generally linear and behaves well.  Whether % debut does as well is another question.  And whether lifetime partners will is also an issue.
