@@ -2,7 +2,7 @@
 #############################################################
 #'Function to back calculate PPY 
 #'
-#' @param x A vctor
+#' @param x A vector
 #' @return A matrix
 
 #' @export
