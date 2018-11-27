@@ -90,3 +90,17 @@ Elizebeth has now sent the numbers for all years.  They came as a single .zip fi
     + YRBS gives us weights, not pop sizes per se
     + those weights need to be used in all regressions
     + will probably use multiple linear regression for generating the predicted values of debut /condom use etc.  Tested this on condom use, which is generally linear and behaves well.  Whether % debut does as well is another question.  And whether lifetime partners will is also an issue.
+
+### Nov 27, 2018
+
+Tackling overall school sizes. All taken from American FactFinder:
+
+B14001	SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER
+Universe: Population 3 years and over  more information
+American Community Survey 1-Year Estimates
+
+All values placed in /data/schoolpops.csv
+
+Code to import them added to CAMP_10yr_import.R
+
+
