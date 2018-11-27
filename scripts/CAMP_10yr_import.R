@@ -110,6 +110,13 @@ for (i in 1:length(years)) {
   }
 }
 
+####################
+# Total HS pop sizes
+filename <- paste(datapath, "/schoolpops.csv", sep="")
+schoolpops <- read.csv(filename)
+plot(schoolpops, ylim=c(min(schoolpops$totschoolpop)*0.9,max(schoolpops$totschoolpop*1.1)), type='b')
+abline(h=mean(schoolpops$totschoolpop))
+(max(schoolpops$totschoolpop) - min(schoolpops$totschoolpop))/mean(schoolpops$totschoolpop)
 
 ### To be moved
 bbb <- lm(condom_f[1,,1]~ages, weights = wts_f[1,,1])
