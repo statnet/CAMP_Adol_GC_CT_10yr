@@ -103,4 +103,10 @@ All values placed in /data/schoolpops.csv
 
 Code to import them added to CAMP_10yr_import.R
 
+Added code to look at trends in pop sizes by race, sex and age through time (in file exploratory_popsize_trends_by_ethn) to get a sense of what we will need to do with these.  Looked at both absolute numbers and proportions.  Pattern is clear, consistent, and expected: strong evidence that Hisp are increasing over the decade, both as abs and rel.  But then for relative there is little clear pattern in the other two (even though they must add up to 1). For absoulte Blacks are flat; Whites are mostly except older males are declining.
+
+Revisit perhaps with the ages taken out and just look at the total by sex/ethn across years.
+
+
+
 
