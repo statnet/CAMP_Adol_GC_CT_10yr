@@ -34,6 +34,9 @@ for (i in 1:length(years)) {
     }
 }
 
+wts_f <- wts_f %>% replace_na(0)
+wts_m <- wts_m %>% replace_na(0)
+
 #### Read in the eversex numbers
 # NB:the name of the sex column is different hear than for wts
 
