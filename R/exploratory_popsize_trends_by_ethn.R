@@ -1,3 +1,5 @@
+# Note: decided on 12/3/2018 to just use man pop sizes, with relevenat code extracted to a10_masterscript.R
+# Code here can help if we revisit that decision.
 
 ### Changes in pop sizes - do the changes in race composition reflect clear secular trends?
 

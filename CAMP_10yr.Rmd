@@ -107,6 +107,9 @@ Added code to look at trends in pop sizes by race, sex and age through time (in 
 
 Revisit perhaps with the ages taken out and just look at the total by sex/ethn across years.
 
+## Dec 3, 2018
+
+deciding to just go with the static pop sizes, averaged across all time periods.  These are currently calculated at the very end of the file "Eexplotary_popsize_trends>by_ethn.R".  This still means that we will need a way for people to enter the model in ages 13, 14, 15, leave the model in ages 18 and 19, and some mix of the two for ages 16 (depending on sex and ethn). presumably people should enter negative, and exit with both statuses.
 
 
 
