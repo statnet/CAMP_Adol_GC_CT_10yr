@@ -76,6 +76,11 @@ matrix( c(
 nrow=6, byrow=T)
 
 
-
-
+###  All values averaged across years
+par(mfrow=c(1,2))
 matplot(t(apply(abspopsizes_f, 1:2, mean)), type='l')
+matplot(t(apply(abspopsizes_m, 1:2, mean)), type='l')
+
+popsize_f <- apply(abspopsizes_f, 1:2, mean)
+popsize_m <- apply(abspopsizes_m, 1:2, mean)
+
