@@ -78,3 +78,4 @@ nrow=6, byrow=T)
 
 
 
+matplot(t(apply(abspopsizes_f, 1:2, mean)), type='l')
