@@ -11,7 +11,7 @@ setwd("C:/git/CAMP_10yr_proj/scripts/")
 rm(list=ls())
 
 # Get all inputs
-source("CAMP_10yr_import.R")
+source("a10_import.R")
 
 # Get pop sizes
 years <- seq(2007, 2017, by=2)
