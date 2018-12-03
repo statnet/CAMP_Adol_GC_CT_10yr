@@ -35,8 +35,28 @@ for (i in 1:nyears) {
     sum(wts_m[,,i])
 }
 
-n_f <- apply(abspopsizes_f, 1:2, mean)
-n_m <- apply(abspopsizes_m, 1:2, mean)
+n_f <- array11(apply(abspopsizes_f, 1:2, mean))
+n_m <- array11(apply(abspopsizes_m, 1:2, mean))
+
+
+#
+if(F) {
+  a10_gc01 <- a10(n_f=n_f, n_m=n_m,
+                    init_sexdeb_f=init_sexdeb_f,
+                    init_sexdeb_m=init_sexdeb_m
+#                    beta_m2f=beta_m2f,
+#                    beta_f2m=beta_f2m,
+#                    pc_debuting_f=pc_debuting_f,
+#                    pc_debuting_m=pc_debuting_m,
+#                    coital_acts_pp_f=coital_acts_pp_f,
+#                    coital_acts_pp_m=coital_acts_pp_m,
+#                    condom_use_f=condom_use_f,
+#                    condom_use_m=condom_use_m,
+#                    ann_chg_npartners=ann_chg_npartners,
+#                    ann_chg_coital=ann_chg_coital,
+#                    ann_chg_condoms=ann_chg_condoms
+  )
+}
 
 # Save image
 save.image()
