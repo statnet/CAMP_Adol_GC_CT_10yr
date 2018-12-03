@@ -7,7 +7,7 @@
 ppy_backcalc(x)
 }
 \arguments{
-\item{x}{A vctor}
+\item{x}{A vector}
 }
 \value{
 A matrix
