@@ -1,4 +1,17 @@
 
+# none of the existing functions seem to work with means 
+# that are both weighted and across one dimension of a 3D array
+#library(matrixStats)
+#library(diagis)
+#apply(condom_m, 1:2, weighted.mean, w=wts_m)
+#weighted_mean(condom_m, 1:2, wts_m)
+#rowWeightedMeans(condom_m, wts_m, 2:3)
+#condom_m %>% weighted.mean()
+
+apply(condom_m * wts_m, c(1,3), sum) / apply(wts_m, c(1,3), sum)
+
+
+
 
 bbb <- lm(condom_f[1,,1]~ages, weights = wts_f[1,,1])
 plot(ages,condom_f[1,,1], ylim=c(0,1))
