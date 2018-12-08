@@ -109,7 +109,21 @@ Revisit perhaps with the ages taken out and just look at the total by sex/ethn a
 
 ## Dec 3, 2018
 
-deciding to just go with the static pop sizes, averaged across all time periods.  These are currently calculated at the very end of the file "Eexplotary_popsize_trends>by_ethn.R".  This still means that we will need a way for people to enter the model in ages 13, 14, 15, leave the model in ages 18 and 19, and some mix of the two for ages 16 (depending on sex and ethn). presumably people should enter negative, and exit with both statuses.
+Deciding to just go with the static pop sizes, averaged across all time periods.  These are currently calculated at the very end of the file "Eexplotary_popsize_trends>by_ethn.R".  This still means that we will need a way for people to enter the model in ages 13, 14, 15, leave the model in ages 18 and 19, and some mix of the two for ages 16 (depending on sex and ethn). presumably people should enter negative, and exit with both statuses.
 
+Did some file renmaing and reorganization to get things standardized and located in the proper places.
 
+Beginning eversex and then condom use.
+
+## Dec 7, 2018
+
+Realized I need to remove all non-B/H/W kids from the census-derived total pop sizes.  Have sent email to Elizabeth to get these numbers.
+
+Realized I had it set so that F and M were the same pop size; I probably shouldn't do that. Will fix now. Bascially I had been so fixated on popsize by race I just didn't think about sex.
+
+Redid pop sizes so that we have constant compositions by race and sex, and have sex differ by grand mean rather than 50:50.  Just need to hear from Elizabeth to take out the non-BHWs
+
+Worked on eversex and have decided on model5.  It has age as cateogrical, because the pattern across ages is celarly non-linear.  It also - crucially - has an ethn by year interaction, because that was the main point of the 10-year trend.  We may do a run where this interaction is *not* in there, in order to compare results - but for now it's there.
+
+Thta model seems to be working fine for F, but the predicted values for M are doing odd things.  Will return here.  Code is in the masterscript.
 
