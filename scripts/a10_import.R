@@ -55,6 +55,9 @@ for (i in 1:length(years)) {
   }
 }
 
+eversex_f <- eversex_f %>% replace_na(0)
+eversex_m <- eversex_m %>% replace_na(0)
+
 ### Read in the condom numbers
 ## Condoms are expressed differently than previous values, as popsizes for no and yes separately
 
@@ -72,6 +75,14 @@ for (i in 1:length(years)) {
             temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k], condomuse=="Yes") %>% select(freq) / 
               sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% select(freq))
          ))
+      }
+      if(nrow(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k], condomuse=="Yes"))==0) {
+           condom_m[j,k,i] <- NA
+      } else {
+           condom_m[j,k,i] <- unname(unlist(
+             temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k], condomuse=="Yes") %>% select(freq) / 
+               sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% select(freq))
+           ))
       }
     }
   }
@@ -117,7 +128,3 @@ for (i in 1:length(years)) {
 # Total HS pop sizes
 filename <- paste(datapath, "/schoolpops.csv", sep="")
 schoolpops <- read.csv(filename)
-plot(schoolpops, ylim=c(min(schoolpops$totschoolpop)*0.9,max(schoolpops$totschoolpop*1.1)), type='b')
-abline(h=mean(schoolpops$totschoolpop))
-(max(schoolpops$totschoolpop) - min(schoolpops$totschoolpop))/mean(schoolpops$totschoolpop)
-
