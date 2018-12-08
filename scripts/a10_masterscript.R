@@ -13,33 +13,73 @@ rm(list=ls())
 # Get all inputs
 source("a10_import.R")
 
-# Get pop sizes
+# Set years info
 years <- seq(2007, 2017, by=2)
 nyears <- length(years)
 
-abspopsizes_f <- wts_f
-for (i in 1:nyears) {
-  abspopsizes_f[,,i] <- abspopsizes_f[,,i]* 
-    unname(unlist(
-      (schoolpops %>% filter(year==years[i]) %>% select("totschoolpop"))
-    )) / 
-    sum(wts_f[,,i])
+##### TODO: Using total schoolpops from census for sure.  But:
+#####       for race: we are currently using mean of weights across time 
+#####                    - but this ignores that some of the total are not B/H/W
+#####                 we can find out the wts for the other race/ethn groups, and subtract from census (yes)
+#####                 or we could use the census pop numbers (no)
+#####       for sex: currently we assume 50/50 but should redo with age/specific weights averaged across yrs.
+#####
+
+#### TODO: Remove non-BHW
+
+#### Get pop sizes by age/race/sex that are averaged across years
+meanschoolpop <- mean(schoolpops$totschoolpop)                          # Tot pop size averaged across years
+pct_f <- sum(wts_f) / (sum(wts_f) + sum(wts_m))                         # Tot % female averaged across years
+mean_pct_age_race <- apply(wts_f+wts_m, 1:2, mean) / 
+          sum(apply(wts_f+wts_m, 1:2, mean))                            # Tot % age/race averaged across years
+n_f <- array11(mean_pct_age_race * pct_f * meanschoolpop)
+n_m <- array11(mean_pct_age_race * (1-pct_f) * meanschoolpop)
+
+#### Get eversex sizes
+
+prop_eversex_f <- eversex_f / wts_f
+prop_eversex_f[prop_eversex_f==Inf] <- 0
+prop_eversex_f_df <- expand.grid(c('B','H','W'), 13:18, seq(2007,2017,2))
+colnames(prop_eversex_f_df) <- c('ethn', 'age', 'year')
+prop_eversex_f_df$prop_eversex <- as.vector(prop_eversex_f)
+prop_eversex_f_df$wts <- as.vector(wts_f)
+prop_eversex_f_df$agefac <- relevel(as.factor(prop_eversex_f_df$age), ref='16')
+eversex_f_reg <- glm(prop_eversex ~ agefac + year + ethn + year*ethn,
+                    data=prop_eversex_f_df, weights=wts, 
+                    family="binomial")
+eversex_f_lo <- array(predict(eversex_f_reg), dim=c(3,6,6))
+eversex_f <- exp(eversex_f_lo) / (1+exp(eversex_f_lo))
+
+prop_eversex_m <- eversex_m / wts_m
+prop_eversex_m[prop_eversex_m==Inf] <- 0
+prop_eversex_m_df <- expand.grid(c('B','H','W'), 13:18, seq(2007,2017,2))
+colnames(prop_eversex_m_df) <- c('ethn', 'age', 'year')
+prop_eversex_m_df$prop_eversex <- as.vector(prop_eversex_m)
+prop_eversex_m_df$wts <- as.vector(wts_m)
+prop_eversex_m_df$agefac <- relevel(as.factor(prop_eversex_m_df$age), ref='16')
+eversex_m_reg <- glm(prop_eversex ~ agefac + year + ethn + year*ethn,
+                     data=prop_eversex_m_df, weights=wts, 
+                     family="binomial")
+eversex_m_lo <- array(predict(eversex_m_reg), dim=c(3,6,6))
+eversex_m <- exp(eversex_m_lo) / (1+exp(eversex_m_lo))
+
+if(F) {
+  matplot(t(eversex_f[,1,]),type='l', ylim=c(0,1))
+  matplot(t(eversex_f[,2,]),type='l', add=T)
+  matplot(t(eversex_f[,3,]),type='l', add=T)
+  matplot(t(eversex_f[,4,]),type='l', add=T)
+  matplot(t(eversex_f[,5,]),type='l', add=T)
+  matplot(t(eversex_f[,6,]),type='l', add=T)
+
+  matplot(t(eversex_m[,1,]),type='l', ylim=c(0,1))
+  matplot(t(eversex_m[,2,]),type='l', add=T)
+  matplot(t(eversex_m[,3,]),type='l', add=T)
+  matplot(t(eversex_m[,4,]),type='l', add=T)
+  matplot(t(eversex_m[,5,]),type='l', add=T)
+  matplot(t(eversex_m[,6,]),type='l', add=T)
 }
 
-abspopsizes_m <- wts_m
-for (i in 1:nyears) {
-  abspopsizes_m[,,i] <- abspopsizes_m[,,i]* 
-    unname(unlist(
-      (schoolpops %>% filter(year==years[i]) %>% select("totschoolpop"))
-    )) / 
-    sum(wts_m[,,i])
-}
 
-n_f <- array11(apply(abspopsizes_f, 1:2, mean))
-n_m <- array11(apply(abspopsizes_m, 1:2, mean))
-
-
-#
 if(F) {
   a10_gc01 <- a10(n_f=n_f, n_m=n_m,
                     init_sexdeb_f=init_sexdeb_f,
