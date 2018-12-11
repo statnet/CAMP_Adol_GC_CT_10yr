@@ -127,3 +127,16 @@ Worked on eversex and have decided on model5.  It has age as cateogrical, becaus
 
 Thta model seems to be working fine for F, but the predicted values for M are doing odd things.  Will return here.  Code is in the masterscript.
 
+## Dec 10, 2018
+
+Elizabeth has sent pop sizes (total weights) for non-BHW. Now integrated.
+
+Debugging eversex_m model - predicted probs don't make sense.
+
+OK, it was an issue with NaNsa - I had told the code to replace Infs with 0s, but not NaNs. Since all of these have weights of 0, it doesn't matter what the value is, but the NaN was causing issues.
+
+Now we face the issue that 13-yo males have higher rates of ever sex than 14-yo males.  This is because the data say so.  Of course the number of them in the data is miniscule, and probably some are over-reporting.
+
+Decision: it's Ok to leave them in.  It's what the data says; plus it doesn't create a logical problem as I feared since we'll need to have a whole slew of 14-year olds enter the model inexperienced, so one can easily have the total % of 14yo who've had sex be less than that of 13yos without having to "unvirginize" anyone.  Plus the effects on the total model output are miniscule.  The alternative -- to return to a parametric form on age -- means getting the shape of the curve in the 15-8 yo range wrong, and that is a much much bigger deal.
+
+
