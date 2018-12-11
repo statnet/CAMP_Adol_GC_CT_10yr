@@ -13,23 +13,25 @@ datapath <- "../data"
 years <- seq(2007, 2017, by=2)
 ages <- 13:18
 eths <- c("Black", "Hispanic", "White")
+eths_all <- c("Black", "Hispanic", "White", "Other")  # For popsizes, to remove Others from census estimates
 
 nages <- length(ages)
 nyears <- length(years)
 neths <- length(eths)
+neths_all <- length(eths_all)
 
 ##### Read in the pop size weights
-wts_f <- wts_m <- array(dim=c(neths, nages, nyears))
+wts_f <- wts_m <- array(dim=c(neths_all, nages, nyears))
 
 for (i in 1:length(years)) {
-    filename <- paste(datapath, "/propsexrace_", years[i], ".txt", sep="")
+    filename <- paste(datapath, "/propsexrace_allrace_", years[i], ".txt", sep="")
     temp <- read.csv(filename)
-    for (j in 1:neths) {
+    for (j in 1:neths_all) {
       wts_f[j,,i] <- unname(unlist(
-          temp %>% filter(sex=="Female", race==eths[j]) %>% select(starts_with("Age"))
+          temp %>% filter(sex=="Female", race4==eths_all[j]) %>% select(starts_with("Age"))
       ))
       wts_m[j,,i] <- unname(unlist(
-          temp %>% filter(sex=="Male", race==eths[j]) %>% select(starts_with("Age"))
+          temp %>% filter(sex=="Male", race4==eths_all[j]) %>% select(starts_with("Age"))
       ))
     }
 }
@@ -128,3 +130,4 @@ for (i in 1:length(years)) {
 # Total HS pop sizes
 filename <- paste(datapath, "/schoolpops.csv", sep="")
 schoolpops <- read.csv(filename)
+
