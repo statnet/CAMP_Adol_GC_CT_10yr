@@ -32,6 +32,14 @@ eversex_reg5 <- glm(prop_eversex~agefac+year+ethn+
                     family="binomial")
 summary(eversex_reg5) # Coefficients are moderately intuitive
 
+eversex_reg6 <- glm(prop_eversex~age+year+ethn+
+                      year*ethn,
+                    data=prop_eversex_f_df, weights=wts, 
+                    family="binomial")
+summary(eversex_reg6) # Coefficients are moderately intuitive
+
+
+
 pred2.lo <- array(predict(eversex_reg2), dim=c(3,6,6))
 pred2.p <- exp(pred2.lo) / (1+exp(pred2.lo))
 pred3.lo <- array(predict(eversex_reg3), dim=c(3,6,6))
@@ -40,12 +48,15 @@ pred4.lo <- array(predict(eversex_reg4), dim=c(3,6,6))
 pred4.p <- exp(pred4.lo) / (1+exp(pred4.lo))
 pred5.lo <- array(predict(eversex_reg5), dim=c(3,6,6))
 pred5.p <- exp(pred5.lo) / (1+exp(pred5.lo))
+pred6.lo <- array(predict(eversex_reg6), dim=c(3,6,6))
+pred6.p <- exp(pred6.lo) / (1+exp(pred6.lo))
 
 matplot(t(eversex_f[1,,]/wts_f[1,,]), type='l')
 matplot(t(pred2.p[1,,]), type='l', add=TRUE)
 matplot(t(pred3.p[1,,]), type='l', add=TRUE)
 matplot(t(pred4.p[1,,]), type='l', add=TRUE)
 matplot(t(pred5.p[1,,]), type='l', add=TRUE)
+matplot(t(pred6.p[1,,]), type='l', add=TRUE, lwd=3)
 
 matplot(t(eversex_f[2,,]/wts_f[2,,]), type='l')
 matplot(t(pred2.p[2,,]), type='l', add=TRUE)
@@ -72,3 +83,8 @@ matplot(t(pred5.p[,3,]),type='l', add=T)
 matplot(t(pred5.p[,4,]),type='l', add=T)
 matplot(t(pred5.p[,5,]),type='l', add=T)
 matplot(t(pred5.p[,6,]),type='l', add=T)
+
+## Males behaving badly
+plot(sapply(1:6, function(x) sum(prop_eversex_f[,x,] * wts_f[,x,]) / sum(wts_f[,x,])), type='b')
+points(sapply(1:6, function(x) sum(prop_eversex_m[,x,] * wts_m[,x,]) / sum(wts_m[,x,])), type='b')
+
