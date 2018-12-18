@@ -64,28 +64,42 @@ eversex_m <- eversex_m %>% replace_na(0)
 ## Condoms are expressed differently than previous values, as popsizes for no and yes separately
 
 condom_f <- condom_m <- array(dim=c(neths, nages, nyears))
+condom_wts_f <- condom_wts_m <- array(dim=c(neths, nages, nyears))
 
 for (i in 1:length(years)) {
   filename <- paste(datapath, "/condom_", years[i], ".txt", sep="")
   temp <- read.csv(filename)
+  temp$freq <- temp$freq %>% replace_na(0)
   for (j in 1:neths) {
     for (k in 1:nages) {
-      if(nrow(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k], condomuse=="Yes"))==0) {
-         condom_f[j,k,i] <- NA
+      if(nrow(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]))==0) {  ## Cases where row is missing altogether
+         condom_f[j,k,i] <- 0
+         condom_wts_f[j,k,i] <- 0
       } else {
-         condom_f[j,k,i] <- unname(unlist(
+        if(sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% select(freq))==0) {  ## Cases where freq is 0 (either in the original data, or as a replacement for NA as done above)
+          condom_f[j,k,i] <- 0
+          condom_wts_f[j,k,i] <- 0
+        } else {
+          condom_f[j,k,i] <- unname(unlist(
             temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k], condomuse=="Yes") %>% select(freq) / 
               sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% select(freq))
-         ))
-      }
-      if(nrow(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k], condomuse=="Yes"))==0) {
-           condom_m[j,k,i] <- NA
+            ))
+          condom_wts_f[j,k,i] <- sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% select(freq))
+      }}
+      if(nrow(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]))==0) {  ## Cases where row is missing altogether
+        condom_m[j,k,i] <- 0
+        condom_wts_m[j,k,i] <- 0
       } else {
-           condom_m[j,k,i] <- unname(unlist(
-             temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k], condomuse=="Yes") %>% select(freq) / 
-               sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% select(freq))
-           ))
-      }
+        if(sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% select(freq))==0) {  ## Cases where freq is 0 (either in the original data, or as a replacement for NA as done above)
+          condom_m[j,k,i] <- 0
+          condom_wts_m[j,k,i] <- 0
+        } else {
+          condom_m[j,k,i] <- unname(unlist(
+            temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k], condomuse=="Yes") %>% select(freq) / 
+              sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% select(freq))
+          ))
+          condom_wts_m[j,k,i] <- sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% select(freq))
+      }}
     }
   }
 }
