@@ -4,13 +4,23 @@
 \alias{ppy_backcalc}
 \title{Function to back calculate PPY}
 \usage{
-ppy_backcalc(x)
+ppy_backcalc(popsizes, lifepops, rowages, colages, returnages)
 }
 \arguments{
-\item{x}{A vector}
-}
-\value{
-A matrix
+\item{popsizes}{a matrix of population sizes. 
+The rows represent age at survey, and the columns represent age of debut. 
+Cells above the main diagonal should contain NA; a warning will be produced if they do not.}
+
+\item{rowages}{a vector indicating the ages represented by the rows of popsizes and lifeparts}
+
+\item{colages}{a vector indicating the ages represented by the columns of popsizes and lifeparts}
+
+\item{returnages}{a vectr indicating the ages that should be included in the returned object
+#' @return A vector of estimated new partners per year by age.}
+
+\item{lifeparts}{a matrix of mean lifetime partner counts. 
+The rows represent age at survey, and the columns represent age of debut. 
+Cells above the main diagonal should contain NA; a warning will be produced if they do not.}
 }
 \description{
 Function to back calculate PPY
