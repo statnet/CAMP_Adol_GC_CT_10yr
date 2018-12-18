@@ -51,3 +51,10 @@ matplot(years, t(mnppy_f[,3,]),type='l')  # MNPPY for 15yo over time - declining
 matplot(years, t(mnppy_f[,4,]),type='l')  # MNPPY for 16yo over time - declining for H?
 matplot(years, t(mnppy_f[,5,]),type='l')  # MNPPY for 17yo over time - ?
 matplot(years, t(mnppy_f[,6,]),type='l')  # MNPPY for 18yo over time
+
+matplot(years, t(mnppy_m[,1,]),type='l')  # MNPPY for 13yo over time - declining
+matplot(years, t(mnppy_m[,2,]),type='l')  # MNPPY for 14yo over time - declining
+matplot(years, t(mnppy_m[,3,]),type='l')  # MNPPY for 15yo over time - declining?
+matplot(years, t(mnppy_m[,4,]),type='l')  # MNPPY for 16yo over time - declining for H?
+matplot(years, t(mnppy_m[,5,]),type='l')  # MNPPY for 17yo over time - declining for H?
+matplot(years, t(mnppy_m[,6,]),type='l')  # MNPPY for 18yo over time
