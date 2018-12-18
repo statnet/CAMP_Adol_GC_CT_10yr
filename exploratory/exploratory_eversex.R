@@ -39,6 +39,15 @@ eversex_reg6 <- glm(prop_eversex~age+year+ethn+
 summary(eversex_reg6) # Coefficients are moderately intuitive
 
 
+library(nplr)
+eversex_reg7 <- nplr(y=prop_eversex_f_df$prop_eversex,
+                     x = ~
+                       prop_eversex_f_df$age+
+                       prop_eversex_f_df$year+
+                       prop_eversex_f_df$ethn+
+                       prop_eversex_f_df$year*prop_eversex_f_df$ethn
+                    )
+summary(eversex_reg6) # Coefficients are moderately intuitive
 
 pred2.lo <- array(predict(eversex_reg2), dim=c(3,6,6))
 pred2.p <- exp(pred2.lo) / (1+exp(pred2.lo))
