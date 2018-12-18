@@ -86,14 +86,60 @@ if(F) {
   matplot(t(pred_eversex_m[,6,]),type='l', add=T)
 }
 
+################### Condom use
+
+#### Get condomuse sizes
+
+condom_f_df <- expand.grid(c('B','H','W'), 13:18, seq(2007,2017,2))
+colnames(condom_f_df) <- c('ethn', 'age', 'year')
+condom_f_df$condom <- as.vector(condom_f)
+condom_f_df$wts <- as.vector(condom_wts_f)
+condom_f_df$agefac <- relevel(as.factor(condom_f_df$age), ref='16')
+condom_f_reg <- glm(condom ~ agefac + year + ethn + year*ethn,
+                     data=condom_f_df, weights=wts, 
+                     family="binomial")
+pred_condom_f_lo <- array(predict(condom_f_reg), dim=c(3,6,6))
+pred_condom_f <- exp(pred_condom_f_lo) / (1+exp(pred_condom_f_lo))
+
+condom_m_df <- expand.grid(c('B','H','W'), 13:18, seq(2007,2017,2))
+colnames(condom_m_df) <- c('ethn', 'age', 'year')
+condom_m_df$condom <- as.vector(condom_m)
+condom_m_df$wts <- as.vector(condom_wts_m)
+condom_m_df$agefac <- relevel(as.factor(condom_m_df$age), ref='16')
+condom_m_reg <- glm(condom ~ agefac + year + ethn + year*ethn,
+                    data=condom_m_df, weights=wts, 
+                    family="binomial")
+pred_condom_m_lo <- array(predict(condom_m_reg), dim=c(3,6,6))
+pred_condom_m <- exp(pred_condom_m_lo) / (1+exp(pred_condom_m_lo))
+
+if(F) {
+  matplot(t(pred_condom_f[,1,]),type='l', ylim=c(0,1))
+  matplot(t(pred_condom_f[,2,]),type='l', add=T)
+  matplot(t(pred_condom_f[,3,]),type='l', add=T)
+  matplot(t(pred_condom_f[,4,]),type='l', add=T)
+  matplot(t(pred_condom_f[,5,]),type='l', add=T)
+  matplot(t(pred_condom_f[,6,]),type='l', add=T)
+  
+  matplot(t(pred_condom_m[,1,]),type='l', ylim=c(0,1))
+  matplot(t(pred_condom_m[,2,]),type='l', add=T)
+  matplot(t(pred_condom_m[,3,]),type='l', add=T)
+  matplot(t(pred_condom_m[,4,]),type='l', add=T)
+  matplot(t(pred_condom_m[,5,]),type='l', add=T)
+  matplot(t(pred_condom_m[,6,]),type='l', add=T)
+}
+
+
+
+
+
 if(F) {
   a10_gc01 <- a10(n_f=n_f, n_m=n_m,
                     init_sexdeb_f=init_sexdeb_f,
-                    init_sexdeb_m=init_sexdeb_m
+                    init_sexdeb_m=init_sexdeb_m,
 #                    beta_m2f=beta_m2f,
 #                    beta_f2m=beta_f2m,
-#                    pc_debuting_f=pc_debuting_f,
-#                    pc_debuting_m=pc_debuting_m,
+                     prop_evesex_f=prop_evesex_f,
+                     prop_evesex_m=prop_evesex_m
 #                    coital_acts_pp_f=coital_acts_pp_f,
 #                    coital_acts_pp_m=coital_acts_pp_m,
 #                    condom_use_f=condom_use_f,
