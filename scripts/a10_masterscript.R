@@ -53,8 +53,7 @@ prop_eversex_f_df$agefac <- relevel(as.factor(prop_eversex_f_df$age), ref='16')
 eversex_f_reg <- glm(prop_eversex ~ agefac + year + ethn + year*ethn,
                     data=prop_eversex_f_df, weights=wts, 
                     family="binomial")
-pred_eversex_f_lo <- array(predict(eversex_f_reg), dim=c(3,6,6))
-pred_eversex_f <- exp(pred_eversex_f_lo) / (1+exp(pred_eversex_f_lo))
+pred_eversex_f <- array(predict(eversex_f_reg, type='response'), dim=c(3,6,6))
 
 prop_eversex_m <- eversex_m / wts_m
 prop_eversex_m[prop_eversex_m==Inf] <- 0
@@ -67,8 +66,7 @@ prop_eversex_m_df$agefac <- relevel(as.factor(prop_eversex_m_df$age), ref='16')
 eversex_m_reg <- glm(prop_eversex ~ agefac + year + ethn + year*ethn,
                      data=prop_eversex_m_df, weights=wts, 
                      family="binomial")
-pred_eversex_m_lo <- array(predict(eversex_m_reg), dim=c(3,6,6))
-pred_eversex_m <- exp(pred_eversex_m_lo) / (1+exp(pred_eversex_m_lo))
+pred_eversex_m_lo <- array(predict(eversex_m_reg, type='response'), dim=c(3,6,6))
 
 if(F) {
   matplot(t(pred_eversex_f[,1,]),type='l', ylim=c(0,1))
@@ -98,8 +96,7 @@ condom_f_df$agefac <- relevel(as.factor(condom_f_df$age), ref='16')
 condom_f_reg <- glm(condom ~ agefac + year + ethn + year*ethn,
                      data=condom_f_df, weights=wts, 
                      family="binomial")
-pred_condom_f_lo <- array(predict(condom_f_reg), dim=c(3,6,6))
-pred_condom_f <- exp(pred_condom_f_lo) / (1+exp(pred_condom_f_lo))
+pred_condom_lo <- array(predict(condom_f_reg, type='response'), dim=c(3,6,6))
 
 condom_m_df <- expand.grid(c('B','H','W'), 13:18, seq(2007,2017,2))
 colnames(condom_m_df) <- c('ethn', 'age', 'year')
@@ -109,8 +106,7 @@ condom_m_df$agefac <- relevel(as.factor(condom_m_df$age), ref='16')
 condom_m_reg <- glm(condom ~ agefac + year + ethn + year*ethn,
                     data=condom_m_df, weights=wts, 
                     family="binomial")
-pred_condom_m_lo <- array(predict(condom_m_reg), dim=c(3,6,6))
-pred_condom_m <- exp(pred_condom_m_lo) / (1+exp(pred_condom_m_lo))
+pred_condom_m_lo <- array(predict(condom_m_reg, type='response'), dim=c(3,6,6))
 
 if(F) {
   matplot(t(pred_condom_f[,1,]),type='l', ylim=c(0,1))
