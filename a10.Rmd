@@ -139,4 +139,22 @@ Now we face the issue that 13-yo males have higher rates of ever sex than 14-yo 
 
 Decision: it's Ok to leave them in.  It's what the data says; plus it doesn't create a logical problem as I feared since we'll need to have a whole slew of 14-year olds enter the model inexperienced, so one can easily have the total % of 14yo who've had sex be less than that of 13yos without having to "unvirginize" anyone.  Plus the effects on the total model output are miniscule.  The alternative -- to return to a parametric form on age -- means getting the shape of the curve in the 15-8 yo range wrong, and that is a much much bigger deal.
 
+## Dec 26, 2018
+
+Since the last record here, I did some more work.
+
+First was to consider a 4-parameter logistic model for sexual debut.  That would allow for a parametric form across age, but not one that requires the value to eventually asymptote at 1, such that we might fit the curve across ages a bit better, and have a more realistic value for 13-year olds.  But it turned out that the two R packages I found for this don't allow for the use ofweights. So I decided this wasn'tworth pursuing any further.
+
+Next was to write all of the code for the back-calculation of mean number of new parters per year.  
+
+Picking up there now.
+
+intrudced y2k as year - 2000, since this makes the parameters far more interpretable here.
+
+Just learned the predict function includes a type argument, which will convert automatically from log odds or log probs to probs.  Went back and changed all code on this.
+
+Did a lot of exploring glm models for nppy.  The age effect is curved; and can't be captured with a cateogrical effect since we have no data for 18 and couldn't extrapolate. But age+age^2 works well, and both terms are significant.  Also, the enth*y2k terms all make sense in terms of my original eyeballing that H rates are falling the fastest.
+
+Hmmm, stuck. Need to have age^2 effect to capture things well.  Then it turns out that age-by-y2k matters, and is signficant, and makes the pattern bettern fitting and perhaps more sensible. But then I was'nt sure if you could have age-by-year and not have age^2-by-year if you have age^2 in the model. So I put in age^2-by-year, and it gets confusing, and then both age-by-year and age^2-by-year become non-significant.  Not sure what to do.
+
 
