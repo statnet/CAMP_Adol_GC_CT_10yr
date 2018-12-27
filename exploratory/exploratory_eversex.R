@@ -49,16 +49,11 @@ eversex_reg7 <- nplr(y=prop_eversex_f_df$prop_eversex,
                     )
 summary(eversex_reg6) # Coefficients are moderately intuitive
 
-pred2.lo <- array(predict(eversex_reg2), dim=c(3,6,6))
-pred2.p <- exp(pred2.lo) / (1+exp(pred2.lo))
-pred3.lo <- array(predict(eversex_reg3), dim=c(3,6,6))
-pred3.p <- exp(pred3.lo) / (1+exp(pred3.lo))
-pred4.lo <- array(predict(eversex_reg4), dim=c(3,6,6))
-pred4.p <- exp(pred4.lo) / (1+exp(pred4.lo))
-pred5.lo <- array(predict(eversex_reg5), dim=c(3,6,6))
-pred5.p <- exp(pred5.lo) / (1+exp(pred5.lo))
-pred6.lo <- array(predict(eversex_reg6), dim=c(3,6,6))
-pred6.p <- exp(pred6.lo) / (1+exp(pred6.lo))
+pred2.p <- array(predict(eversex_reg2, type='response'), dim=c(3,6,6))
+pred3.p <- array(predict(eversex_reg3, type='response'), dim=c(3,6,6))
+pred4.p <- array(predict(eversex_reg4, type='response'), dim=c(3,6,6))
+pred5.p <- array(predict(eversex_reg5, type='response'), dim=c(3,6,6))
+pred6.p <- array(predict(eversex_reg6, type='response'), dim=c(3,6,6))
 
 matplot(t(eversex_f[1,,]/wts_f[1,,]), type='l')
 matplot(t(pred2.p[1,,]), type='l', add=TRUE)

@@ -31,14 +31,12 @@ condom_m_df$agefac <- relevel(as.factor(condom_m_df$age), ref='16')
 condom_f_reg_1 <- glm(condom ~ agefac + year + ethn + year*ethn,
                     data=condom_f_df, weights=wts, 
                     family="binomial")
-pred_condom_f_lo_1 <- array(predict(condom_f_reg_1), dim=c(3,6,6))
-pred_condom_f_1 <- exp(pred_condom_f_lo_1) / (1+exp(pred_condom_f_lo_1))
+pred_condom_f_1 <- array(predict(condom_f_reg_1, type='response'), dim=c(3,6,6))
 
 condom_m_reg_1 <- glm(condom ~ agefac + year + ethn + year*ethn,
                       data=condom_m_df, weights=wts, 
                       family="binomial")
-pred_condom_m_lo_1 <- array(predict(condom_m_reg_1), dim=c(3,6,6))
-pred_condom_m_1 <- exp(pred_condom_m_lo_1) / (1+exp(pred_condom_m_lo_1))
+pred_condom_m_1 <- array(predict(condom_m_reg_1, type='response'), dim=c(3,6,6))
 
 matplot(t(condom_f[1,,]), type='l')
 matplot(t(pred_condom_f_1[1,,]), type='l', add=TRUE)
@@ -57,15 +55,13 @@ matplot(t(pred_condom_m_1[3,,]), type='l', add=TRUE)
 condom_f_reg_2 <- glm(condom ~ age + year + ethn + year*ethn,
                       data=condom_f_df, weights=wts, 
                       family="binomial")
-pred_condom_f_lo_2 <- array(predict(condom_f_reg_2), dim=c(3,6,6))
-pred_condom_f_2 <- exp(pred_condom_f_lo_2) / (1+exp(pred_condom_f_lo_2))
+pred_condom_f_2 <- array(predict(condom_f_reg_2, type='response'), dim=c(3,6,6))
 
 condom_m_reg_2 <- glm(condom ~ age + year + ethn + year*ethn,
                       data=condom_m_df, weights=wts, 
                       family="binomial")
-pred_condom_m_lo_2 <- array(predict(condom_m_reg_2), dim=c(3,6,6))
-pred_condom_m_2 <- exp(pred_condom_m_lo_2) / (1+exp(pred_condom_m_lo_2))
-
+pred_condom_m_2 <- array(predict(condom_m_reg_2, type='response'), dim=c(3,6,6))
+  
 matplot(t(condom_f[1,,]), type='l')
 matplot(t(pred_condom_f_2[1,,]), type='l', add=TRUE)
 matplot(t(condom_f[2,,]), type='l')
@@ -79,3 +75,4 @@ matplot(t(condom_m[2,,]), type='l')
 matplot(t(pred_condom_m_2[2,,]), type='l', add=TRUE)
 matplot(t(condom_m[3,,]), type='l')
 matplot(t(pred_condom_m_2[3,,]), type='l', add=TRUE)
+
