@@ -66,7 +66,7 @@ prop_eversex_m_df$agefac <- relevel(as.factor(prop_eversex_m_df$age), ref='16')
 eversex_m_reg <- glm(prop_eversex ~ agefac + year + ethn + year*ethn,
                      data=prop_eversex_m_df, weights=wts, 
                      family="binomial")
-pred_eversex_m_lo <- array(predict(eversex_m_reg, type='response'), dim=c(3,6,6))
+pred_eversex_m <- array(predict(eversex_m_reg, type='response'), dim=c(3,6,6))
 
 if(F) {
   matplot(t(pred_eversex_f[,1,]),type='l', ylim=c(0,1))
@@ -96,7 +96,7 @@ condom_f_df$agefac <- relevel(as.factor(condom_f_df$age), ref='16')
 condom_f_reg <- glm(condom ~ agefac + year + ethn + year*ethn,
                      data=condom_f_df, weights=wts, 
                      family="binomial")
-pred_condom_lo <- array(predict(condom_f_reg, type='response'), dim=c(3,6,6))
+pred_condom_f<- array(predict(condom_f_reg, type='response'), dim=c(3,6,6))
 
 condom_m_df <- expand.grid(c('B','H','W'), 13:18, seq(2007,2017,2))
 colnames(condom_m_df) <- c('ethn', 'age', 'year')
@@ -106,7 +106,7 @@ condom_m_df$agefac <- relevel(as.factor(condom_m_df$age), ref='16')
 condom_m_reg <- glm(condom ~ agefac + year + ethn + year*ethn,
                     data=condom_m_df, weights=wts, 
                     family="binomial")
-pred_condom_m_lo <- array(predict(condom_m_reg, type='response'), dim=c(3,6,6))
+pred_condom_m <- array(predict(condom_m_reg, type='response'), dim=c(3,6,6))
 
 if(F) {
   matplot(t(pred_condom_f[,1,]),type='l', ylim=c(0,1))
@@ -124,8 +124,80 @@ if(F) {
   matplot(t(pred_condom_m[,6,]),type='l', add=T)
 }
 
+##### Get mnnppy values
+
+mnppy_f <- array(dim=c(3,6,6))
+mnppy_wts_f <- array(dim=c(3,6,6))
+rowages <- 13:18
+colages <- 11:17
+returnages <- 13:18
+for (i in 1:6) {
+  for (j in 1:3) {
+    popsizes <- AgeByDebutAge_num_f[j,,,i]
+    lifeparts <- AgeByDebutAge_lp_f[j,,,i]
+    temp <- ppy_backcalc(popsizes, lifeparts, rowages, colages, 13:18)
+    mnppy_f[j,,i] <- temp$mnppy
+    mnppy_wts_f[j,,i] <- temp$wts
+  }  
+}
+
+mnppy_m <- array(dim=c(3,6,6))
+mnppy_wts_m <- array(dim=c(3,6,6))
+rowages <- 13:18
+colages <- 11:17
+returnages <- 13:18
+for (i in 1:6) {
+  for (j in 1:3) {
+    popsizes <- AgeByDebutAge_num_m[j,,,i]
+    lifeparts <- AgeByDebutAge_lp_m[j,,,i]
+    temp <- ppy_backcalc(popsizes, lifeparts, rowages, colages, 13:18)
+    mnppy_m[j,,i] <- temp$mnppy
+    mnppy_wts_m[j,,i] <- temp$wts
+  }  
+}
+
+mnppy_f_df <- expand.grid(c('B','H','W'), 13:18, seq(2007,2017,2))
+colnames(mnppy_f_df) <- c('ethn', 'age', 'year')
+mnppy_f_df$mnppy <- as.vector(mnppy_f)
+mnppy_f_df$wts <- as.vector(mnppy_wts_f)
+mnppy_f_df$agefac <- relevel(as.factor(mnppy_f_df$age), ref='16')
+mnppy_f_df$y2k <- mnppy_f_df$year - 2000
+mnppy_f_reg <- glm(mnppy ~ ethn + y2k + ethn*y2k + age + I(age^2),
+                   data=mnppy_f_df, weights=wts, na.action=na.exclude, family="poisson")
+pred_mnppy_f <- array(predict(mnppy_f_reg, type='response', newdata = mnppy_f_df), 
+                      dim=c(3,6,6))
+
+mnppy_m_df <- expand.grid(c('B','H','W'), 13:18, seq(2007,2017,2))
+colnames(mnppy_m_df) <- c('ethn', 'age', 'year')
+mnppy_m_df$mnppy <- as.vector(mnppy_m)
+mnppy_m_df$wts <- as.vector(mnppy_wts_m)
+mnppy_m_df$agefac <- relevel(as.factor(mnppy_m_df$age), ref='16')
+mnppy_m_df$y2k <- mnppy_m_df$year - 2000
+mnppy_m_reg <- glm(mnppy ~ ethn + y2k + ethn*y2k + age + I(age^2),
+                   data=mnppy_m_df, weights=wts, na.action=na.exclude, family="poisson")
+pred_mnppy_m <- array(predict(mnppy_m_reg, type='response', newdata = mnppy_m_df), 
+                      dim=c(3,6,6))
 
 
+if(F) {
+  plot(pred_mnppy_f, ylim=c(0,2))
+  points(pred_mnppy_m, col='red')
+
+  plot(as.vector(pred_mnppy_f[1,,]), ylim=c(0,2), type='l')
+  lines(as.vector(pred_mnppy_m[1,,]), lty=2)
+  lines(as.vector(pred_mnppy_f[2,,]), lty=1, col='blue')
+  lines(as.vector(pred_mnppy_m[2,,]), lty=2, col='blue')
+  lines(as.vector(pred_mnppy_f[3,,]), lty=1, col='red')
+  lines(as.vector(pred_mnppy_m[3,,]), lty=2, col='red')
+  
+  matplot(t((mnppy_f[1,,])), type='l', ylim=c(0,2), col=rainbow(6), lty=2, lwd=0.5)
+  matplot(t(pred_mnppy_f[1,,]), type='l', add=TRUE, col=rainbow(6), lty=1, lwd=1.5)
+  matplot(t((mnppy_f[2,,])), type='l', ylim=c(0,2), col=rainbow(6), lty=2, lwd=0.5)
+  matplot(t(pred_mnppy_f[2,,]), type='l', add=TRUE, col=rainbow(6), lty=1, lwd=1.5)
+  matplot(t((mnppy_f[3,,])), type='l', ylim=c(0,2), col=rainbow(6), lty=2, lwd=0.5)
+  matplot(t(pred_mnppy_f[3,,]), type='l', add=TRUE, col=rainbow(6), lty=1, lwd=1.5)
+  
+}
 
 
 if(F) {
