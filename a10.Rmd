@@ -157,4 +157,13 @@ Did a lot of exploring glm models for nppy.  The age effect is curved; and can't
 
 Hmmm, stuck. Need to have age^2 effect to capture things well.  Then it turns out that age-by-y2k matters, and is signficant, and makes the pattern bettern fitting and perhaps more sensible. But then I was'nt sure if you could have age-by-year and not have age^2-by-year if you have age^2 in the model. So I put in age^2-by-year, and it gets confusing, and then both age-by-year and age^2-by-year become non-significant.  Not sure what to do.
 
+## Dec. 27, 2018
+
+I'm way overthinking this.  No need for age-y2k effect - this is getting way too complicated, far more than they asked for.
+
+Done, with code caried over to master script.
+
+
+
+
 
