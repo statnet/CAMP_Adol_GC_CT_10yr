@@ -2,7 +2,7 @@
 
 export(a10)
 export(array11)
-export(initPrev_calc)
+export(diag_inschool_calc)
 export(mat2)
 export(mat3)
 export(ppy_backcalc)
