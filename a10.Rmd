@@ -163,7 +163,44 @@ I'm way overthinking this.  No need for age-y2k effect - this is getting way too
 
 Done, with code caried over to master script.
 
+## Jan 4, 2019
+
+Reviewing progress in the new year.
+- Have pulled in: pop sizes, eversex, condomuse and mnnppy
+- Need to: confirm that pop sizes are done (there are comments in there that I think have been taken care of)
+- Need to: pull in diagnoses for first year only (yay) - rest will emerge
+- Are there any other multi-dimensional inputs?
+- Need to: write the actual function that works with all of these.
+
+Order: confirm pop sizes; think about other needed inputs; make up diagnoses for now so I can work on the function code; work on the function code; think about getting real diagnoses.
+
+Pop sizes confirmed.
+
+Other inputs that may be needed: 
+- total age-based pop sizes (not just school)
+- diagnoses
+- and the little ones about transmission and diagnosis percents and duration that will come form the tool itself
+
+### Jan 7, 2019
+
+Making up diagnoses; pulling in mini-inputs; working on main code.
+
+# Jan 8, 2019
+
+Today I basically wrote the main function.
 
 
 
 
+### Keep at bottom
+
+# To do:
+- write diag_inschool_calc function
+- add in race mixing parameters to model
+- test main function
+- add in main fxn output
+
+- get diagnoses by race
+- get race mixing
+- get tot 13-18 pop (not just in school)
+- consider revisiting coital acts by single year age groups
