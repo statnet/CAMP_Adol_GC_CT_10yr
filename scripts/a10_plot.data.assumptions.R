@@ -1,0 +1,46 @@
+# Run master script first
+
+matplot(t(pred_eversex_f[,1,]),type='l', ylim=c(0,1))
+matplot(t(pred_eversex_f[,2,]),type='l', add=T)
+matplot(t(pred_eversex_f[,3,]),type='l', add=T)
+matplot(t(pred_eversex_f[,4,]),type='l', add=T)
+matplot(t(pred_eversex_f[,5,]),type='l', add=T)
+matplot(t(pred_eversex_f[,6,]),type='l', add=T)
+
+matplot(t(pred_eversex_m[,1,]),type='l', ylim=c(0,1))
+matplot(t(pred_eversex_m[,2,]),type='l', add=T)
+matplot(t(pred_eversex_m[,3,]),type='l', add=T)
+matplot(t(pred_eversex_m[,4,]),type='l', add=T)
+matplot(t(pred_eversex_m[,5,]),type='l', add=T)
+matplot(t(pred_eversex_m[,6,]),type='l', add=T)
+
+matplot(t(pred_condom_f[,1,]),type='l', ylim=c(0,1))
+matplot(t(pred_condom_f[,2,]),type='l', add=T)
+matplot(t(pred_condom_f[,3,]),type='l', add=T)
+matplot(t(pred_condom_f[,4,]),type='l', add=T)
+matplot(t(pred_condom_f[,5,]),type='l', add=T)
+matplot(t(pred_condom_f[,6,]),type='l', add=T)
+
+matplot(t(pred_condom_m[,1,]),type='l', ylim=c(0,1))
+matplot(t(pred_condom_m[,2,]),type='l', add=T)
+matplot(t(pred_condom_m[,3,]),type='l', add=T)
+matplot(t(pred_condom_m[,4,]),type='l', add=T)
+matplot(t(pred_condom_m[,5,]),type='l', add=T)
+matplot(t(pred_condom_m[,6,]),type='l', add=T)
+
+plot(pred_mnppy_f, ylim=c(0,2))
+points(pred_mnppy_m, col='red')
+
+plot(as.vector(pred_mnppy_f[1,,]), ylim=c(0,2), type='l')
+lines(as.vector(pred_mnppy_m[1,,]), lty=2)
+lines(as.vector(pred_mnppy_f[2,,]), lty=1, col='blue')
+lines(as.vector(pred_mnppy_m[2,,]), lty=2, col='blue')
+lines(as.vector(pred_mnppy_f[3,,]), lty=1, col='red')
+lines(as.vector(pred_mnppy_m[3,,]), lty=2, col='red')
+
+matplot(t((mnppy_f[1,,])), type='l', ylim=c(0,2), col=rainbow(6), lty=2, lwd=0.5)
+matplot(t(pred_mnppy_f[1,,]), type='l', add=TRUE, col=rainbow(6), lty=1, lwd=1.5)
+matplot(t((mnppy_f[2,,])), type='l', ylim=c(0,2), col=rainbow(6), lty=2, lwd=0.5)
+matplot(t(pred_mnppy_f[2,,]), type='l', add=TRUE, col=rainbow(6), lty=1, lwd=1.5)
+matplot(t((mnppy_f[3,,])), type='l', ylim=c(0,2), col=rainbow(6), lty=2, lwd=0.5)
+matplot(t(pred_mnppy_f[3,,]), type='l', add=TRUE, col=rainbow(6), lty=1, lwd=1.5)
