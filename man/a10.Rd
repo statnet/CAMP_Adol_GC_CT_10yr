@@ -4,38 +4,47 @@
 \alias{a10}
 \title{Main a10 function}
 \usage{
-a10(n_f, n_m, sexdeb_f, sexdeb_m, init_prev_f, init_prev_m, beta_m2f,
-  beta_f2m, newppy_f, newppy_m, coital_acts_pp_f, coital_acts_pp_m,
-  condom_use_f, condom_use_m)
+a10(n_f, n_m, prop_eversex_f, prop_eversex_m, condom_use_f, condom_use_m,
+  mean_new_part_f, mean_new_part_m, coital_acts_pp_f, coital_acts_pp_m,
+  diag_init_f, diag_init_m, prop_diag_f, prop_diag_m, dur_inf_f, dur_inf_m,
+  beta_f2m, beta_m2f)
 }
 \arguments{
 \item{n_f}{A 3x6x11 array indicating the population size for females, by race/eth by age by year}
 
 \item{n_m}{A 3x6x11 array indicating the population size for males, by race/eth by age by year}
 
-\item{sexdeb_f}{A 3x6x11 matrix inidicating the % of females debuted (as FSM), by race/eth by age by year}
+\item{prop_eversex_f}{A 3x6x11 matrix inidicating the proportion of females debuted (as FSM), by race/eth by age by year}
 
-\item{sexdeb_m}{A 3x6x11 matrix inidicating the % of males debuted (as MSF), by race/eth by age by year}
-
-\item{init_prev_f}{A 3x6 matrix indicating the initial STI prevalence among females who have sexually debuted, by race/eth by age}
-
-\item{init_prev_m}{A 3x6 matrix indicating the initial STI prevalence among males who have sexually debuted, by race/eth by age}
-
-\item{beta_m2f}{Per-act transmission probability from male to female}
-
-\item{beta_f2m}{Per-act transmission probability from female to male}
-
-\item{newppy_f}{A 3x6 matrix indicating the mean new partners per year for debuted females, by race/eth by age}
-
-\item{newppy_m}{A 3x6 matrix indicating the mean new partners per year for debuted males, by race/eth by age}
-
-\item{coital_acts_pp_f}{A 3x6 matrix indicating the mean coital acts per partner for females, by race/eth by age}
-
-\item{coital_acts_pp_m}{A 3x6 matrix indicating the mean coital acts per partner for males, by race/eth by age}
+\item{prop_eversex_m}{A 3x6x11 matrix inidicating the proportion of males debuted (as MSF), by race/eth by age by year}
 
 \item{condom_use_f, }{A 3x6x11 matrix indicating % condom use for females, by race/eth by age by year}
 
 \item{condom_use_m, }{A 3x6x11 matrix indicating % condom use for males, by race/eth by age by year}
+
+\item{mean_new_part_f}{A 3x6x11 matrix indicating the mean new partners per year for debuted females, by race/eth by age}
+
+\item{mean_new_part_m}{A 3x6x11 matrix indicating the mean new partners per year for debuted males, by race/eth by age}
+
+\item{coital_acts_pp_f}{A 3x6x11 matrix indicating the mean coital acts per partner for females, by race/eth by age}
+
+\item{coital_acts_pp_m}{A 3x6x11 matrix indicating the mean coital acts per partner for males, by race/eth by age}
+
+\item{diag_init_f}{A 3x6 matrix indicating the number of recent annual STI diagnoses among females, by race/eth by age}
+
+\item{diag_init_m}{A 3x6 matrix indicating the number of recent annual STI diagnoses among males, by race/eth by age}
+
+\item{prop_diag_f}{The proportion of females who get diagnosed for the STI}
+
+\item{prop_diag_m}{The proportion of males who get diagnosed for the STI}
+
+\item{dur_inf_f}{The average duration of infection for females}
+
+\item{dur_inf_m}{The average duration of infection for males}
+
+\item{beta_f2m}{Per-act transmission probability from female to male}
+
+\item{beta_m2f}{Per-act transmission probability from male to female}
 }
 \value{
 A list comprising two arrays of dimensions [3,6,11], containing the estimated number of 
