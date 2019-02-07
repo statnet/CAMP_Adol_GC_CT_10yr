@@ -103,15 +103,15 @@ All values placed in /data/schoolpops.csv
 
 Code to import them added to CAMP_10yr_import.R
 
-Added code to look at trends in pop sizes by race, sex and age through time (in file exploratory_popsize_trends_by_ethn) to get a sense of what we will need to do with these.  Looked at both absolute numbers and proportions.  Pattern is clear, consistent, and expected: strong evidence that Hisp are increasing over the decade, both as abs and rel.  But then for relative there is little clear pattern in the other two (even though they must add up to 1). For absoulte Blacks are flat; Whites are mostly except older males are declining.
+Added code to look at trends in pop sizes by race, sex and age through time (in file exploratory_popsize_trends_by_ethn) to get a sense of what we will need to do with these.  Looked at both absolute numbers and proportions.  Pattern is clear, consistent, and expected: strong evidence that Hisp are increasing over the decade, both as abs and rel.  But then there is relatively little clear pattern in the other two (even though they must add up to 1). For absolute, Blacks are flat; Whites are mostly flat, except older males are declining.
 
 Revisit perhaps with the ages taken out and just look at the total by sex/ethn across years.
 
 ## Dec 3, 2018
 
-Deciding to just go with the static pop sizes, averaged across all time periods.  These are currently calculated at the very end of the file "Eexplotary_popsize_trends>by_ethn.R".  This still means that we will need a way for people to enter the model in ages 13, 14, 15, leave the model in ages 18 and 19, and some mix of the two for ages 16 (depending on sex and ethn). presumably people should enter negative, and exit with both statuses.
+Deciding to just go with the static pop sizes, averaged across all time periods.  These are currently calculated at the very end of the file "Exploratory_popsize_trends>by_ethn.R".  This still means that we will need a way for people to enter the model in ages 13, 14, 15, leave the model in ages 18 and 19, and some mix of the two for ages 16 (depending on sex and ethn). presumably people should enter negative, and exit with both statuses.
 
-Did some file renmaing and reorganization to get things standardized and located in the proper places.
+Did some file renaming and reorganization to get things standardized and located in the proper places.
 
 Beginning eversex and then condom use.
 
@@ -185,9 +185,33 @@ Other inputs that may be needed:
 
 Making up diagnoses; pulling in mini-inputs; working on main code.
 
-# Jan 8, 2019
+### Jan 8, 2019
 
 Today I basically wrote the main function.
+
+### Jan 11, 2018
+
+Working on the populations for age 13-18 regardless of school attendance, to be able to convert the diagnoses.
+
+Numbers are readily available for 2010 onwards in AmFactFinder (table PEPALL6N).  But for those years prior to 2010, one must make a special data request:
+
+https://www.census.gov/programs-surveys/popest/data/special-tab/content.html
+
+And of course we are in the middle of a government shutdown:
+
+But really we are most interested in the % of folks who are in school, and that might not have an obvious secular trend to it like total pop nubers do.  So this should be fine - I will calculate the numbers we observe, and look for trends.
+
+Ugh, spent time on it, averaged across years, and found that more than 100% of 15-6 year olds are in HS.  Need to pause and think about something else and then return to this.
+
+### Feb 6, 2019
+
+Returning to think about pop sizes. We want kids in school / all kids, for each cell by sex/age/race. Problem is that some are >100%.
+
+Issue #1: in-school pop sizes are calcualted by averaging across all years 2007-2017.  Then, we use a single average sex ratio across all year, ages, and races to determine sex-specific sizes. Tot pop should use the same method in order to avoid problems.
+
+issues #2: total pop is currently based on 2011-2017, since that is what is available on line.  If we wish the averaging to be the same, we should do a comparable version of in-school pop sizes using just the same years.  This would be really annoying if we have to do it. BUT, I have just written to the Census Burau requesting the numbers, as described at: https://www.census.gov/programs-surveys/popest/data/special-tab/content.html
+
+Ok, I redid the calculations for the totalpops to match the approach infor the school pops (while still not yet having the same set of years). I still get numbes above 100%.  I wonder if this is the same issue we faced earlier, where the age composition of the HS attending population changes over the course of the year. How again did we deal with this in the tool itself? Just looked; it seems that what I'm doing here is comparable to what we do there.  So if the problem persists after I get the final year data, then we may just need to make the assumption that the percent in school is min(1, calculated_value). For these purposes it should not cause a problem.
 
 
 
