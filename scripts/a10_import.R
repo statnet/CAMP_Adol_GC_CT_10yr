@@ -145,3 +145,21 @@ for (i in 1:length(years)) {
 filename <- paste(datapath, "/schoolpops.csv", sep="")
 schoolpops <- read.csv(filename)
 
+####################
+# Total pops 13-18
+
+totpopyears <- c(2011, 2013, 2015, 2017)
+filename <- paste(datapath, "/totalpops.csv", sep="")
+temp <- read.csv(filename)
+totpop_f <- totpop_m <- array(dim=c(neths, nages, nyears))
+
+for (i in 1:length(totpopyears)) {
+  for (j in 1:neths) {
+    totpop_f[j,,which(years==totpopyears[i])] <- unname(unlist(
+      temp %>% filter(Year==totpopyears[i], Sex=="Female", Race==eths[j]) %>% select(starts_with("Age"))
+    ))
+    totpop_m[j,,which(years==totpopyears[i])] <- unname(unlist(
+      temp %>% filter(Year==totpopyears[i], Sex=="Male", Race==eths[j]) %>% select(starts_with("Age"))
+    ))
+  }
+}
