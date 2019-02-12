@@ -5,17 +5,15 @@
 \title{Function to convert all diagnoses to diagnoses in school 
  NA: to be run separately by sex}
 \usage{
-diag_inschool_calc(diags, perc_diag, infdur)
+diag_inschool_calc(diags, perc_inschool)
 }
 \arguments{
-\item{XX}{A 3x6 matrix of past-year diagnoses among}
+\item{diags}{A 3x6 matrix of past-year diagnoses among adols regardless of school status}
 
-\item{XX}{A 3x6 matrix of precent of cases that get diagnosed}
-
-\item{XX}{A 3x6 matrix indicating mean dur of infection}
+\item{perc_inschool}{A 3x6 matrix of precent of adols in HS}
 }
 \value{
-A 3 x 6 matrix indicating est. number of prevalent cases in the cross-section
+A 3x6 matrix indicating number of diagnoses among HS students
 }
 \description{
 Function to convert all diagnoses to diagnoses in school 
