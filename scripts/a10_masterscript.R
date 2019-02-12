@@ -20,12 +20,12 @@ nyears <- length(years)
 ### HS-attending pop sizes by age/race/sex (averaged across years)
 
 meanschoolpop <- mean(schoolpops$totschoolpop)             # Tot pop size from census, avgd across years
-mean_pct_age_race <- apply(wts_f+wts_m, 1:2, mean) / 
+mean_prop_age_race <- apply(wts_f+wts_m, 1:2, mean) / 
           sum(apply(wts_f+wts_m, 1:2, mean))               # Tot % age/race from YRBS, avgd across years and sexes
-pct_f <- sum(wts_f) / (sum(wts_f) + sum(wts_m))            # Tot % female from YRBS, avgd across years
+prop_f <- sum(wts_f) / (sum(wts_f) + sum(wts_m))            # Tot % female from YRBS, avgd across years
 
-n_f <- array11(mean_pct_age_race * pct_f * meanschoolpop)
-n_m <- array11(mean_pct_age_race * (1-pct_f) * meanschoolpop)
+n_f <- array11(mean_prop_age_race * prop_f * meanschoolpop)
+n_m <- array11(mean_prop_age_race * (1-prop_f) * meanschoolpop)
 
 n_f <- n_f[-4,,]
 n_m <- n_m[-4,,]
@@ -38,16 +38,16 @@ wts_m <- wts_m[-4,,]
 totpop <- totpop_f + totpop_m
 meanpop_13to18 <- apply(totpop, 1:2, mean, na.rm=TRUE)
 
-totpop_pct_f <- sum(totpop_f, na.rm=TRUE) / (sum(totpop_f, na.rm=TRUE) + sum(totpop_m, na.rm=TRUE))
-meanpop_13to18_f <- meanpop_13to18 * totpop_pct_f
+totpop_prop_f <- sum(totpop_f, na.rm=TRUE) / (sum(totpop_f, na.rm=TRUE) + sum(totpop_m, na.rm=TRUE))
+meanpop_13to18_f <- meanpop_13to18 * totpop_prop_f
 meanpop_13to18_f <- array(rep(meanpop_13to18_f, 11), dim=c(3,6,11))
-pct_in_school_f <- n_f / meanpop_13to18_f
-pct_in_school_f[pct_in_school_f>1] <- 1
+prop_in_school_f <- n_f / meanpop_13to18_f
+prop_in_school_f[prop_in_school_f>1] <- 1
 
-meanpop_13to18_m <- meanpop_13to18 * (1-totpop_pct_f)
+meanpop_13to18_m <- meanpop_13to18 * (1-totpop_prop_f)
 meanpop_13to18_m <- array(rep(meanpop_13to18_m, 11), dim=c(3,6,11))
-pct_in_school_m <- n_m / meanpop_13to18_m
-pct_in_school_m[pct_in_school_m>1] <- 1
+prop_in_school_m <- n_m / meanpop_13to18_m
+prop_in_school_m[prop_in_school_m>1] <- 1
 
 
 #########################################################################
@@ -231,8 +231,8 @@ dur_m_gc <- 0.23
 ### Call function to convert all diagnoses to in-school diagnoses
 
 # TODO
-diagnoses_init_sch_f_gc <- diagnoses_init_tot_f_gc
-diagnoses_init_sch_m_gc <- diagnoses_init_tot_m_gc
+diagnoses_init_sch_f_gc <- diagnoses_init_tot_f_gc * prop_in_school_f[,,1]
+diagnoses_init_sch_m_gc <- diagnoses_init_tot_m_gc * prop_in_school_m[,,1]
 
 
 #########################################################################
@@ -249,8 +249,8 @@ diagnoses_init_sch_m_gc <- diagnoses_init_tot_m_gc
                 mean_new_part_m = pred_mnppy_m,
                 coital_acts_pp_f = capp_f,
                 coital_acts_pp_m = capp_m,
-                diag_init_f = diagnoses_init_tot_f_gc,
-                diag_init_m = diagnoses_init_tot_m_gc,
+                diag_init_f = diagnoses_init_sch_f_gc,
+                diag_init_m = diagnoses_init_sch_m_gc,
                 prop_diag_f = prop_diag_f_gc,
                 prop_diag_m = prop_diag_m_gc,
                 dur_inf_f = dur_f_gc,
