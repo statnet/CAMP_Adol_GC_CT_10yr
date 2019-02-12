@@ -30,9 +30,9 @@ a10(n_f, n_m, prop_eversex_f, prop_eversex_m, condom_use_f, condom_use_m,
 
 \item{coital_acts_pp_m}{A 3x6x11 matrix indicating the mean coital acts per partner for males, by race/eth by age}
 
-\item{diag_init_f}{A 3x6 matrix indicating the number of recent annual STI diagnoses among females, by race/eth by age}
+\item{diag_init_f}{A 3x6 matrix indicating the number of recent annual STI diagnoses among HS females, by race/eth by age}
 
-\item{diag_init_m}{A 3x6 matrix indicating the number of recent annual STI diagnoses among males, by race/eth by age}
+\item{diag_init_m}{A 3x6 matrix indicating the number of recent annual STI diagnoses among HS males, by race/eth by age}
 
 \item{prop_diag_f}{The proportion of females who get diagnosed for the STI}
 

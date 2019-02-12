@@ -12,8 +12,8 @@
 #' @param mean_new_part_m A 3x6x11 matrix indicating the mean new partners per year for debuted males, by race/eth by age
 #' @param coital_acts_pp_f A 3x6x11 matrix indicating the mean coital acts per partner for females, by race/eth by age
 #' @param coital_acts_pp_m A 3x6x11 matrix indicating the mean coital acts per partner for males, by race/eth by age
-#' @param diag_init_f A 3x6 matrix indicating the number of recent annual STI diagnoses among females, by race/eth by age
-#' @param diag_init_m A 3x6 matrix indicating the number of recent annual STI diagnoses among males, by race/eth by age
+#' @param diag_init_f A 3x6 matrix indicating the number of recent annual STI diagnoses among HS females, by race/eth by age
+#' @param diag_init_m A 3x6 matrix indicating the number of recent annual STI diagnoses among HS males, by race/eth by age
 #' @param prop_diag_f The proportion of females who get diagnosed for the STI
 #' @param prop_diag_m The proportion of males who get diagnosed for the STI
 #' @param dur_inf_f The average duration of infection for females
@@ -118,6 +118,7 @@ a10 <- function(n_f, n_m,
   ##########################################################################
   # Final processing
 
-  result <- n_inc_f
+  result <- list(n_inc_f, n_inc_m
+  )
   return(result)
 }
