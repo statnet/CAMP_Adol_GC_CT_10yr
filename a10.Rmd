@@ -213,18 +213,27 @@ issues #2: total pop is currently based on 2011-2017, since that is what is avai
 
 Ok, I redid the calculations for the totalpops to match the approach infor the school pops (while still not yet having the same set of years). I still get numbes above 100%.  I wonder if this is the same issue we faced earlier, where the age composition of the HS attending population changes over the course of the year. How again did we deal with this in the tool itself? Just looked; it seems that what I'm doing here is comparable to what we do there.  So if the problem persists after I get the final year data, then we may just need to make the assumption that the percent in school is min(1, calculated_value). For these purposes it should not cause a problem.
 
-
+## Feb 11, 2019
+Wrote diag_inschool_calc (yes it's two lines)
+Added main fxn output
+Ran through code to make sure makes snese (it seems to)
+Realize next step is to:
+  get real diagnoses numbers
+  get real race mixing
+  make final decision on coital acts - NO
+  run, and be able to show zig-zagging (plus calibrating) to group
+  
+Spent asome hours with the CDC surveillance reports.  Very good news: they publish numbers for sex x age x race.  Downside: huge amounts of missing by race; they don't impute (or at least they did up until 2009).  So we will need to adjust all of them for that. Up next!
 
 
 ### Keep at bottom
 
 # To do:
-- write diag_inschool_calc function
 - add in race mixing parameters to model
 - test main function
 - add in main fxn output
 
 - get diagnoses by race
 - get race mixing
-- get tot 13-18 pop (not just in school)
-- consider revisiting coital acts by single year age groups
+- get tot 13-18 pop (not just in school)  # MOSTLY DONE (AWAITING CENSUS BUREAU)
+- consider revisiting coital acts by single year age groups # NO
