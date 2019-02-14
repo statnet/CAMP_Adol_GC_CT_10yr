@@ -223,7 +223,14 @@ Realize next step is to:
   make final decision on coital acts - NO
   run, and be able to show zig-zagging (plus calibrating) to group
   
-Spent asome hours with the CDC surveillance reports.  Very good news: they publish numbers for sex x age x race.  Downside: huge amounts of missing by race; they don't impute (or at least they did up until 2009).  So we will need to adjust all of them for that. Up next!
+Spent some hours with the CDC surveillance reports.  Very good news: they publish numbers for sex x age x race.  Downside: huge amounts of missing by race; they don't impute (or at least they did up until 2009).  So we will need to adjust all of them for that. Up next!
+
+## Feb 12, 2019
+
+I will make files that contain: the entire number of diagnoses (Table 1), then the number by sex, then age, then race.  Imputation will follow.
+
+Have entered 2007 at all levels.  Turns out this year was already imputed, so there was no need to do the levels; I think this is only needed from 2010 onwards.
+
 
 
 ### Keep at bottom
