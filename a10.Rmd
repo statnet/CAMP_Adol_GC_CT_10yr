@@ -231,7 +231,9 @@ I will make files that contain: the entire number of diagnoses (Table 1), then t
 
 Have entered 2007 at all levels.  Turns out this year was already imputed, so there was no need to do the levels; I think this is only needed from 2010 onwards.
 
+## Feb 13, 2019
 
+Finished exploratory code on initial diagnoses. Model has less zig-zagging for H than my made-up numbers did, but B and W still do. And incidence still declines rapidly for Band H (but much less so for W), so I will need to think about this more.
 
 ### Keep at bottom
 

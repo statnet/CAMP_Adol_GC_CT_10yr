@@ -49,7 +49,6 @@ meanpop_13to18_m <- array(rep(meanpop_13to18_m, 11), dim=c(3,6,11))
 prop_in_school_m <- n_m / meanpop_13to18_m
 prop_in_school_m[prop_in_school_m>1] <- 1
 
-
 #########################################################################
 ### Eversex sizes
 
@@ -202,15 +201,9 @@ capp_m <- array11(mat3(c( 11.9, 11.9, 11.9, 19.3, 19.3, 29.3,
 
 # TODO 
 
-diagnoses_init_tot_f_gc <- mat3(c(  5,  20,  30,  40,  50,  600,
-                                    5,  30,  45,  60,  75,  900,
-                                    5, 200, 300, 400, 500, 6000
-                         ))
+diagnoses_init_tot_f_gc <- dx_f[,,1]
 
-diagnoses_init_tot_m_gc <- mat3(c( 5,  20,  30,  40,  50,  600,
-                                   5,  30,  45,  60,  75,  900,
-                                   5, 200, 300, 400, 500, 6000
-))
+diagnoses_init_tot_m_gc <- dx_m[,,1]
 
 
 #########################################################################
