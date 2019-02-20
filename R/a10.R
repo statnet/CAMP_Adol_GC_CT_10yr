@@ -118,8 +118,14 @@ a10 <- function(n_f, n_m,
   ##########################################################################
   # Final processing
 
-  result <- list(n_inc_f, n_inc_m, n_prev_f, n_prev_m, n_diag_f, n_diag_m,
-                 n_eversex_f, n_eversex_m               
+  result <- list(n_inc_f = n_inc_f, 
+                 n_inc_m = n_inc_m, 
+                 n_prev_f = n_prev_f, 
+                 n_prev_m = n_prev_m, 
+                 n_diag_f = n_diag_f, 
+                 n_diag_m = n_diag_m,
+                 n_eversex_f = n_eversex_f, 
+                 n_eversex_m = n_eversex_m               
   )
   return(result)
 }
