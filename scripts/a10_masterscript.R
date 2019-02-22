@@ -5,7 +5,6 @@
 # Notes: 
 #   1. Change the setwd() line if needed
 
-
 #########################################################################
 ### Basics
 
@@ -221,15 +220,6 @@ prop_diag_m_gc <- 0.490
 dur_f_gc <- 0.46
 dur_m_gc <- 0.23
 
-
-#########################################################################
-### Call function to convert all diagnoses to in-school diagnoses
-
-# TODO
-diagnoses_init_sch_f_gc <- diagnoses_init_tot_f_gc * prop_in_school_f[,,1]
-diagnoses_init_sch_m_gc <- diagnoses_init_tot_m_gc * prop_in_school_m[,,1]
-
-
 #########################################################################
 ### Call main function
 
@@ -244,14 +234,16 @@ diagnoses_init_sch_m_gc <- diagnoses_init_tot_m_gc * prop_in_school_m[,,1]
                 mean_new_part_m = pred_mnppy_m,
                 coital_acts_pp_f = capp_f,
                 coital_acts_pp_m = capp_m,
-                diag_init_f = diagnoses_init_sch_f_gc,
-                diag_init_m = diagnoses_init_sch_m_gc,
+                diag_init_f = diagnoses_init_tot_f_gc,
+                diag_init_m = diagnoses_init_tot_m_gc,
                 prop_diag_f = prop_diag_f_gc,
                 prop_diag_m = prop_diag_m_gc,
                 dur_inf_f = dur_f_gc,
                 dur_inf_m = dur_m_gc,
                 beta_f2m = beta_ipv_gc,
-                beta_m2f = beta_rpv_gc
+                beta_m2f = beta_rpv_gc,
+                meanpop_13to18_f = meanpop_13to18_f,
+                meanpop_13to18_m = meanpop_13to18_m
 )
 
 
