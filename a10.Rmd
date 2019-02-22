@@ -235,14 +235,33 @@ Have entered 2007 at all levels.  Turns out this year was already imputed, so th
 
 Finished exploratory code on initial diagnoses. Model has less zig-zagging for H than my made-up numbers did, but B and W still do. And incidence still declines rapidly for Band H (but much less so for W), so I will need to think about this more.
 
+## Feb 20, 2019
+
+Am in the midst of testing the main function to see if it produces results at all similar to the 1-year tool. 
+## Feb 22, 2019
+
+Spent lots of time tweaking equations and inputs to better align with the tool itself.  THings still needing to do:
+
+1. Redo incidence equations to use Bernoulli format instead of simple multiplication
+
+2. Carry over the changes made in a10_comp_with_excel_gc.R to a10_masterscript.R.  These include adding in the total population (in and out of HS), making the argument passed in for init diagnoses be summer across age and for all diags (in and out of HS).  And others?
+
+3. Add aging! 
+
+
 ### Keep at bottom
 
 # To do:
 - add in race mixing parameters to model
 - test main function
 - add in main fxn output
+- add aging!!!
 
 - get diagnoses by race
 - get race mixing
 - get tot 13-18 pop (not just in school)  # MOSTLY DONE (AWAITING CENSUS BUREAU)
 - consider revisiting coital acts by single year age groups # NO
+- import diagnoses from every year, not just from 2007? But the model only uses the first year and then models all the others from there.
+- are there any other inputs that need to change by year????
+- revisit decision on what to do about pops that are < HS enrollment
+
