@@ -242,8 +242,8 @@ dur_m_gc <- 0.23
                 dur_inf_m = dur_m_gc,
                 beta_f2m = beta_ipv_gc,
                 beta_m2f = beta_rpv_gc,
-                meanpop_13to18_f = meanpop_13to18_f,
-                meanpop_13to18_m = meanpop_13to18_m
+                meanpop_tot_f = meanpop_13to18_f,
+                meanpop_tot_m = meanpop_13to18_m
 )
 
 
