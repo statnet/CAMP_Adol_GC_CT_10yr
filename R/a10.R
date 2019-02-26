@@ -22,15 +22,15 @@
 #' @param beta_m2f Per-act transmission probability from male to female
 #' @param meanpop_tot_f Total female population in and out of school across the relevant ages
 #' @param meanpop_tot_m Total male population in and out of school across the relevant ages
-#' 
-#' @return A list comprising two arrays of dimensions [3,6,11], containing the estimated number of 
-#'   incident cases of STI per age per year. The three rows represent the 
+#'
+#' @return A list comprising two arrays of dimensions [3,6,11], containing the estimated number of
+#'   incident cases of STI per age per year. The three rows represent the
 #'   three race/ethnicity groups (B, H, W); the six columns represent the ages (13:18);
 #'   the 11 layers represent the years (baseline, years 1:10). The first array in the list is F,
 #'   and the second M.
 
 #' @export
-a10 <- function(n_f, n_m, 
+a10 <- function(n_f, n_m,
                 prop_eversex_f,
                 prop_eversex_m,
                 condom_use_f,
@@ -56,22 +56,22 @@ a10 <- function(n_f, n_m,
   # Need to convert incidence to prevalence again
   # Need to incorporate race mixing
   # Need to decide on model calibration
-  
+
   ##########################################################################
   # Dimensional error checking
   if (sum(dim(n_f) == c(3,6,11)) <3) stop("n_f must be an array with dimensions c(3,6,11).")
   if (sum(dim(n_f) == c(3,6,11)) <3) stop("n_m must be an array with dimensions c(3,6,11).")
   # TODO
-  
+
   ##########################################################################
   # Init bookkeeping
-  
+
   # Calc # who have sexually debuted
   n_eversex_f <- n_f * prop_eversex_f
   n_eversex_m <- n_m * prop_eversex_m
-  
+
   # Create arrays to store number of incident cases per year
-  n_inc_f <- n_inc_m <- array(dim=c(3,6,10))
+  n_inc_f <- n_inc_m <- array(dim=c(3,6,11))
   n_inc_f[,,1] <- NA
   n_inc_m[,,1] <- NA
 
@@ -82,48 +82,47 @@ a10 <- function(n_f, n_m,
 
   # Create arrays to store number of diagnoses per year *in HS*
   n_diag_f <- n_diag_m <- array(dim=c(3,6,11))
-  
+  n_diag_f[,,1] <- diag_init_f
+  n_diag_m[,,1] diag_init_m
+
   # Create arrays to store prevalence in the cross-section
   prev_f <- prev_m <- array(dim=c(3,6,11))
   prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / rowSums(prop_eversex_f[,,1]*meanpop_tot_f[,,1])
   prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / rowSums(prop_eversex_m[,,1]*meanpop_tot_m[,,1])
-  
+
   # Calculate the number of condomless acts per person
   cl_acts_f <- mean_new_part_f * coital_acts_pp_f * (1-condom_use_f)
   cl_acts_m <- mean_new_part_m * coital_acts_pp_m * (1-condom_use_m)
-  
+
   ##########################################################################
   # Advancement
 
-  for (i in 1:10) {  
+  for (i in 2:11) {
 
-    if (i>1) prev_f[,,i] <- n_inc_f[,,i-1] * dur_inf_f
-    if (i>1) prev_m[,,i] <- n_inc_m[,,i-1] * dur_inf_m
-    
-    n_inc_f[,,i] <- n_eversex_f[,,i] * (1-prev_f[,,i]) * prev_m[,,i] *
-                        cl_acts_f[,,i] * beta_m2f 
 
-    n_inc_m[,,i] <- n_eversex_m[,,i] * (1-prev_m[,,i]) * prev_f[,,i] *
-                        cl_acts_m[,,i] * beta_f2m
+    n_inc_f[,,i] <- (n_eversex_f[,,i]*(1-prev_f[,,i])) *    # Number suscep F
+                    (1-(1-prev_m[,,i]*beta_m2f)^cl_acts_f[,,i])  # Prob per suscep F
 
-    
+    n_inc_m[,,i] <- (n_eversex_m[,,i]*(1-prev_m[,,i])) *    # Number suscep F
+      (1-(1-prev_f[,,i]*beta_f2m)^cl_acts_m[,,i])  # Prob per suscep F
+
     n_diag_f[,,i] <- n_inc_f[,,i] * prop_diag_f
     n_diag_m[,,i] <- n_inc_m[,,i] * prop_diag_m
-    
+
   }
-  
-  
+
+
   ##########################################################################
   # Final processing
 
-  result <- list(n_inc_f = n_inc_f, 
-                 n_inc_m = n_inc_m, 
-                 prev_f = prev_f, 
-                 prev_m = prev_m, 
-                 n_diag_f = n_diag_f, 
+  result <- list(n_inc_f = n_inc_f,
+                 n_inc_m = n_inc_m,
+                 prev_f = prev_f,
+                 prev_m = prev_m,
+                 n_diag_f = n_diag_f,
                  n_diag_m = n_diag_m,
-                 n_eversex_f = n_eversex_f, 
-                 n_eversex_m = n_eversex_m               
+                 n_eversex_f = n_eversex_f,
+                 n_eversex_m = n_eversex_m
   )
   return(result)
 }
