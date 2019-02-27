@@ -248,20 +248,26 @@ Spent lots of time tweaking equations and inputs to better align with the tool i
 
 3. Add aging! 
 
+## Feb 25, 2019
+
+Redid Bernoulli equations.  Discovered that prev is defined as numbers in one place and prop in another.  Computer issues forcing me to stop.
+
+## Feb 26, 2019
+
+Carried over edits from excel-compare script to master script.
+Census data arrived! And added.
+Fixed prevalence calcuations so they are proportion, not absolute.
+Realized aging doesn't really need to happen.
+Adjusted pop sizes for cases where enrollment > census
+
 
 ### Keep at bottom
 
 # To do:
 - add in race mixing parameters to model
+- get race mixing
 - test main function
 - add in main fxn output
-- add aging!!!
-
-- get diagnoses by race
-- get race mixing
-- get tot 13-18 pop (not just in school)  # MOSTLY DONE (AWAITING CENSUS BUREAU)
-- consider revisiting coital acts by single year age groups # NO
-- import diagnoses from every year, not just from 2007? But the model only uses the first year and then models all the others from there.
-- are there any other inputs that need to change by year????
-- revisit decision on what to do about pops that are < HS enrollment
-
+- import diagnoses from every year, not just from 2007? 
+      (But the model only uses the first year and then models all the others from there.)
+- check if there are any other inputs that need to change by year
