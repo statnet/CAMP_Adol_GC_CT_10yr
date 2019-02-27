@@ -40,13 +40,13 @@ meanpop_13to18 <- apply(totpop, 1:2, mean, na.rm=TRUE)
 totpop_prop_f <- sum(totpop_f, na.rm=TRUE) / (sum(totpop_f, na.rm=TRUE) + sum(totpop_m, na.rm=TRUE))
 meanpop_13to18_f <- meanpop_13to18 * totpop_prop_f
 meanpop_13to18_f <- array(rep(meanpop_13to18_f, 11), dim=c(3,6,11))
+n_f[n_f > meanpop_13to18_f] <- meanpop_13to18_f[n_f > meanpop_13to18_f]
 prop_in_school_f <- n_f / meanpop_13to18_f
-prop_in_school_f[prop_in_school_f>1] <- 1
 
 meanpop_13to18_m <- meanpop_13to18 * (1-totpop_prop_f)
 meanpop_13to18_m <- array(rep(meanpop_13to18_m, 11), dim=c(3,6,11))
+n_m[n_m > meanpop_13to18_m] <- meanpop_13to18_m[n_m > meanpop_13to18_m]
 prop_in_school_m <- n_m / meanpop_13to18_m
-prop_in_school_m[prop_in_school_m>1] <- 1
 
 #########################################################################
 ### Eversex sizes
@@ -198,7 +198,6 @@ capp_m <- array11(mat3(c( 11.9, 11.9, 11.9, 19.3, 19.3, 29.3,
 #########################################################################
 ### Init diagnoses, total (in and out of school)
 
-# TODO 
 dx_f[,1:2,1] <- dx_10_14_f[,,1]*(meanpop_13to18_f[,1:2,1])/1e5
 dx_f[,3:6,1] <- dx_15_19_f[,,1]*(meanpop_13to18_f[,3:6,1])/1e5
 dx_m[,1:2,1] <- dx_10_14_m[,,1]*(meanpop_13to18_m[,1:2,1])/1e5
