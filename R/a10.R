@@ -83,7 +83,7 @@ a10 <- function(n_f, n_m,
   # Create arrays to store number of diagnoses per year *in HS*
   n_diag_f <- n_diag_m <- array(dim=c(3,6,11))
   n_diag_f[,,1] <- diag_init_f
-  n_diag_m[,,1] diag_init_m
+  n_diag_m[,,1] <- diag_init_m
 
   # Create arrays to store prevalence in the cross-section
   prev_f <- prev_m <- array(dim=c(3,6,11))
