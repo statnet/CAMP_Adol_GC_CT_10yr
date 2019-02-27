@@ -51,8 +51,8 @@ a10(n_f, n_m, prop_eversex_f, prop_eversex_m, condom_use_f, condom_use_m,
 \item{meanpop_tot_m}{Total male population in and out of school across the relevant ages}
 }
 \value{
-A list comprising two arrays of dimensions [3,6,11], containing the estimated number of 
-  incident cases of STI per age per year. The three rows represent the 
+A list comprising two arrays of dimensions [3,6,11], containing the estimated number of
+  incident cases of STI per age per year. The three rows represent the
   three race/ethnicity groups (B, H, W); the six columns represent the ages (13:18);
   the 11 layers represent the years (baseline, years 1:10). The first array in the list is F,
   and the second M.
