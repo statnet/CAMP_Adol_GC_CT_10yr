@@ -98,19 +98,26 @@ a10 <- function(n_f, n_m,
   # Advancement
 
   for (i in 2:11) {
+    
+    # Get weighted avg of prevalence in age range among those eversex, in or out of school 
+    #  Differs from in school bc age population weights are different, even though age-specific prevs are the same.
+    #  This is all needed to make consistent with the tool.
+    overall_prev_f <- rowSums(prev_f[,,i-1]*meanpop_tot_f[,,i-1]*prop_eversex_f[,,i-1]) /   
+                                rowSums(meanpop_tot_f[,,i-1]*prop_eversex_f[,,i-1])
+    overall_prev_m <- rowSums(prev_m[,,i-1]*meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1]) / 
+                                rowSums(meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1])
+    
+    n_inc_f[,,i] <- (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *          # Number suscep F
+                    (1-(1-overall_prev_m*beta_m2f)^cl_acts_f[,,i-1])  # Prob per suscep F
 
-
-    n_inc_f[,,i] <- (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *    # Number suscep F
-                    (1-(1-prev_m[,,i-1]*beta_m2f)^cl_acts_f[,,i-1])  # Prob per suscep F
-
-    n_inc_m[,,i] <- (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *    # Number suscep F
-      (1-(1-prev_f[,,i-1]*beta_f2m)^cl_acts_m[,,i-1])  # Prob per suscep F
+    n_inc_m[,,i] <- (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *          # Number suscep F
+                    (1-(1-overall_prev_f*beta_f2m)^cl_acts_m[,,i-1])  # Prob per suscep F
 
     n_diag_f[,,i] <- n_inc_f[,,i] * prop_diag_f
     n_diag_m[,,i] <- n_inc_m[,,i] * prop_diag_m
 
     prev_f[,,i] <- n_inc_f[,,i]*dur_inf_f / n_eversex_f[,,i]
-    prev_m[,,i] <- n_inc_m[,,i]*dur_inf_m / n_eversex_f[,,i]
+    prev_m[,,i] <- n_inc_m[,,i]*dur_inf_m / n_eversex_m[,,i]
   }
 
 
