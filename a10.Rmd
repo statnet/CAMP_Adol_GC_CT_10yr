@@ -256,10 +256,19 @@ Redid Bernoulli equations.  Discovered that prev is defined as numbers in one pl
 
 Carried over edits from excel-compare script to master script.
 Census data arrived! And added.
-Fixed prevalence calcuations so they are proportion, not absolute.
+Fixed prevalence calculations so they are proportion, not absolute.
 Realized aging doesn't really need to happen.
 Adjusted pop sizes for cases where enrollment > census
 
+## Mar 8, 2019
+
+As of last week, the code was reproducing the initial diagnoses in the excel comparison model for the output for the first year, but not beyond.I spent some time last Friday (3/1) going through the logic of this in some excel spreadsheets, but then CROI happened.  Picking that back up now. 
+
+It appears I have succeeded! There are tiny effects in the excel-compare model, which appear to be due to (1) an inability to assign ages in the initial diagnoses, which causes the susceptible pool by age to differ slightly in y2 from y1, causing minor deviations even though the tool was calibrated to overall diagnoses; these then magnify with time, but stil lare very slight.
+
+Then I checked out the actual model and it seems to be dong much better.  Need to think about (1) how to deal with sex-specific see-sawing, and (2) should this calibrate in the absence of behavior change?  Or is smoothing the see-sawing enough?
+
+Must add in the race mixing still!
 
 ### Keep at bottom
 
