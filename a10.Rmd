@@ -264,19 +264,21 @@ Adjusted pop sizes for cases where enrollment > census
 
 As of last week, the code was reproducing the initial diagnoses in the excel comparison model for the output for the first year, but not beyond.I spent some time last Friday (3/1) going through the logic of this in some excel spreadsheets, but then CROI happened.  Picking that back up now. 
 
-It appears I have succeeded! There are tiny effects in the excel-compare model, which appear to be due to (1) an inability to assign ages in the initial diagnoses, which causes the susceptible pool by age to differ slightly in y2 from y1, causing minor deviations even though the tool was calibrated to overall diagnoses; these then magnify with time, but stil lare very slight.
+It appears I have succeeded! There are tiny effects in the excel-compare model, which appear to be due to (1) an inability to assign ages in the initial diagnoses, which causes the susceptible pool by age to differ slightly in y2 from y1, causing minor deviations even though the tool was calibrated to overall diagnoses; these then magnify with time, but still are very slight.
 
 Then I checked out the actual model and it seems to be dong much better.  Need to think about (1) how to deal with sex-specific see-sawing, and (2) should this calibrate in the absence of behavior change?  Or is smoothing the see-sawing enough?
 
 Must add in the race mixing still!
 
+## Mar 26, 2019
+
+- Added in race mixing code.  Debugged.
+- Set Emily on getting race mixing data from NSFG.
+- Created a script file that represents the observed trend data but if all years post 2007 were like 2007, so no behavior change.  (This isn't strictly the same as just using 2007 data, because I used all years to create smooth predicted trends, then used the 2007 numbers from that smoothed model and repteated them in later years.)
+
+Once I have the numbers from Emily, I can put them into the import file, carry them through in bithboth the relevant scripts (masterscript and no_behav_change_script), and then continue with diagnosing the see-sawing and calibrating, and deciding what to do about them.
+
 ### Keep at bottom
 
 # To do:
-- add in race mixing parameters to model
 - get race mixing
-- test main function
-- add in main fxn output
-- import diagnoses from every year, not just from 2007? 
-      (But the model only uses the first year and then models all the others from there.)
-- check if there are any other inputs that need to change by year
