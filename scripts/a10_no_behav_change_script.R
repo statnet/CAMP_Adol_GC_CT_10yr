@@ -218,6 +218,14 @@ prop_diag_m_gc <- 0.490
 dur_f_gc <- 0.46
 dur_m_gc <- 0.23
 
+
+#########################################################################
+### TEMP - WILL IMPORT WHEN EMILY HAS THE DATA
+
+p_ethn_f <- mat3(c(0.9, 0.05, 0.05, 0.05, 0.9, 0.05, 0.05, 0.05, 0.9))
+p_ethn_m <- mat3(c(0.9, 0.05, 0.05, 0.05, 0.9, 0.05, 0.05, 0.05, 0.9))
+
+
 #########################################################################
 ### Change all post-2007 numbers to match 2007 (ie as if no behavior change)
 
@@ -234,6 +242,7 @@ for (i in 2:dim(pred_mnppy_f)[3]) pred_mnppy_f[,,i] <- pred_mnppy_f[,,1]
 for (i in 2:dim(pred_mnppy_m)[3]) pred_mnppy_m[,,i] <- pred_mnppy_m[,,1]
 
 
+
 #########################################################################
 ### Call main function
 
@@ -248,6 +257,8 @@ for (i in 2:dim(pred_mnppy_m)[3]) pred_mnppy_m[,,i] <- pred_mnppy_m[,,1]
                 mean_new_part_m = pred_mnppy_m,
                 coital_acts_pp_f = capp_f,
                 coital_acts_pp_m = capp_m,
+                p_ethn_f = p_ethn_f,
+                p_ethn_m = p_ethn_m,
                 diag_init_f = diagnoses_init_tot_f_gc,
                 diag_init_m = diagnoses_init_tot_m_gc,
                 prop_diag_f = prop_diag_f_gc,
