@@ -199,3 +199,15 @@ for (i in 1:nyears) {
   }  
 }
 
+### Race mixing
+
+filename <- paste(datapath, "/racemixing.csv", sep="")
+p_ethn <- read.csv(filename)
+
+p_ethn_f <- p_ethn_m <- mat3(rep(NA,9))
+p_ethn_f[1,] <- unname(unlist(p_ethn %>% filter(Ego=="BF") %>% select(B, H, W)))
+p_ethn_f[2,] <- unname(unlist(p_ethn %>% filter(Ego=="HF") %>% select(B, H, W)))
+p_ethn_f[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WF") %>% select(B, H, W)))
+p_ethn_m[1,] <- unname(unlist(p_ethn %>% filter(Ego=="BM") %>% select(B, H, W)))
+p_ethn_m[2,] <- unname(unlist(p_ethn %>% filter(Ego=="HM") %>% select(B, H, W)))
+p_ethn_m[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WM") %>% select(B, H, W)))
