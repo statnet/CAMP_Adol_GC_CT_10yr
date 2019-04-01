@@ -242,7 +242,6 @@ for (i in 2:dim(pred_mnppy_m)[3]) pred_mnppy_m[,,i] <- pred_mnppy_m[,,1]
 #########################################################################
 ### Call main function
 
-#if(F) 
   a10_gc_nbc <- a10(n_f = n_f, 
                 n_m = n_m,
                 prop_eversex_f = pred_eversex_f,
