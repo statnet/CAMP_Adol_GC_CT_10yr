@@ -220,6 +220,9 @@ dur_f_gc <- 0.46
 dur_m_gc <- 0.23
 
 #########################################################################
+### Race / ethn mixing - needs no post-processing
+
+#########################################################################
 ### Call main function
 
 #if(F) 
@@ -233,6 +236,8 @@ dur_m_gc <- 0.23
                 mean_new_part_m = pred_mnppy_m,
                 coital_acts_pp_f = capp_f,
                 coital_acts_pp_m = capp_m,
+                p_ethn_f = p_ethn_f,
+                p_ethn_m = p_ethn_m,
                 diag_init_f = diagnoses_init_tot_f_gc,
                 diag_init_m = diagnoses_init_tot_m_gc,
                 prop_diag_f = prop_diag_f_gc,
