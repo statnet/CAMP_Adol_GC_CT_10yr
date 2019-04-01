@@ -276,9 +276,15 @@ Must add in the race mixing still!
 - Set Emily on getting race mixing data from NSFG.
 - Created a script file that represents the observed trend data but if all years post 2007 were like 2007, so no behavior change.  (This isn't strictly the same as just using 2007 data, because I used all years to create smooth predicted trends, then used the 2007 numbers from that smoothed model and repteated them in later years.)
 
-Once I have the numbers from Emily, I can put them into the import file, carry them through in bithboth the relevant scripts (masterscript and no_behav_change_script), and then continue with diagnosing the see-sawing and calibrating, and deciding what to do about them.
+Once I have the numbers from Emily, I can put them into the import file, carry them through in both the relevant scripts (masterscript and no_behav_change_script), and then continue with diagnosing the see-sawing and calibrating, and deciding what to do about them.
 
-### Keep at bottom
+## Mar 27, 2019
 
-# To do:
-- get race mixing
+Got race numbers form Emily, hurray.
+
+## Apr 1, 2019
+
+Race numbers added.  Now going to dive into why the 2007 model is so very far from calibrating given that the 2015 model is calibrated.  How could they be so far apart?
+
+
+
