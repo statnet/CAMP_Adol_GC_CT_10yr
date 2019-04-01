@@ -220,11 +220,7 @@ dur_m_gc <- 0.23
 
 
 #########################################################################
-### TEMP - WILL IMPORT WHEN EMILY HAS THE DATA
-
-p_ethn_f <- mat3(c(0.9, 0.05, 0.05, 0.05, 0.9, 0.05, 0.05, 0.05, 0.9))
-p_ethn_m <- mat3(c(0.9, 0.05, 0.05, 0.05, 0.9, 0.05, 0.05, 0.05, 0.9))
-
+### Race / ethn mixing - needs no post-processing
 
 #########################################################################
 ### Change all post-2007 numbers to match 2007 (ie as if no behavior change)
