@@ -203,8 +203,8 @@ dx_f[,3:6,1] <- dx_15_19_f[,,1]*(meanpop_13to18_f[,3:6,1])/1e5
 dx_m[,1:2,1] <- dx_10_14_m[,,1]*(meanpop_13to18_m[,1:2,1])/1e5
 dx_m[,3:6,1] <- dx_15_19_m[,,1]*(meanpop_13to18_m[,3:6,1])/1e5
 
-diagnoses_init_tot_f_gc <- dx_f[,,1]
-diagnoses_init_tot_m_gc <- dx_m[,,1]
+diagnoses_init_tot_f_gc <- rowSums(dx_f[,,1])
+diagnoses_init_tot_m_gc <- rowSums(dx_m[,,1])
 
 
 #########################################################################
