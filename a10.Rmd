@@ -286,5 +286,21 @@ Got race numbers form Emily, hurray.
 
 Race numbers added.  Now going to dive into why the 2007 model is so very far from calibrating given that the 2015 model is calibrated.  How could they be so far apart?
 
+## April 2, 2019
 
+Spent a few hours on this, building up a spreadsheet that goes step by step by step.  Made it through the end of time point 2, where it is indeed clear that the prevalence among the NBC model should indeed go up.  So next we will see why it reverses and heads the other way after another time step.  But not today.
+
+
+## April 11, 2019
+
+OK, have gone through step by step through time step 4.  Al lseems to work appropriately; no bugs.  That is good.  And there is no reversal; it just declines.  
+
+What i also realized just now is that we are going to need to do calibration in a race-specific way.  This can't be done just through the adjustment of transmission probabilities, as those are across the board.  instead we will revert the trans probs back to the medians from the literature, and then add in an "unmeasured partner prevalence factor" for each race/sex group specifically.  Not for each age group though.
+
+Solving the calibration is going to be more work than it was before; there should still be a unique solution (six unknowns on six parameters); but I will need to write a routine that continually loops to find the solution. Should be fun!
+
+Next steps:
+1. Add in the part_prev_ratio code (variable, formula)
+2. Re-adjust the trans probs back to the literature
+3. Write the caliration code.
 
