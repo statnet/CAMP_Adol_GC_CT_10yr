@@ -64,6 +64,8 @@ totalpop_m <- array11(mat3(c(
 diagnoses_init_f_gc <- c(40562, 0, 0)
 diagnoses_init_m_gc <- c(20198, 0, 0)
 
+part_prev_ratio_f <- part_prev_ratio_m <- c(1,1,1)
+
 a10_gc_sync <- a10(n_f = n_f, 
                 n_m = n_m,
                 prop_eversex_f = pred_eversex_f,
@@ -85,6 +87,8 @@ a10_gc_sync <- a10(n_f = n_f,
                 beta_f2m = beta_ipv_gc,
                 beta_m2f = beta_rpv_gc,
                 meanpop_tot_f = totalpop_f,
-                meanpop_tot_m = totalpop_m
+                meanpop_tot_m = totalpop_m,
+                part_prev_ratio_f = part_prev_ratio_f,
+                part_prev_ratio_m = part_prev_ratio_m
 )
 

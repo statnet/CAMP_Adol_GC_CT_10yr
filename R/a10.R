@@ -52,7 +52,9 @@ a10 <- function(n_f, n_m,
                 beta_f2m,
                 beta_m2f,
                 meanpop_tot_f,
-                meanpop_tot_m
+                meanpop_tot_m,
+                part_prev_ratio_f,
+                part_prev_ratio_m
         ) {
 
   ##################################################
@@ -112,22 +114,22 @@ a10 <- function(n_f, n_m,
                                 rowSums(meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1])
     
     n_inc_f[,,i] <- (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from BM
-                    (1-(1-overall_prev_m[1]*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,1])) + 
+                    (1-(1-overall_prev_m[1]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,1])) + 
 
                     (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from HM
-                    (1-(1-overall_prev_m[2]*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,2])) + 
+                    (1-(1-overall_prev_m[2]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,2])) + 
 
                     (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from WM
-                    (1-(1-overall_prev_m[3]*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,3]))  
+                    (1-(1-overall_prev_m[3]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,3]))  
       
     n_inc_m[,,i] <- (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from BF
-                    (1-(1-overall_prev_f[1]*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,1])) + 
+                    (1-(1-overall_prev_f[1]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,1])) + 
                     
                     (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from HF
-                    (1-(1-overall_prev_f[2]*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,2])) + 
+                    (1-(1-overall_prev_f[2]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,2])) + 
                     
                     (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from WF
-                    (1-(1-overall_prev_f[3]*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,3]))  
+                    (1-(1-overall_prev_f[3]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,3]))  
 
     n_diag_f[,,i] <- n_inc_f[,,i] * prop_diag_f
     n_diag_m[,,i] <- n_inc_m[,,i] * prop_diag_m

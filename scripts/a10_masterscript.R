@@ -223,6 +223,11 @@ dur_m_gc <- 0.23
 ### Race / ethn mixing - needs no post-processing
 
 #########################################################################
+### Partner prevalence raio - needed to calibrate the model by race
+
+part_prev_ratio_f <- part_prev_ratio_m <- c(1,1,1)
+
+#########################################################################
 ### Call main function
 
 #if(F) 
@@ -247,8 +252,10 @@ dur_m_gc <- 0.23
                 beta_f2m = beta_ipv_gc,
                 beta_m2f = beta_rpv_gc,
                 meanpop_tot_f = meanpop_13to18_f,
-                meanpop_tot_m = meanpop_13to18_m
-)
+                meanpop_tot_m = meanpop_13to18_m,
+                part_prev_ratio_f = part_prev_ratio_f,
+                part_prev_ratio_m = part_prev_ratio_m
+  )
 
 
 #########################################################################

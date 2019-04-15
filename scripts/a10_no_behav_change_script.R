@@ -238,6 +238,13 @@ for (i in 2:dim(pred_mnppy_f)[3]) pred_mnppy_f[,,i] <- pred_mnppy_f[,,1]
 for (i in 2:dim(pred_mnppy_m)[3]) pred_mnppy_m[,,i] <- pred_mnppy_m[,,1]
 
 
+#########################################################################
+### Partner prevalence raio - needed to calibrate the model by race
+
+part_prev_ratio_f <- c(1.11, 1.0, 1)
+part_prev_ratio_m <- c(1.78, 1.0, 1)
+
+#p_ethn_f <- p_ethn_m <- mat3(c(1,0,0,0,1,0,0,0,1))
 
 #########################################################################
 ### Call main function
@@ -263,8 +270,10 @@ for (i in 2:dim(pred_mnppy_m)[3]) pred_mnppy_m[,,i] <- pred_mnppy_m[,,1]
                 beta_f2m = beta_ipv_gc,
                 beta_m2f = beta_rpv_gc,
                 meanpop_tot_f = meanpop_13to18_f,
-                meanpop_tot_m = meanpop_13to18_m
-)
+                meanpop_tot_m = meanpop_13to18_m,
+                part_prev_ratio_f = part_prev_ratio_f,
+                part_prev_ratio_m = part_prev_ratio_m
+  )
 
 
 #########################################################################
@@ -285,3 +294,10 @@ diag_by_yr_and_race_m <- apply(a10_gc_nbc$n_diag_m, c(1,3), sum)
 matplot(t(diag_by_yr_and_race_f), 
         ylim=c(0,max(diag_by_yr_and_race_f,na.rm=TRUE)*1.2), type='b')
 matplot(t(diag_by_yr_and_race_m), type='b', add=TRUE, pch=4:6)
+
+diag_by_yr_and_race_f <- apply(a10_gc_nbc$n_diag_f, c(1,3), sum)
+diag_by_yr_and_race_m <- apply(a10_gc_nbc$n_diag_m, c(1,3), sum)
+matplot(t(diag_by_yr_and_race_f), 
+        ylim=c(0,max(diag_by_yr_and_race_f,na.rm=TRUE)*1.2), type='b')
+matplot(t(diag_by_yr_and_race_m), type='b', add=TRUE, pch=4:6)
+

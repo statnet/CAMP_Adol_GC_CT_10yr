@@ -304,3 +304,9 @@ Next steps:
 2. Re-adjust the trans probs back to the literature
 3. Write the caliration code.
 
+## April 12, 2019
+
+Note: computer keeps crashing, and that seemed to do something to the Rproject to cause it to be corrupted.  Just had to download it anew, and copy out and back in the two files that hadn't been commited.  Seemed to work well, yay git.
+
+Adding in the part_prev_ratio code now.
+
