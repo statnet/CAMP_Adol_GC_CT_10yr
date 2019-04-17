@@ -310,3 +310,18 @@ Note: computer keeps crashing, and that seemed to do something to the Rproject t
 
 Adding in the part_prev_ratio code now.
 
+## April 17, 2019
+
+Computer still crashing, working on TS3 via macbook loaner from Brandon Marshall's lab group.
+
+wrote the ABC, and after a few quirks it seems to be working!!!
+
+Reset the transmission probabilities to medians and reran.
+
+First efforts show the outcomes are highly far from the targets.
+
+In exploring, I learned that the tolerance in the Beaumont model is in terms of numbers of standard deviations, not an absolute value.  I've worked to redo that.  Runs are better but still far from target, although I can see that they're close for time 2.  Will rewrite so that the target measure is about distance across multiple time points, not just time step 2.
+
+
+
+
