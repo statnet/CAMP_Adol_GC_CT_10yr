@@ -12,6 +12,8 @@
 #' @param mean_new_part_m A 3x6x11 matrix indicating the mean new partners per year for debuted males, by race/eth by age
 #' @param coital_acts_pp_f A 3x6x11 matrix indicating the mean coital acts per partner for females, by race/eth by age
 #' @param coital_acts_pp_m A 3x6x11 matrix indicating the mean coital acts per partner for males, by race/eth by age
+#' @param p_ethn_f A 3x3 matrix indicating the proportion of females' partnerships that are with males of each ethn
+#' @param p_ethn_m A 3x3 matrix indicating the proportion of males' partnerships that are with females of each ethn
 #' @param diag_init_f A vector of length 3 indicating the number of recent annual STI diagnoses among females, by race/eth
 #' @param diag_init_m A vector of length 3 indicating the number of recent annual STI diagnoses among males, by race/eth
 #' @param prop_diag_f The proportion of females who get diagnosed for the STI
@@ -39,6 +41,8 @@ a10 <- function(n_f, n_m,
                 mean_new_part_m,
                 coital_acts_pp_f,
                 coital_acts_pp_m,
+                p_ethn_f,
+                p_ethn_m,
                 diag_init_f,
                 diag_init_m,
                 prop_diag_f,
@@ -48,7 +52,9 @@ a10 <- function(n_f, n_m,
                 beta_f2m,
                 beta_m2f,
                 meanpop_tot_f,
-                meanpop_tot_m
+                meanpop_tot_m,
+                part_prev_ratio_f,
+                part_prev_ratio_m
         ) {
 
   ##################################################
@@ -83,8 +89,8 @@ a10 <- function(n_f, n_m,
   # Create arrays to store number of diagnoses per year *in HS*
   n_diag_f <- n_diag_m <- array(dim=c(3,6,11))
   n_diag_f[,,1] <- NA
-  n_diag_m[,,1] <- NA
 
+  n_diag_m[,,1] <- NA
   # Create arrays to store prevalence in the cross-section
   prev_f <- prev_m <- array(dim=c(3,6,11))
   prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / rowSums(prop_eversex_f[,,1]*meanpop_tot_f[,,1])
@@ -98,19 +104,38 @@ a10 <- function(n_f, n_m,
   # Advancement
 
   for (i in 2:11) {
+    
+    # Get weighted avg of prevalence in age range among those eversex, in or out of school 
+    #  Differs from in school bc age population weights are different, even though age-specific prevs are the same.
+    #  This is all needed to make consistent with the tool.
+    overall_prev_f <- rowSums(prev_f[,,i-1]*meanpop_tot_f[,,i-1]*prop_eversex_f[,,i-1]) /   
+                                rowSums(meanpop_tot_f[,,i-1]*prop_eversex_f[,,i-1])
+    overall_prev_m <- rowSums(prev_m[,,i-1]*meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1]) / 
+                                rowSums(meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1])
+    
+    n_inc_f[,,i] <- (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from BM
+                    (1-(1-overall_prev_m[1]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,1])) + 
 
+                    (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from HM
+                    (1-(1-overall_prev_m[2]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,2])) + 
 
-    n_inc_f[,,i] <- (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *    # Number suscep F
-                    (1-(1-prev_m[,,i-1]*beta_m2f)^cl_acts_f[,,i-1])  # Prob per suscep F
-
-    n_inc_m[,,i] <- (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *    # Number suscep F
-      (1-(1-prev_f[,,i-1]*beta_f2m)^cl_acts_m[,,i-1])  # Prob per suscep F
+                    (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from WM
+                    (1-(1-overall_prev_m[3]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,3]))  
+      
+    n_inc_m[,,i] <- (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from BF
+                    (1-(1-overall_prev_f[1]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,1])) + 
+                    
+                    (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from HF
+                    (1-(1-overall_prev_f[2]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,2])) + 
+                    
+                    (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from WF
+                    (1-(1-overall_prev_f[3]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,3]))  
 
     n_diag_f[,,i] <- n_inc_f[,,i] * prop_diag_f
     n_diag_m[,,i] <- n_inc_m[,,i] * prop_diag_m
 
     prev_f[,,i] <- n_inc_f[,,i]*dur_inf_f / n_eversex_f[,,i]
-    prev_m[,,i] <- n_inc_m[,,i]*dur_inf_m / n_eversex_f[,,i]
+    prev_m[,,i] <- n_inc_m[,,i]*dur_inf_m / n_eversex_m[,,i]
   }
 
 
@@ -124,7 +149,9 @@ a10 <- function(n_f, n_m,
                  n_diag_f = n_diag_f,
                  n_diag_m = n_diag_m,
                  n_eversex_f = n_eversex_f,
-                 n_eversex_m = n_eversex_m
+                 n_eversex_m = n_eversex_m,
+                 cl_acts_f = cl_acts_f,
+                 cl_acts_m = cl_acts_m
   )
   return(result)
 }

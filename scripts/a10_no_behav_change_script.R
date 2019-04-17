@@ -184,7 +184,6 @@ pred_mnppy_m <- array(predict(mnppy_m_reg, type='response',
 #########################################################################
 ### Coital acts per partner
 
-# TODO 
 capp_f <- array11(mat3(c( 9.4, 9.4, 9.4, 24.7, 24.7, 46.7,
                           9.4, 9.4, 9.4, 24.7, 24.7, 46.7,
                           9.4, 9.4, 9.4, 24.7, 24.7, 46.7
@@ -219,19 +218,38 @@ prop_diag_m_gc <- 0.490
 dur_f_gc <- 0.46
 dur_m_gc <- 0.23
 
+
 #########################################################################
 ### Race / ethn mixing - needs no post-processing
 
 #########################################################################
+### Change all post-2007 numbers to match 2007 (ie as if no behavior change)
+
+# n_f and n_m already equal across ages
+# meanpop_13to18_f and meanpop_13to18_m already equal across ages
+# capp_f and capp_m already equal across ages
+# diagnoses_init_tot only for 2007
+
+for (i in 2:dim(pred_eversex_f)[3]) pred_eversex_f[,,i] <- pred_eversex_f[,,1]
+for (i in 2:dim(pred_eversex_m)[3]) pred_eversex_m[,,i] <- pred_eversex_m[,,1]
+for (i in 2:dim(pred_condom_f)[3]) pred_condom_f[,,i] <- pred_condom_f[,,1]
+for (i in 2:dim(pred_condom_m)[3]) pred_condom_m[,,i] <- pred_condom_m[,,1]
+for (i in 2:dim(pred_mnppy_f)[3]) pred_mnppy_f[,,i] <- pred_mnppy_f[,,1]
+for (i in 2:dim(pred_mnppy_m)[3]) pred_mnppy_m[,,i] <- pred_mnppy_m[,,1]
+
+
+#########################################################################
 ### Partner prevalence raio - needed to calibrate the model by race
 
-part_prev_ratio_f <- part_prev_ratio_m <- c(1,1,1)
+part_prev_ratio_f <- c(1.11, 1.0, 1)
+part_prev_ratio_m <- c(1.78, 1.0, 1)
+
+#p_ethn_f <- p_ethn_m <- mat3(c(1,0,0,0,1,0,0,0,1))
 
 #########################################################################
 ### Call main function
 
-#if(F) 
-  a10_gc01 <- a10(n_f = n_f, 
+  a10_gc_nbc <- a10(n_f = n_f, 
                 n_m = n_m,
                 prop_eversex_f = pred_eversex_f,
                 prop_eversex_m = pred_eversex_m,
@@ -263,4 +281,23 @@ part_prev_ratio_f <- part_prev_ratio_m <- c(1,1,1)
 
 # Save image
 save.image()
+
+diag_by_year_f <- apply(a10_gc_nbc$n_diag_f, 3, sum)
+diag_by_year_f[1] <- sum(diagnoses_init_tot_f_gc)
+diag_by_year_m <- apply(a10_gc_nbc$n_diag_m, 3, sum)
+diag_by_year_m[1] <- sum(diagnoses_init_tot_m_gc)
+plot(diag_by_year_f, ylim=c(0,max(diag_by_year_f)*1.2), type='b')
+points(diag_by_year_m, col='blue', type='b')
+
+diag_by_yr_and_race_f <- apply(a10_gc_nbc$n_diag_f, c(1,3), sum)
+diag_by_yr_and_race_m <- apply(a10_gc_nbc$n_diag_m, c(1,3), sum)
+matplot(t(diag_by_yr_and_race_f), 
+        ylim=c(0,max(diag_by_yr_and_race_f,na.rm=TRUE)*1.2), type='b')
+matplot(t(diag_by_yr_and_race_m), type='b', add=TRUE, pch=4:6)
+
+diag_by_yr_and_race_f <- apply(a10_gc_nbc$n_diag_f, c(1,3), sum)
+diag_by_yr_and_race_m <- apply(a10_gc_nbc$n_diag_m, c(1,3), sum)
+matplot(t(diag_by_yr_and_race_f), 
+        ylim=c(0,max(diag_by_yr_and_race_f,na.rm=TRUE)*1.2), type='b')
+matplot(t(diag_by_yr_and_race_m), type='b', add=TRUE, pch=4:6)
 

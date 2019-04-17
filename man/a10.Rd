@@ -6,8 +6,8 @@
 \usage{
 a10(n_f, n_m, prop_eversex_f, prop_eversex_m, condom_use_f, condom_use_m,
   mean_new_part_f, mean_new_part_m, coital_acts_pp_f, coital_acts_pp_m,
-  diag_init_f, diag_init_m, prop_diag_f, prop_diag_m, dur_inf_f, dur_inf_m,
-  beta_f2m, beta_m2f, meanpop_tot_f, meanpop_tot_m)
+  p_ethn_f, p_ethn_m, diag_init_f, diag_init_m, prop_diag_f, prop_diag_m,
+  dur_inf_f, dur_inf_m, beta_f2m, beta_m2f, meanpop_tot_f, meanpop_tot_m)
 }
 \arguments{
 \item{n_f}{A 3x6x11 array indicating the population size for females, by race/eth by age by year}
@@ -29,6 +29,10 @@ a10(n_f, n_m, prop_eversex_f, prop_eversex_m, condom_use_f, condom_use_m,
 \item{coital_acts_pp_f}{A 3x6x11 matrix indicating the mean coital acts per partner for females, by race/eth by age}
 
 \item{coital_acts_pp_m}{A 3x6x11 matrix indicating the mean coital acts per partner for males, by race/eth by age}
+
+\item{p_ethn_f}{A 3x3 matrix indicating the proportion of females' partnerships that are with males of each ethn}
+
+\item{p_ethn_m}{A 3x3 matrix indicating the proportion of males' partnerships that are with females of each ethn}
 
 \item{diag_init_f}{A vector of length 3 indicating the number of recent annual STI diagnoses among females, by race/eth}
 
