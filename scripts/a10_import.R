@@ -4,7 +4,7 @@ library(tidyverse)
 library(magrittr)
 
 # Make sure working directory is in /scripts/
-setwd("C:/git/CAMP_10yr_proj/scripts")
+#setwd("C:/git/CAMP_10yr_proj/scripts")
 
 datapath <- "../data"
 #file_classes <- c("propsexrace.txt", "eversex.txt", "condom.txt", 

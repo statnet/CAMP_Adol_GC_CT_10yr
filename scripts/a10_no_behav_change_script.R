@@ -8,7 +8,7 @@
 #########################################################################
 ### Basics
 
-setwd("C:/git/CAMP_10yr_proj/scripts/")
+#setwd("C:/git/CAMP_10yr_proj/scripts/")
 rm(list=ls())
 source("a10_import.R")                  # Get all inputs
 years <- seq(2007, 2017, by=2)          # Set years info

@@ -1,6 +1,6 @@
 library(EasyABC)
 
-setwd("C:/git/CAMP_10yr_proj/scripts/")
+#setwd("C:/git/CAMP_10yr_proj/scripts/")
 source("a10_no_behav_change_script.R")
 
 nbc_gc_tolerance=c(1, 0.5)
