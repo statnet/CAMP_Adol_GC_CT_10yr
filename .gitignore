@@ -8,3 +8,5 @@ CAMP_10yr.html
 *.zip
 a10.html
 *.rda
+n_simul_tot*
+output_step*
