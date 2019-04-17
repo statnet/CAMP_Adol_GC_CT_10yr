@@ -29,10 +29,10 @@ for (i in 1:length(years)) {
     temp <- read.csv(filename)
     for (j in 1:neths_all) {
       wts_f[j,,i] <- unname(unlist(
-          temp %>% filter(sex=="Female", race4==eths_all[j]) %>% select(starts_with("Age"))
+          temp %>% filter(sex=="Female", race4==eths_all[j]) %>% dplyr::select(starts_with("Age"))
       ))
       wts_m[j,,i] <- unname(unlist(
-          temp %>% filter(sex=="Male", race4==eths_all[j]) %>% select(starts_with("Age"))
+          temp %>% filter(sex=="Male", race4==eths_all[j]) %>% dplyr::select(starts_with("Age"))
       ))
     }
 }
@@ -50,10 +50,10 @@ for (i in 1:length(years)) {
   temp <- read.csv(filename)
   for (j in 1:neths) {
     eversex_f[j,,i] <- unname(unlist(
-      temp %>% filter(sex_active=="Female", race==eths[j]) %>% select(starts_with("Age"))
+      temp %>% filter(sex_active=="Female", race==eths[j]) %>% dplyr::select(starts_with("Age"))
     ))
     eversex_m[j,,i] <- unname(unlist(
-      temp %>% filter(sex_active=="Male", race==eths[j]) %>% select(starts_with("Age"))
+      temp %>% filter(sex_active=="Male", race==eths[j]) %>% dplyr::select(starts_with("Age"))
     ))
   }
 }
@@ -77,29 +77,29 @@ for (i in 1:length(years)) {
          condom_f[j,k,i] <- 0
          condom_wts_f[j,k,i] <- 0
       } else {
-        if(sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% select(freq))==0) {  ## Cases where freq is 0 (either in the original data, or as a replacement for NA as done above)
+        if(sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% dplyr::select(freq))==0) {  ## Cases where freq is 0 (either in the original data, or as a replacement for NA as done above)
           condom_f[j,k,i] <- 0
           condom_wts_f[j,k,i] <- 0
         } else {
           condom_f[j,k,i] <- unname(unlist(
-            temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k], condomuse=="Yes") %>% select(freq) / 
-              sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% select(freq))
+            temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k], condomuse=="Yes") %>% dplyr::select(freq) / 
+              sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% dplyr::select(freq))
             ))
-          condom_wts_f[j,k,i] <- sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% select(freq))
+          condom_wts_f[j,k,i] <- sum(temp %>% filter(sex_active=="Female", race==eths[j], age==ages[k]) %>% dplyr::select(freq))
       }}
       if(nrow(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]))==0) {  ## Cases where row is missing altogether
         condom_m[j,k,i] <- 0
         condom_wts_m[j,k,i] <- 0
       } else {
-        if(sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% select(freq))==0) {  ## Cases where freq is 0 (either in the original data, or as a replacement for NA as done above)
+        if(sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% dplyr::select(freq))==0) {  ## Cases where freq is 0 (either in the original data, or as a replacement for NA as done above)
           condom_m[j,k,i] <- 0
           condom_wts_m[j,k,i] <- 0
         } else {
           condom_m[j,k,i] <- unname(unlist(
-            temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k], condomuse=="Yes") %>% select(freq) / 
-              sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% select(freq))
+            temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k], condomuse=="Yes") %>% dplyr::select(freq) / 
+              sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% dplyr::select(freq))
           ))
-          condom_wts_m[j,k,i] <- sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% select(freq))
+          condom_wts_m[j,k,i] <- sum(temp %>% filter(sex_active=="Male", race==eths[j], age==ages[k]) %>% dplyr::select(freq))
       }}
     }
   }
@@ -117,10 +117,10 @@ for (i in 1:length(years)) {
   for (j in 1:neths) {
     AgeByDebutAge_num_f[j,,,i] <- unname(as.matrix(temp %>% 
                         filter(sex_active=="Female", race==eths[j]) %>% 
-                        select(starts_with("age1")), nages))
+                        dplyr::select(starts_with("age1")), nages))
     AgeByDebutAge_num_m[j,,,i] <- unname(as.matrix(temp %>% 
                         filter(sex_active=="Male", race==eths[j]) %>% 
-                        select(starts_with("age1")), nages))
+                        dplyr::select(starts_with("age1")), nages))
   }
 }
 
@@ -134,10 +134,10 @@ for (i in 1:length(years)) {
   for (j in 1:neths) {
     AgeByDebutAge_lp_f[j,,,i] <- unname(as.matrix(temp %>% 
                                  filter(sex_active=="Female", race==eths[j]) %>% 
-                                 select(starts_with("mean1")), nages))
+                                 dplyr::select(starts_with("mean1")), nages))
     AgeByDebutAge_lp_m[j,,,i] <- unname(as.matrix(temp %>% 
                                  filter(sex_active=="Male", race==eths[j]) %>% 
-                                 select(starts_with("mean1")), nages))
+                                 dplyr::select(starts_with("mean1")), nages))
   }
 }
 
@@ -156,10 +156,10 @@ totpop_f <- totpop_m <- array(dim=c(neths, nages, nyears))
 for (i in 1:length(years)) {
   for (j in 1:neths) {
     totpop_f[j,,which(years==years[i])] <- unname(unlist(
-      temp %>% filter(Year==years[i], Sex=="Female", Race==eths[j]) %>% select(starts_with("Age"))
+      temp %>% filter(Year==years[i], Sex=="Female", Race==eths[j]) %>% dplyr::select(starts_with("Age"))
     ))
     totpop_m[j,,which(years==years[i])] <- unname(unlist(
-      temp %>% filter(Year==years[i], Sex=="Male", Race==eths[j]) %>% select(starts_with("Age"))
+      temp %>% filter(Year==years[i], Sex=="Male", Race==eths[j]) %>% dplyr::select(starts_with("Age"))
     ))
   }
 }
@@ -182,19 +182,19 @@ for (i in 1:nyears) {
   for (j in 1:neths) {
     dx_10_14_f[j,,i] <- unname(unlist(
       temp %>% filter(Infection==infection, Sex=="F", Ethn==eths_all[j], Age=="10-14", !is.na(Ethn)) %>% 
-        select(Rate)
+        dplyr::select(Rate)
     ))
     dx_15_19_f[j,,i] <- unname(unlist(
       temp %>% filter(Infection==infection, Sex=="F", Ethn==eths_all[j], Age=="15-19", !is.na(Ethn)) %>% 
-        select(Rate)
+        dplyr::select(Rate)
     ))
     dx_10_14_m[j,,i] <- unname(unlist(
       temp %>% filter(Infection==infection, Sex=="M", Ethn==eths_all[j], Age=="10-14", !is.na(Ethn)) %>% 
-        select(Rate)
+        dplyr::select(Rate)
     ))
     dx_15_19_m[j,,i] <- unname(unlist(
       temp %>% filter(Infection==infection, Sex=="M", Ethn==eths_all[j], Age=="15-19", !is.na(Ethn)) %>% 
-        select(Rate)
+        dplyr::select(Rate)
     ))
   }  
 }
@@ -205,9 +205,9 @@ filename <- paste(datapath, "/racemixing.csv", sep="")
 p_ethn <- read.csv(filename)
 
 p_ethn_f <- p_ethn_m <- mat3(rep(NA,9))
-p_ethn_f[1,] <- unname(unlist(p_ethn %>% filter(Ego=="BF") %>% select(B, H, W)))
-p_ethn_f[2,] <- unname(unlist(p_ethn %>% filter(Ego=="HF") %>% select(B, H, W)))
-p_ethn_f[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WF") %>% select(B, H, W)))
-p_ethn_m[1,] <- unname(unlist(p_ethn %>% filter(Ego=="BM") %>% select(B, H, W)))
-p_ethn_m[2,] <- unname(unlist(p_ethn %>% filter(Ego=="HM") %>% select(B, H, W)))
-p_ethn_m[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WM") %>% select(B, H, W)))
+p_ethn_f[1,] <- unname(unlist(p_ethn %>% filter(Ego=="BF") %>% dplyr::select(B, H, W)))
+p_ethn_f[2,] <- unname(unlist(p_ethn %>% filter(Ego=="HF") %>% dplyr::select(B, H, W)))
+p_ethn_f[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WF") %>% dplyr::select(B, H, W)))
+p_ethn_m[1,] <- unname(unlist(p_ethn %>% filter(Ego=="BM") %>% dplyr::select(B, H, W)))
+p_ethn_m[2,] <- unname(unlist(p_ethn %>% filter(Ego=="HM") %>% dplyr::select(B, H, W)))
+p_ethn_m[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WM") %>% dplyr::select(B, H, W)))
