@@ -210,8 +210,8 @@ diagnoses_init_tot_m_gc <- rowSums(dx_m[,,1])
 #########################################################################
 ### Small inputs
 
-beta_rpv_gc <- 0.5856
-beta_ipv_gc <- 0.1164
+beta_rpv_gc <- 0.50 # 0.5856
+beta_ipv_gc <- 0.25 # 0.1164
 
 prop_diag_f_gc <- 0.523
 prop_diag_m_gc <- 0.490
