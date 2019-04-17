@@ -3,7 +3,7 @@ library(EasyABC)
 #setwd("C:/git/CAMP_10yr_proj/scripts/")
 source("a10_no_behav_change_script.R")
 
-nbc_gc_tolerance=c(100, 10, 5, 2.5, 1, 0.5, 0.25, 0.1)
+nbc_gc_tolerance=c(5, 2, 1, 0.5, 0.25, 0.1)
 
 lower <- 0
 upper <- 5
@@ -53,5 +53,7 @@ nbc_gc_ABC<-ABC_sequential(method="Beaumont",
                               nb_simul=100,
                               summary_stat_target=0,
                               tolerance_tab=nbc_gc_tolerance,
-                              verbose=TRUE)
+                              verbose=TRUE,
+                              progress_bar=TRUE)
+
 boxplot(nbc_gc_ABC$param)
