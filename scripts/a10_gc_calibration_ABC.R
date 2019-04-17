@@ -3,10 +3,14 @@ library(EasyABC)
 #setwd("C:/git/CAMP_10yr_proj/scripts/")
 source("a10_no_behav_change_script.R")
 
-nbc_gc_tolerance=c(1, 0.5)
+nbc_gc_tolerance=c(100, 10, 5, 2.5, 1, 0.5, 0.25, 0.1)
 
-nbc_gc_priors=list(c("unif", 1, 2), c("unif", 1, 2), c("unif", 1, 2), 
-               c("unif", 1, 2), c("unif", 1, 2), c("unif", 1, 2))
+lower <- 0
+upper <- 5
+
+nbc_gc_priors=list(c("unif", lower, upper), c("unif", lower, upper), 
+                   c("unif", lower, upper), c("unif", lower, upper),
+                   c("unif", lower, upper), c("unif", lower, upper))
 
 nbc_gc_model <- function(x) {
   part_prev_ratio_f <- as.vector(x[1:3])
@@ -37,9 +41,10 @@ nbc_gc_model <- function(x) {
                     part_prev_ratio_m = part_prev_ratio_m
   )
   
-  result <- sum(rowSums(a10_output$n_diag_f[,,2]) - diagnoses_init_tot_f_gc) + 
-            sum(rowSums(a10_output$n_diag_m[,,2]) - diagnoses_init_tot_m_gc)
-  return(result)
+  result <- sum(abs(rowSums(a10_output$n_diag_f[,,2]) - diagnoses_init_tot_f_gc)) + 
+            sum(abs(rowSums(a10_output$n_diag_m[,,2]) - diagnoses_init_tot_m_gc))
+
+    return(result)
 }
 
 nbc_gc_ABC<-ABC_sequential(method="Beaumont",
@@ -48,5 +53,5 @@ nbc_gc_ABC<-ABC_sequential(method="Beaumont",
                               nb_simul=100,
                               summary_stat_target=0,
                               tolerance_tab=nbc_gc_tolerance,
-                              verbose=T)
+                              verbose=TRUE)
 boxplot(nbc_gc_ABC$param)
