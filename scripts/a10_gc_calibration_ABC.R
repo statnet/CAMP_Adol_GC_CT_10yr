@@ -3,14 +3,14 @@ library(EasyABC)
 setwd("C:/git/CAMP_10yr_proj/scripts/")
 source("a10_no_behav_change_script.R")
 
-nbc_gc_tolerance=c(1000, 500)
+nbc_gc_tolerance=c(1, 0.5)
 
 nbc_gc_priors=list(c("unif", 1, 2), c("unif", 1, 2), c("unif", 1, 2), 
                c("unif", 1, 2), c("unif", 1, 2), c("unif", 1, 2))
 
 nbc_gc_model <- function(x) {
-  part_prev_ratio_f <- x[1:3]
-  part_prev_ratio_m <- x[4:6]
+  part_prev_ratio_f <- as.vector(x[1:3])
+  part_prev_ratio_m <- as.vector(x[4:6])
   a10_output <- a10(n_f = n_f, 
                     n_m = n_m,
                     prop_eversex_f = pred_eversex_f,
@@ -49,10 +49,4 @@ nbc_gc_ABC<-ABC_sequential(method="Beaumont",
                               summary_stat_target=0,
                               tolerance_tab=nbc_gc_tolerance,
                               verbose=T)
-plot(nbc_gc_ABC$param)
-
-
-result1 <- colMeans(nbc_gc_ABC$param)
-
-output1 <- my_model(result1)
-output1
+boxplot(nbc_gc_ABC$param)
