@@ -1,5 +1,4 @@
 
-     
 nsims <- nrow(nbc_gc_ABC$param)
 
 calib_test_gc_f <- calib_test_gc_m <- array(dim=c(3,11,nsims))
@@ -7,6 +6,8 @@ calib_test_gc_f <- calib_test_gc_m <- array(dim=c(3,11,nsims))
 for (i in 1:nsims) {
   part_prev_ratio_f <- as.vector(nbc_gc_ABC$param[i,1:3])
   part_prev_ratio_m <- as.vector(nbc_gc_ABC$param[i,4:6])
+  #part_prev_ratio_f <- as.vector(nbc_gc_ABC_step2$param[i,1:3])
+  #part_prev_ratio_m <- as.vector(nbc_gc_ABC_step2$param[i,4:6])
   temp <- a10(n_f = n_f, 
                     n_m = n_m,
                     prop_eversex_f = pred_eversex_f,
@@ -33,9 +34,19 @@ for (i in 1:nsims) {
                     part_prev_ratio_m = part_prev_ratio_m
   )
   calib_test_gc_f[,,i] <- apply(temp$n_diag_f, c(1,3), sum)
-  calib_test_gc_f[,1,i] <- diagnoses_init_tot_f_gc
+  if (is.vector(diagnoses_init_tot_f_gc)) {
+    calib_test_gc_f[,1,i] <- diagnoses_init_tot_f_gc
+  } else {
+    calib_test_gc_f[,1,i] <- rowSums(diagnoses_init_tot_f_gc)
+  }
+
   calib_test_gc_m[,,i] <- apply(temp$n_diag_m, c(1,3), sum)
-  calib_test_gc_m[,1,i] <- diagnoses_init_tot_m_gc
+  if (is.vector(diagnoses_init_tot_m_gc)) {
+    calib_test_gc_m[,1,i] <- diagnoses_init_tot_m_gc
+  } else {
+    calib_test_gc_m[,1,i] <- rowSums(diagnoses_init_tot_m_gc)
+  }
+  
 }
 
 pdf("calib_test_gc_f.pdf")
