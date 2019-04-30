@@ -14,8 +14,8 @@
 #' @param coital_acts_pp_m A 3x6x11 matrix indicating the mean coital acts per partner for males, by race/eth by age
 #' @param p_ethn_f A 3x3 matrix indicating the proportion of females' partnerships that are with males of each ethn
 #' @param p_ethn_m A 3x3 matrix indicating the proportion of males' partnerships that are with females of each ethn
-#' @param diag_init_f A vector of length 3 indicating the number of recent annual STI diagnoses among females, by race/eth
-#' @param diag_init_m A vector of length 3 indicating the number of recent annual STI diagnoses among males, by race/eth
+#' @param diag_init_f A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among females, by race/eth (and optionally by age)
+#' @param diag_init_m A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among males, by race/eth (and optionally by age)
 #' @param prop_diag_f The proportion of females who get diagnosed for the STI
 #' @param prop_diag_m The proportion of males who get diagnosed for the STI
 #' @param dur_inf_f The average duration of infection for females
@@ -93,10 +93,28 @@ a10 <- function(n_f, n_m,
   n_diag_m[,,1] <- NA
   # Create arrays to store prevalence in the cross-section
   prev_f <- prev_m <- array(dim=c(3,6,11))
-  prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / rowSums(prop_eversex_f[,,1]*meanpop_tot_f[,,1])
-  prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / rowSums(prop_eversex_m[,,1]*meanpop_tot_m[,,1])
+  
+  if(is.vector(diag_init_f) & length(diag_init_f)==3) {
+    prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / rowSums(prop_eversex_f[,,1]*meanpop_tot_f[,,1])
+  } else {
+    if(is.matrix(diag_init_f) & sum(dim(diag_init_f)==c(3,6))==2) {
+      prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / (prop_eversex_f[,,1]*meanpop_tot_f[,,1])
+    } else {
+      stop("diag_init_f must be either a vector of length 3 or a matrix of dim (3,6).")
+    }
+  }
+  
+  if(is.vector(diag_init_f) & length(diag_init_f)==3) {
+    prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / rowSums(prop_eversex_m[,,1]*meanpop_tot_m[,,1])
+  } else {
+    if(is.matrix(diag_init_f) & sum(dim(diag_init_f)==c(3,6))==2) {
+      prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / (prop_eversex_m[,,1]*meanpop_tot_m[,,1])
+    } else {
+      stop(" diag_init_m must be either a vector of length 3 or a matrix of dim (3,6).")
+    }
+  }
 
-  # Calculate the number of condomless acts per person
+    # Calculate the number of condomless acts per person
   cl_acts_f <- mean_new_part_f * coital_acts_pp_f * (1-condom_use_f)
   cl_acts_m <- mean_new_part_m * coital_acts_pp_m * (1-condom_use_m)
 
