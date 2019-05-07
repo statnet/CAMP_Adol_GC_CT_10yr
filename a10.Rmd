@@ -333,7 +333,11 @@ Update after a while.  Spent a lot of time getting frustrated, trying to get dif
 - take the distribution of diagnoses by age for this outcome, and reassign it as the starting distribution.
 - repeat
 
-This all works as of now.  The problem is that this still leads to the model going off to high prevalence after time step 2.  I am not sure why. but the next step is to use the excel files I built to step through why my logic is wrong that doinghaving the diagnoses at time 2 match those at time 1 shouldn't then lead to a stable model afterwards.....
+This all works as of now.  The problem is that this still leads to the model going off to high prevalence after time step 2.  I am not sure why. but the next step is to use the excel files I built to step through why my logic is wrong that doing having the diagnoses at time 2 match those at time 1 shouldn't then lead to a stable model afterwards.....
+
+### May 7, 2019
+
+Oh happy day! Yesterday I finalliy figured out the problem - the output I was producing ws diagnoses in school ,and I was comparing it to the initial total diagnoses. So of course one would need a growing epidemic for those two numbers to match, making all subseuqent years bigger.  I re-wrote the code  track borth diag_insch and diag_total, as well as both inc_insch and inc_total, and to then properly compare diag_total to the initial diagnoses.  Works!!!!  Interestingly, my earlier idea still holds about needing to do two rounds to get the age distribution correct  - the first version is close, and then the second vesion is on.  Techinically it's off by a few dozen diagnoses, but given the 10s of 1000s total, this is trivial.  Yay!
 
 
 
