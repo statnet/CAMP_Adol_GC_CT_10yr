@@ -14,8 +14,8 @@
 #' @param coital_acts_pp_m A 3x6x11 matrix indicating the mean coital acts per partner for males, by race/eth by age
 #' @param p_ethn_f A 3x3 matrix indicating the proportion of females' partnerships that are with males of each ethn
 #' @param p_ethn_m A 3x3 matrix indicating the proportion of males' partnerships that are with females of each ethn
-#' @param diag_init_f A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among females, by race/eth (and optionally by age)
-#' @param diag_init_m A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among males, by race/eth (and optionally by age)
+#' @param diag_init_f A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among females, by race/eth (and optionally by age) -- in and out of school
+#' @param diag_init_m A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among males, by race/eth (and optionally by age) -- in and out of school
 #' @param prop_diag_f The proportion of females who get diagnosed for the STI
 #' @param prop_diag_m The proportion of males who get diagnosed for the STI
 #' @param dur_inf_f The average duration of infection for females
@@ -76,22 +76,23 @@ a10 <- function(n_f, n_m,
   n_eversex_f <- n_f * prop_eversex_f
   n_eversex_m <- n_m * prop_eversex_m
 
-  # Create arrays to store number of incident cases per year
-  n_inc_f <- n_inc_m <- array(dim=c(3,6,11))
-  n_inc_f[,,1] <- NA
-  n_inc_m[,,1] <- NA
-
+  # Create arrays to store number of incident cases per year **in school8 and *total*
+  n_inc_insch_f <- n_inc_insch_m <- n_inc_total_f <- n_inc_total_m <- array(dim=c(3,6,11))
+  n_inc_insch_f[,,1] <- n_inc_insch_m[,,1] <- n_inc_total_f[,,1] <- n_inc_total_m[,,1] <- NA
+  
   # Create arrays to store number of diagnoses per year *total* (in and out of HS)
-  #n_diag_tot_f <- n_diag_tot_m <- array(dim=c(3,6,11))
-  #n_diag_tot_f[,,1] <- diag_init_f
-  #n_diag_tot_m[,,1] <- diag_init_m
+  n_diag_total_f <- n_diag_total_m <- array(dim=c(3,6,11))
+  if(is.matrix(diag_init_f) & sum(dim(diag_init_f)==c(3,6))==2) {
+    n_diag_total_f[,,1] <- diag_init_f
+    n_diag_total_m[,,1] <- diag_init_m
+  } else n_diag_total_f[,,1] <- n_diag_total_m[,,1] <- NA
 
   # Create arrays to store number of diagnoses per year *in HS*
-  n_diag_f <- n_diag_m <- array(dim=c(3,6,11))
-  n_diag_f[,,1] <- NA
+  n_diag_insch_f <- n_diag_insch_m <- array(dim=c(3,6,11))
+  n_diag_insch_f[,,1] <- NA
+  n_diag_insch_m[,,1] <- NA
 
-  n_diag_m[,,1] <- NA
-  # Create arrays to store prevalence in the cross-section
+  # Create arrays to store prevalence in the cross-section (value should be same in sch and tot)
   prev_f <- prev_m <- array(dim=c(3,6,11))
   
   if(is.vector(diag_init_f) & length(diag_init_f)==3) {
@@ -114,7 +115,7 @@ a10 <- function(n_f, n_m,
     }
   }
 
-    # Calculate the number of condomless acts per person
+  # Calculate the number of condomless acts per person
   cl_acts_f <- mean_new_part_f * coital_acts_pp_f * (1-condom_use_f)
   cl_acts_m <- mean_new_part_m * coital_acts_pp_m * (1-condom_use_m)
 
@@ -131,7 +132,7 @@ a10 <- function(n_f, n_m,
     overall_prev_m <- rowSums(prev_m[,,i-1]*meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1]) / 
                                 rowSums(meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1])
     
-    n_inc_f[,,i] <- (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from BM
+    n_inc_insch_f[,,i] <- (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from BM
                     (1-(1-overall_prev_m[1]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,1])) + 
 
                     (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from HM
@@ -140,7 +141,7 @@ a10 <- function(n_f, n_m,
                     (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from WM
                     (1-(1-overall_prev_m[3]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,3]))  
       
-    n_inc_m[,,i] <- (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from BF
+    n_inc_insch_m[,,i] <- (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from BF
                     (1-(1-overall_prev_f[1]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,1])) + 
                     
                     (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from HF
@@ -149,23 +150,32 @@ a10 <- function(n_f, n_m,
                     (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from WF
                     (1-(1-overall_prev_f[3]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,3]))  
 
-    n_diag_f[,,i] <- n_inc_f[,,i] * prop_diag_f
-    n_diag_m[,,i] <- n_inc_m[,,i] * prop_diag_m
+    n_diag_insch_f[,,i] <- n_inc_insch_f[,,i] * prop_diag_f
+    n_diag_insch_m[,,i] <- n_inc_insch_m[,,i] * prop_diag_m
+    
+    n_inc_total_f[,,i] <- n_inc_insch_f[,,i] * meanpop_tot_f[,,1] / n_f[,,1]
+    n_inc_total_m[,,i] <- n_inc_insch_m[,,i] * meanpop_tot_m[,,1] / n_m[,,1]
+    n_diag_total_f[,,i] <- n_diag_insch_f[,,i] * meanpop_tot_f[,,1] / n_f[,,1]
+    n_diag_total_m[,,i] <- n_diag_insch_m[,,i] * meanpop_tot_m[,,1] / n_m[,,1]
 
-    prev_f[,,i] <- n_inc_f[,,i]*dur_inf_f / n_eversex_f[,,i]
-    prev_m[,,i] <- n_inc_m[,,i]*dur_inf_m / n_eversex_m[,,i]
+    prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_eversex_f[,,i]
+    prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_eversex_m[,,i]
   }
 
 
   ##########################################################################
   # Final processing
 
-  result <- list(n_inc_f = n_inc_f,
-                 n_inc_m = n_inc_m,
+  result <- list(n_inc_insch_f = n_inc_insch_f,
+                 n_inc_insch_m = n_inc_insch_m,
+                 n_inc_total_f = n_inc_total_f,
+                 n_inc_total_m = n_inc_total_m,
                  prev_f = prev_f,
                  prev_m = prev_m,
-                 n_diag_f = n_diag_f,
-                 n_diag_m = n_diag_m,
+                 n_diag_insch_f = n_diag_insch_f,
+                 n_diag_insch_m = n_diag_insch_m,
+                 n_diag_total_f = n_diag_total_f,
+                 n_diag_total_m = n_diag_total_m,
                  n_eversex_f = n_eversex_f,
                  n_eversex_m = n_eversex_m,
                  cl_acts_f = cl_acts_f,
