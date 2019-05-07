@@ -282,18 +282,11 @@ part_prev_ratio_m <- c(1.2, 0.75, 0.55)
 # Save image
 save.image()
 
-#diag_by_year_f <- apply(a10_gc_nbc$n_diag_f, 3, sum)
-#diag_by_year_f[1] <- sum(diagnoses_init_tot_f_gc)
-#diag_by_year_m <- apply(a10_gc_nbc$n_diag_m, 3, sum)
-#diag_by_year_m[1] <- sum(diagnoses_init_tot_m_gc)
-#plot(diag_by_year_f, ylim=c(0,max(diag_by_year_f)*1.2), type='b')
-#points(diag_by_year_m, col='blue', type='b')
+diag_total_by_yr_and_race_f <- apply(a10_gc_nbc$n_diag_total_f, c(1,3), sum)
+diag_total_by_yr_and_race_m <- apply(a10_gc_nbc$n_diag_total_m, c(1,3), sum)
+diag_total_by_yr_and_race_f[,1] <- diagnoses_init_tot_f_gc
+diag_total_by_yr_and_race_m[,1] <- diagnoses_init_tot_m_gc
 
-diag_by_yr_and_race_f <- apply(a10_gc_nbc$n_diag_f, c(1,3), sum)
-diag_by_yr_and_race_m <- apply(a10_gc_nbc$n_diag_m, c(1,3), sum)
-diag_by_yr_and_race_f[,1] <- diagnoses_init_tot_f_gc
-diag_by_yr_and_race_m[,1] <- diagnoses_init_tot_m_gc
-
-matplot(t(diag_by_yr_and_race_f), 
-        ylim=c(0,max(diag_by_yr_and_race_f,na.rm=TRUE)*1.2), type='b')
-matplot(t(diag_by_yr_and_race_m), type='b', add=TRUE, pch=4:6)
+matplot(t(diag_total_by_yr_and_race_f), 
+        ylim=c(0,max(diag_total_by_yr_and_race_f,na.rm=TRUE)*1.2), type='b')
+matplot(t(diag_total_by_yr_and_race_m), type='b', add=TRUE, pch=4:6)
