@@ -35,9 +35,9 @@ a10(n_f, n_m, prop_eversex_f, prop_eversex_m, condom_use_f, condom_use_m,
 
 \item{p_ethn_m}{A 3x3 matrix indicating the proportion of males' partnerships that are with females of each ethn}
 
-\item{diag_init_f}{A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among females, by race/eth (and optionally by age)}
+\item{diag_init_f}{A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among females, by race/eth (and optionally by age) -- in and out of school}
 
-\item{diag_init_m}{A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among males, by race/eth (and optionally by age)}
+\item{diag_init_m}{A vector of length 3 or a 3x6 matrix, indicating the number of recent annual STI diagnoses among males, by race/eth (and optionally by age) -- in and out of school}
 
 \item{prop_diag_f}{The proportion of females who get diagnosed for the STI}
 
