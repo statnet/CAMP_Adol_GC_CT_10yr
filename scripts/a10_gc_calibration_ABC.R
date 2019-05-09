@@ -209,3 +209,23 @@ a10_nbc_abc_step3 <- a10(n_f = n_f,
 )
 
 apply(a10_nbc_abc_step3$n_diag_insch_f, c(1,3), sum)
+
+part_prev_ratio_f_gc_calib <- part_prev_ratio_f
+part_prev_ratio_m_gc_calib <- part_prev_ratio_m
+save(part_prev_ratio_f_gc_calib, 
+     part_prev_ratio_m_gc_calib, 
+     file="part_prev_ratios_gc_calib.rda")
+
+diagnoses_init_tot_f_gc_calib <- 
+  a10_nbc_abc_step3$n_diag_total_f[,,11] * 
+  diagnoses_init_tot_f_gc_step1/
+  rowSums(diagnoses_init_tot_f_gc_calib)
+
+diagnoses_init_tot_m_gc_calib <- 
+  a10_nbc_abc_step3$n_diag_total_m[,,11] * 
+  diagnoses_init_tot_m_gc_step1/
+  rowSums(diagnoses_init_tot_m_gc_calib)
+
+save(diagnoses_init_tot_f_gc_calib, 
+     diagnoses_init_tot_m_gc_calib, 
+     file="diagnoses_init_tot_gc_calib.rda")
