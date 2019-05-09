@@ -337,7 +337,12 @@ This all works as of now.  The problem is that this still leads to the model goi
 
 ### May 7, 2019
 
-Oh happy day! Yesterday I finalliy figured out the problem - the output I was producing ws diagnoses in school ,and I was comparing it to the initial total diagnoses. So of course one would need a growing epidemic for those two numbers to match, making all subseuqent years bigger.  I re-wrote the code  track borth diag_insch and diag_total, as well as both inc_insch and inc_total, and to then properly compare diag_total to the initial diagnoses.  Works!!!!  Interestingly, my earlier idea still holds about needing to do two rounds to get the age distribution correct  - the first version is close, and then the second vesion is on.  Techinically it's off by a few dozen diagnoses, but given the 10s of 1000s total, this is trivial.  Yay!
+Oh happy day! Yesterday I finally figured out the problem - the output I was producing ws diagnoses in school ,and I was comparing it to the initial total diagnoses. So of course one would need a growing epidemic for those two numbers to match, making all subseuqent years bigger.  I re-wrote the code  track borth diag_insch and diag_total, as well as both inc_insch and inc_total, and to then properly compare diag_total to the initial diagnoses.  Works!!!!  Interestingly, my earlier idea still holds about needing to do two rounds to get the age distribution correct  - the first version is close, and then the second vesion is on.  Techinically it's off by a few dozen diagnoses, but given the 10s of 1000s total, this is trivial.  Yay!
+
+### May 9, 2019
+Did the actual run!  Alas, it shows increases in GC in all ethns groups with time. Just looked at inputs, and indeed the number eversex is dropping so much for B, as is mnppy, and only offset slightly by decreased condom use.  So I need to dive deep into exactly what is happening to get the observed dynamics.
+
+Perhaps I need to document everything ,and write it all up, and in the process, and in doing it all, I might find the issue myself, and/or I cna prep it for Deven to look at with an independent eye.
 
 
 
