@@ -197,14 +197,17 @@ capp_m <- array11(mat3(c( 11.9, 11.9, 11.9, 19.3, 19.3, 29.3,
 #########################################################################
 ### Init diagnoses, total (in and out of school)
 
-dx_f[,1:2,1] <- dx_10_14_f[,,1]*(meanpop_13to18_f[,1:2,1])/1e5
-dx_f[,3:6,1] <- dx_15_19_f[,,1]*(meanpop_13to18_f[,3:6,1])/1e5
-dx_m[,1:2,1] <- dx_10_14_m[,,1]*(meanpop_13to18_m[,1:2,1])/1e5
-dx_m[,3:6,1] <- dx_15_19_m[,,1]*(meanpop_13to18_m[,3:6,1])/1e5
+#dx_f[,1:2,1] <- dx_10_14_f[,,1]*(meanpop_13to18_f[,1:2,1])/1e5
+#dx_f[,3:6,1] <- dx_15_19_f[,,1]*(meanpop_13to18_f[,3:6,1])/1e5
+#dx_m[,1:2,1] <- dx_10_14_m[,,1]*(meanpop_13to18_m[,1:2,1])/1e5
+#dx_m[,3:6,1] <- dx_15_19_m[,,1]*(meanpop_13to18_m[,3:6,1])/1e5
 
-diagnoses_init_tot_f_gc <- rowSums(dx_f[,,1])
-diagnoses_init_tot_m_gc <- rowSums(dx_m[,,1])
+#diagnoses_init_tot_f_gc <- rowSums(dx_f[,,1])
+#diagnoses_init_tot_m_gc <- rowSums(dx_m[,,1])
 
+load("diagnoses_init_tot_gc_calib.rda")
+diagnoses_init_tot_f_gc <- diagnoses_init_tot_f_gc_calib
+diagnoses_init_tot_m_gc <- diagnoses_init_tot_m_gc_calib
 
 #########################################################################
 ### Small inputs
@@ -218,9 +221,16 @@ prop_diag_m_gc <- 0.490
 dur_f_gc <- 0.46
 dur_m_gc <- 0.23
 
-
 #########################################################################
 ### Race / ethn mixing - needs no post-processing
+
+#########################################################################
+### Partner prevalence ratio - needed to calibrate the model by race
+
+load("part_prev_ratios_gc_calib.rda")
+part_prev_ratio_f <- part_prev_ratio_f_gc_calib
+part_prev_ratio_m <- part_prev_ratio_m_gc_calib
+
 
 #########################################################################
 ### Change all post-2007 numbers to match 2007 (ie as if no behavior change)
@@ -237,19 +247,10 @@ for (i in 2:dim(pred_condom_m)[3]) pred_condom_m[,,i] <- pred_condom_m[,,1]
 for (i in 2:dim(pred_mnppy_f)[3]) pred_mnppy_f[,,i] <- pred_mnppy_f[,,1]
 for (i in 2:dim(pred_mnppy_m)[3]) pred_mnppy_m[,,i] <- pred_mnppy_m[,,1]
 
-
-#########################################################################
-### Partner prevalence raio - needed to calibrate the model by race
-
-part_prev_ratio_f <- c(2.0, 0.75, 0.55)
-part_prev_ratio_m <- c(1.2, 0.75, 0.55)
-
-#p_ethn_f <- p_ethn_m <- mat3(c(1,0,0,0,1,0,0,0,1))
-
 #########################################################################
 ### Call main function
 
-  a10_gc_nbc <- a10(n_f = n_f, 
+a10_gc_nbc <- a10(n_f = n_f, 
                 n_m = n_m,
                 prop_eversex_f = pred_eversex_f,
                 prop_eversex_m = pred_eversex_m,
@@ -275,18 +276,8 @@ part_prev_ratio_m <- c(1.2, 0.75, 0.55)
                 part_prev_ratio_m = part_prev_ratio_m
   )
 
-
 #########################################################################
 ### Process results
 
-# Save image
-save.image()
+save(a10_gc_nbc, file='a10_gc_nbc.rda')
 
-diag_total_by_yr_and_race_f <- apply(a10_gc_nbc$n_diag_total_f, c(1,3), sum)
-diag_total_by_yr_and_race_m <- apply(a10_gc_nbc$n_diag_total_m, c(1,3), sum)
-diag_total_by_yr_and_race_f[,1] <- diagnoses_init_tot_f_gc
-diag_total_by_yr_and_race_m[,1] <- diagnoses_init_tot_m_gc
-
-matplot(t(diag_total_by_yr_and_race_f), 
-        ylim=c(0,max(diag_total_by_yr_and_race_f,na.rm=TRUE)*1.2), type='b')
-matplot(t(diag_total_by_yr_and_race_m), type='b', add=TRUE, pch=4:6)

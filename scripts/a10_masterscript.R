@@ -184,7 +184,6 @@ pred_mnppy_m <- array(predict(mnppy_m_reg, type='response',
 #########################################################################
 ### Coital acts per partner
 
-# TODO 
 capp_f <- array11(mat3(c( 9.4, 9.4, 9.4, 24.7, 24.7, 46.7,
                           9.4, 9.4, 9.4, 24.7, 24.7, 46.7,
                           9.4, 9.4, 9.4, 24.7, 24.7, 46.7
@@ -198,14 +197,17 @@ capp_m <- array11(mat3(c( 11.9, 11.9, 11.9, 19.3, 19.3, 29.3,
 #########################################################################
 ### Init diagnoses, total (in and out of school)
 
-dx_f[,1:2,1] <- dx_10_14_f[,,1]*(meanpop_13to18_f[,1:2,1])/1e5
-dx_f[,3:6,1] <- dx_15_19_f[,,1]*(meanpop_13to18_f[,3:6,1])/1e5
-dx_m[,1:2,1] <- dx_10_14_m[,,1]*(meanpop_13to18_m[,1:2,1])/1e5
-dx_m[,3:6,1] <- dx_15_19_m[,,1]*(meanpop_13to18_m[,3:6,1])/1e5
+#dx_f[,1:2,1] <- dx_10_14_f[,,1]*(meanpop_13to18_f[,1:2,1])/1e5
+#dx_f[,3:6,1] <- dx_15_19_f[,,1]*(meanpop_13to18_f[,3:6,1])/1e5
+#dx_m[,1:2,1] <- dx_10_14_m[,,1]*(meanpop_13to18_m[,1:2,1])/1e5
+#dx_m[,3:6,1] <- dx_15_19_m[,,1]*(meanpop_13to18_m[,3:6,1])/1e5
 
-diagnoses_init_tot_f_gc <- rowSums(dx_f[,,1])
-diagnoses_init_tot_m_gc <- rowSums(dx_m[,,1])
+#diagnoses_init_tot_f_gc <- rowSums(dx_f[,,1])
+#diagnoses_init_tot_m_gc <- rowSums(dx_m[,,1])
 
+load("diagnoses_init_tot_gc_calib.rda")
+diagnoses_init_tot_f_gc <- diagnoses_init_tot_f_gc_calib
+diagnoses_init_tot_m_gc <- diagnoses_init_tot_m_gc_calib
 
 #########################################################################
 ### Small inputs
@@ -225,7 +227,10 @@ dur_m_gc <- 0.23
 #########################################################################
 ### Partner prevalence raio - needed to calibrate the model by race
 
-part_prev_ratio_f <- part_prev_ratio_m <- c(1,1,1)
+load("part_prev_ratios_gc_calib.rda")
+part_prev_ratio_f <- part_prev_ratio_f_gc_calib
+part_prev_ratio_m <- part_prev_ratio_m_gc_calib
+
 
 #########################################################################
 ### Call main function
@@ -261,6 +266,5 @@ part_prev_ratio_f <- part_prev_ratio_m <- c(1,1,1)
 #########################################################################
 ### Process results
 
-# Save image
-save.image()
+save(a10_gc01, file='a10_gc01.rda')
 
