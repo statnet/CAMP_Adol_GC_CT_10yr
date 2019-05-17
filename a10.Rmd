@@ -342,8 +342,31 @@ Oh happy day! Yesterday I finally figured out the problem - the output I was pro
 ### May 9, 2019
 Did the actual run!  Alas, it shows increases in GC in all ethns groups with time. Just looked at inputs, and indeed the number eversex is dropping so much for B, as is mnppy, and only offset slightly by decreased condom use.  So I need to dive deep into exactly what is happening to get the observed dynamics.
 
-Perhaps I need to document everything ,and write it all up, and in the process, and in doing it all, I might find the issue myself, and/or I cna prep it for Deven to look at with an independent eye.
+Perhaps I need to document everything ,and write it all up, and in the process, and in doing it all, I might find the issue myself, and/or I can prep it for Deven to look at with an independent eye.
 
+
+
+### May 17, 2017
+
+Happy birthday to me! I am back on my regular laptop as of yesteday, an excellent present.
+
+Looks like I skipped an update sometime in the last week, where I updated the excel version of the 10 year tool to accurately capture all the edits I had made to the actual (R-based) 10-year tool, in terms of outpus in and out of school, and proper calibration thereof.
+
+
+And now I just updated local github and delved in here, comparing the R and escel versions. I confirmed that the nbc scenario was the same in both for the first 3 years of results.  Then I put in the behavior change around eversex only.  The numbers ever having sex go down, but the predicted diagnoses go up.  So therein lies a problem! I immediately saw two possible issues:
+
+- as the number ever having sex goes down ove time, the prevalence goes up because it is calcuated on the new population size
+- this creates especially weird issues for 18-yo, where the population size is dramatically smaller than the 17 yo from the year before, due to aing out.
+
+I think the solution to both may entail ensuring that the prevalence rate is calculated based on the prevous year's population first, then carried forward as a rate and multipled by the new population size. That should solve both problems, I think?  At first I thought this wouldn't require re-calibrating since it wouldn't affect the nbc model because the pop sizes are the same from year to year.  But this also matters in terms of pop sizes varying across ages as well.
+
+Basically, we are back to the idea that, e.g. this year's 15 year olds, are next year's 16 year olds.  At one point I dove in and determined that I didn't actually need to deal with that directly in this model, largely because of how we take a weighted average of prevalence in the model.  But we still need to calculate it correctly.  And we also do care about prevalence at each age because of calcuating the size of the susceiptible population.  
+
+Tasks:
+- reconsider the issue of prevalence by age, and how that gets carried over from year to year - specifically the denominators
+- recalibrate if needed
+- recheck the behavior with this correction and only pred.eversex varying by year
+- once that works, add in each element of time-changing behavior one by one to excel (or perhaps to R), to see model behavior each time.
 
 
 
