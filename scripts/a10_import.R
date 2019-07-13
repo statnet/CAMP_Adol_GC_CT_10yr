@@ -6,7 +6,7 @@ library(magrittr)
 # Make sure working directory is in /scripts/
 #setwd("C:/git/CAMP_10yr_proj/scripts")
 
-datapath <- "../data"
+datapath <- "../dat"
 #file_classes <- c("propsexrace.txt", "eversex.txt", "condom.txt", 
 #                  "matrix1.txt", "matrix2.txt")
 
