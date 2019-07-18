@@ -158,8 +158,27 @@ a10 <- function(n_f, n_m,
     n_diag_total_f[,,i] <- n_diag_insch_f[,,i] * meanpop_tot_f[,,1] / n_f[,,1]
     n_diag_total_m[,,i] <- n_diag_insch_m[,,i] * meanpop_tot_m[,,1] / n_m[,,1]
 
-    prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_eversex_f[,,i]
-    prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_eversex_m[,,i]
+    #prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_eversex_f[,,i]                # Old way with no aging
+    #prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_eversex_m[,,i]
+    
+    prev_f_num_temp <- n_inc_insch_f[,,i]*dur_inf_f                                # Prev number
+    prev_m_num_temp <- n_inc_insch_m[,,i]*dur_inf_m 
+  
+    prev_f_num_temp <- cbind(c(0,0,0), prev_f_num_temp[,1:5])                      # Advance one age
+    prev_m_num_temp <- cbind(c(0,0,0), prev_m_num_temp[,1:5])                      # Advance one age
+    
+    aging_ratio_f <- n_eversex_f[,1:5,i-1]/n_eversex_f[,2:6,i]
+    aging_ratio_m <- n_eversex_m[,1:5,i-1]/n_eversex_m[,2:6,i]
+    
+    denom_f <- n_eversex_f[,,i]                                                    # Growing pops (i.e. more 15 yos in Y1 than 14 yos in Y0) mean new people entering, who had not previously sexually devuted, so are all uninfected; they should be added to denominator
+    denom_m <- n_eversex_m[,,i]
+    
+    denom_f[,2:6][aging_ratio_f>1] <- n_eversex_f[,1:5,i-1][aging_ratio_f>1]       # Shrinking pops (i.e. fewer 18 yos in Y1 than 17 yos in Y0) mean people are leaving school through aging out or dropout; they *are* sexually experienced, and the prevalence rate calcuated on the old pop size should carry forward
+    denom_m[,2:6][aging_ratio_m>1] <- n_eversex_m[,1:5,i-1][aging_ratio_m>1]      
+
+    prev_f[,,i] <- prev_f_num_temp / denom_f
+    prev_m[,,i] <- prev_m_num_temp / denom_m
+    
   }
 
 
