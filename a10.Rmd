@@ -368,6 +368,10 @@ Returning after two crazy months.  Home stretch.
 ### July 17, 2019
 Did a bunch of coding to address the carrying forward, which operates differently when eople are entering the population (only uninfected) and leaving the population (both unifected and infected). This seems to work.  Now I need to recalibrate.
 
+### July 19, 2019
+Tried to recalibrate and it didn't work.  Then I realized that calibration has two steps to it, and one needs to comment out code and then switch it back on the second round,  Then I realized this is all messy and needs to be made reproducible.  Then I created a new file (a10_gcct_entire_project.R) whose purpose was to do that.  Then I started editing the other files to work with that.  Then I got hopelessly confused, so copied over my edited files to my active/CAMP directory, and reverted.  Now I will more systematically go about recreating and documenting what I'd done before, so that I can change it correctly.
+
+### July 20, 2019
 
 
 ### Tasks:
