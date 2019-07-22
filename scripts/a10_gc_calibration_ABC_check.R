@@ -20,8 +20,8 @@ calib_test_gc <- function(obj, filename_f, filename_m) {
                       coital_acts_pp_m = capp_m,
                       p_ethn_f = p_ethn_f,
                       p_ethn_m = p_ethn_m,
-                      diag_init_f = diagnoses_init_tot_f_gc,
-                      diag_init_m = diagnoses_init_tot_m_gc,
+                      diag_init_f = dx_gc_init_tot_f,
+                      diag_init_m = dx_gc_init_tot_m,
                       prop_diag_f = prop_diag_f_gc,
                       prop_diag_m = prop_diag_m_gc,
                       dur_inf_f = dur_f_gc,
@@ -34,17 +34,17 @@ calib_test_gc <- function(obj, filename_f, filename_m) {
                       part_prev_ratio_m = part_prev_ratio_m
     )
     calib_test_gc_f[,,i] <- apply(temp$n_diag_total_f, c(1,3), sum)
-    if (is.vector(diagnoses_init_tot_f_gc)) {
-      calib_test_gc_f[,1,i] <- diagnoses_init_tot_f_gc
+    if (is.vector(dx_gc_init_tot_f)) {
+      calib_test_gc_f[,1,i] <- dx_gc_init_tot_f
     } else {
-      calib_test_gc_f[,1,i] <- rowSums(diagnoses_init_tot_f_gc)
+      calib_test_gc_f[,1,i] <- rowSums(dx_gc_init_tot_f)
     }
   
     calib_test_gc_m[,,i] <- apply(temp$n_diag_total_m, c(1,3), sum)
-    if (is.vector(diagnoses_init_tot_m_gc)) {
-      calib_test_gc_m[,1,i] <- diagnoses_init_tot_m_gc
+    if (is.vector(dx_gc_init_tot_m)) {
+      calib_test_gc_m[,1,i] <- dx_gc_init_tot_m
     } else {
-      calib_test_gc_m[,1,i] <- rowSums(diagnoses_init_tot_m_gc)
+      calib_test_gc_m[,1,i] <- rowSums(dx_gc_init_tot_m)
     }
     
   }

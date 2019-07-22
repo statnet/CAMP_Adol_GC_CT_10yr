@@ -1,19 +1,46 @@
 
 setwd("C:/git/CAMP_10yr_proj/scripts/")  # Change depending on machine
 rm(list=ls())
-source("a10_import.R")                   # Get all inputs
+library(EasyABC)
 
-calibstage <- 'first'                    # Do initial calibration of GC from the overall diagnoses 
-source("a10_no_behav_change_script.R")
-source("a10_gc_calibration_ABC.R")    ###### HANDRUN
+########################################################################
+### Inputs for GC and CT
 
-minrun <- which(nbc_gc_ABC$stats==min(nbc_gc_ABC$stats))
+source("a10_import.R")                          # Get all inputs
+source("a10_process_inputs.R")                  # Process inputs (i.e. conduct regressions, etc.)
+source("a10_make_behav_inputs_all_2007.R")      # override 2009-2017 numbers with 2007 for both calibration and no-behavior-change models
+source("a10_process_dx_for_calib.R")            # create total (pseudo-age-specific) diagnosis numbers for step 1 of the calibration 
+source("a10_ABC_gc.R")
 
-part_prev_ratio_f <- as.vector(nbc_gc_ABC$param[minrun,1:3])
-part_prev_ratio_m <- as.vector(nbc_gc_ABC$param[minrun,4:6])
+########################################################################
+### Calibrate GC
 
-calibstage <- 'second'                   # Do secondary calibration of GC from the age-sepcific diagnoses output from the first calibration
-source("a10_no_behav_change_script.R")
-source("a10_gc_calibration_ABC.R")    ###### HANDRUN
-source("a10_gc_calibration_ABC_check.R")
+source("a10_gc_calibration_pt1.R")              # GC calib pt 1 (starting with non-age-specific dx)
 
+source("a10_gc_calibration_ABC_check.R")        # Load calibration check function
+boxplot(a10_calib_gc_pt1$param)                 # Check pt 1 calibration
+calib_test_gc(a10_calib_gc_pt1, 
+              "../output/a10_calib_test_gc_step1_f.pdf", 
+              "../output/a10_calib_test_gc_step1_m.pdf")
+
+source("a10_gc_calibration_pt1_sim.R")          # simulate from GC calib pt 1 to get starting age-specific dx
+
+source("a10_gc_calibration_pt2.R")              # GC calib pt 2 (starting with age-specific dx)
+
+boxplot(a10_calib_gc_pt2$param)                 # Check pt 2 calibration
+calib_test_gc(a10_calib_gc_pt2, 
+              "../output/a10_calib_test_gc_step2_f.pdf", 
+              "../output/a10_calib_test_gc_step2_m.pdf")
+
+source("a10_gc_calibration_pt2_sim.R")          # GC calib pt 2 (starting with non-age-specific dx)
+
+
+########################################################################
+### Run GC no-behavior-change scenario
+
+source("a10_gc_no_behav_change_script.R")
+
+########################################################################
+### Run GC behavior-change scenario
+
+source("a10_gc_obs_behav_change.R")

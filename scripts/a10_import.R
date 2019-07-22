@@ -14,7 +14,6 @@ years <- seq(2007, 2017, by=2)
 ages <- 13:18
 eths <- c("Black", "Hispanic", "White")
 eths_all <- c("Black", "Hispanic", "White", "Other")  # For popsizes, to remove Others from census estimates
-infection <- "GC"
 
 nages <- length(ages)
 nyears <- length(years)
@@ -171,8 +170,10 @@ for (i in 1:length(years)) {
 # But note that this gets tricky because CDC stopped imputing missing attributes in 2010,
 # and race is missing for a large proportion of cases. So that needs to be dealt with.
 
-dx_10_14_f <- dx_10_14_m <- dx_15_19_f <- dx_15_19_m <- array(dim=c(neths, 1, nyears))
-dx_f <- dx_m <- array(dim=c(neths, nages, nyears))
+dx_gc_10_14_f <- dx_gc_10_14_m <- dx_gc_15_19_f <- dx_gc_15_19_m <- array(dim=c(neths, 1, nyears))
+dx_gc_f <- dx_gc_m <- array(dim=c(neths, nages, nyears))
+dx_ct_10_14_f <- dx_ct_10_14_m <- dx_ct_15_19_f <- dx_ct_15_19_m <- array(dim=c(neths, 1, nyears))
+dx_ct_f <- dx_ct_m <- array(dim=c(neths, nages, nyears))
 
 for (i in 1:nyears) {
   filename <- paste(datapath, "/diagnoses_", years[1], ".csv", sep="")
@@ -180,20 +181,36 @@ for (i in 1:nyears) {
   
   # No need to prorate for 2007 - CDC prorated the data in the reports until 2009
   for (j in 1:neths) {
-    dx_10_14_f[j,,i] <- unname(unlist(
-      temp %>% filter(Infection==infection, Sex=="F", Ethn==eths_all[j], Age=="10-14", !is.na(Ethn)) %>% 
+    dx_gc_10_14_f[j,,i] <- unname(unlist(
+      temp %>% filter(Infection=="GC", Sex=="F", Ethn==eths_all[j], Age=="10-14", !is.na(Ethn)) %>% 
         dplyr::select(Rate)
     ))
-    dx_15_19_f[j,,i] <- unname(unlist(
-      temp %>% filter(Infection==infection, Sex=="F", Ethn==eths_all[j], Age=="15-19", !is.na(Ethn)) %>% 
+    dx_gc_15_19_f[j,,i] <- unname(unlist(
+      temp %>% filter(Infection=="GC", Sex=="F", Ethn==eths_all[j], Age=="15-19", !is.na(Ethn)) %>% 
         dplyr::select(Rate)
     ))
-    dx_10_14_m[j,,i] <- unname(unlist(
-      temp %>% filter(Infection==infection, Sex=="M", Ethn==eths_all[j], Age=="10-14", !is.na(Ethn)) %>% 
+    dx_gc_10_14_m[j,,i] <- unname(unlist(
+      temp %>% filter(Infection=="GC", Sex=="M", Ethn==eths_all[j], Age=="10-14", !is.na(Ethn)) %>% 
         dplyr::select(Rate)
     ))
-    dx_15_19_m[j,,i] <- unname(unlist(
-      temp %>% filter(Infection==infection, Sex=="M", Ethn==eths_all[j], Age=="15-19", !is.na(Ethn)) %>% 
+    dx_gc_15_19_m[j,,i] <- unname(unlist(
+      temp %>% filter(Infection=="GC", Sex=="M", Ethn==eths_all[j], Age=="15-19", !is.na(Ethn)) %>% 
+        dplyr::select(Rate)
+    ))
+    dx_ct_10_14_f[j,,i] <- unname(unlist(
+      temp %>% filter(Infection=="CT", Sex=="F", Ethn==eths_all[j], Age=="10-14", !is.na(Ethn)) %>% 
+        dplyr::select(Rate)
+    ))
+    dx_ct_15_19_f[j,,i] <- unname(unlist(
+      temp %>% filter(Infection=="CT", Sex=="F", Ethn==eths_all[j], Age=="15-19", !is.na(Ethn)) %>% 
+        dplyr::select(Rate)
+    ))
+    dx_ct_10_14_m[j,,i] <- unname(unlist(
+      temp %>% filter(Infection=="CT", Sex=="M", Ethn==eths_all[j], Age=="10-14", !is.na(Ethn)) %>% 
+        dplyr::select(Rate)
+    ))
+    dx_ct_15_19_m[j,,i] <- unname(unlist(
+      temp %>% filter(Infection=="CT", Sex=="M", Ethn==eths_all[j], Age=="15-19", !is.na(Ethn)) %>% 
         dplyr::select(Rate)
     ))
   }  
@@ -211,3 +228,5 @@ p_ethn_f[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WF") %>% dplyr::select(B, 
 p_ethn_m[1,] <- unname(unlist(p_ethn %>% filter(Ego=="BM") %>% dplyr::select(B, H, W)))
 p_ethn_m[2,] <- unname(unlist(p_ethn %>% filter(Ego=="HM") %>% dplyr::select(B, H, W)))
 p_ethn_m[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WM") %>% dplyr::select(B, H, W)))
+
+save.image("../output/a10_inputs_raw.rda")
