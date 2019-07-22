@@ -9,11 +9,8 @@
 ### Basics
 
 #setwd("C:/git/CAMP_10yr_proj/scripts/")
-rm(list=ls())
-source("a10_import.R")                  # Get all inputs
 years <- seq(2007, 2017, by=2)          # Set years info
 nyears <- length(years)
-
 
 #########################################################################
 ### HS-attending pop sizes by age/race/sex (averaged across years)
@@ -195,21 +192,6 @@ capp_m <- array11(mat3(c( 11.9, 11.9, 11.9, 19.3, 19.3, 29.3,
                          )))
 
 #########################################################################
-### Init diagnoses, total (in and out of school)
-
-#dx_f[,1:2,1] <- dx_10_14_f[,,1]*(meanpop_13to18_f[,1:2,1])/1e5
-#dx_f[,3:6,1] <- dx_15_19_f[,,1]*(meanpop_13to18_f[,3:6,1])/1e5
-#dx_m[,1:2,1] <- dx_10_14_m[,,1]*(meanpop_13to18_m[,1:2,1])/1e5
-#dx_m[,3:6,1] <- dx_15_19_m[,,1]*(meanpop_13to18_m[,3:6,1])/1e5
-
-#diagnoses_init_tot_f_gc <- rowSums(dx_f[,,1])
-#diagnoses_init_tot_m_gc <- rowSums(dx_m[,,1])
-
-load("diagnoses_init_tot_gc_calib.rda")
-diagnoses_init_tot_f_gc <- diagnoses_init_tot_f_gc_calib
-diagnoses_init_tot_m_gc <- diagnoses_init_tot_m_gc_calib
-
-#########################################################################
 ### Small inputs
 
 beta_rpv_gc <- 0.50 # 0.5856
@@ -222,49 +204,10 @@ dur_f_gc <- 0.46
 dur_m_gc <- 0.23
 
 #########################################################################
+### NOTES
+###
 ### Race / ethn mixing - needs no post-processing
+### Initial diagnoses still not set; that depends on the stage of the process one is on
+### Partner prevalece ratios still not set; that depends on the stage of the process one is on
 
-#########################################################################
-### Partner prevalence raio - needed to calibrate the model by race
-
-load("part_prev_ratios_gc_calib.rda")
-part_prev_ratio_f <- part_prev_ratio_f_gc_calib
-part_prev_ratio_m <- part_prev_ratio_m_gc_calib
-
-
-#########################################################################
-### Call main function
-
-#if(F) 
-  a10_gc01 <- a10(n_f = n_f, 
-                n_m = n_m,
-                prop_eversex_f = pred_eversex_f,
-                prop_eversex_m = pred_eversex_m,
-                condom_use_f = pred_condom_f,
-                condom_use_m = pred_condom_m,
-                mean_new_part_f = pred_mnppy_f,
-                mean_new_part_m = pred_mnppy_m,
-                coital_acts_pp_f = capp_f,
-                coital_acts_pp_m = capp_m,
-                p_ethn_f = p_ethn_f,
-                p_ethn_m = p_ethn_m,
-                diag_init_f = diagnoses_init_tot_f_gc,
-                diag_init_m = diagnoses_init_tot_m_gc,
-                prop_diag_f = prop_diag_f_gc,
-                prop_diag_m = prop_diag_m_gc,
-                dur_inf_f = dur_f_gc,
-                dur_inf_m = dur_m_gc,
-                beta_f2m = beta_ipv_gc,
-                beta_m2f = beta_rpv_gc,
-                meanpop_tot_f = meanpop_13to18_f,
-                meanpop_tot_m = meanpop_13to18_m,
-                part_prev_ratio_f = part_prev_ratio_f,
-                part_prev_ratio_m = part_prev_ratio_m
-  )
-
-
-#########################################################################
-### Process results
-
-save(a10_gc01, file='a10_gc01.rda')
-
+save.image("../output/a10_inputs_processed.rda")
