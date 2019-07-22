@@ -368,7 +368,8 @@ Did a bunch of coding to address the carrying forward, which operates differentl
 ### July 19, 2019
 Tried to recalibrate and it didn't work.  Then I realized that calibration has two steps to it, and one needs to comment out code and then switch it back on the second round,  Then I realized this is all messy and needs to be made reproducible.  Then I created a new file (a10_gcct_entire_project.R) whose purpose was to do that.  Then I started editing the other files to work with that.  Then I got hopelessly confused, so copied over my edited files to my active/CAMP directory, and reverted.  Now I will more systematically go about recreating and documenting what I'd done before, so that I can change it correctly.
 
-### July 20, 2019
+### July 22, 2019
+OK, I've reconstructed the previous calibration methods.  Code is not very reproducible, in that one has to run mutliple things and go and change the comments in the code in the middle. I had done this hoping to minimize the amount of code that is written twice, but now it's a mess.  Am going to reorganize now and get the whole thing abole to be reproducedfrom start to end while runing a single file.  And clean up some naming along the way. Then I will work to update to the revised model with aging and related prevalence changes.
 
 
 ### Tasks:
