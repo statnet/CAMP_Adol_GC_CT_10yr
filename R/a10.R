@@ -96,21 +96,24 @@ a10 <- function(n_f, n_m,
   prev_f <- prev_m <- array(dim=c(3,6,11))
   
   if(is.vector(diag_init_f) & length(diag_init_f)==3) {
-    prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / rowSums(prop_eversex_f[,,1]*meanpop_tot_f[,,1])
+    ###prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / rowSums(prop_eversex_f[,,1]*meanpop_tot_f[,,1])
+    prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / rowSums(meanpop_tot_f[,,1])
   } else {
     if(is.matrix(diag_init_f) & sum(dim(diag_init_f)==c(3,6))==2) {
-      prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / (prop_eversex_f[,,1]*meanpop_tot_f[,,1])
+      ###prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / (prop_eversex_f[,,1]*meanpop_tot_f[,,1])
+      prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / (meanpop_tot_f[,,1])
     } else {
       stop("diag_init_f must be either a vector of length 3 or a matrix of dim (3,6).")
     }
   }
   
   if(is.vector(diag_init_f) & length(diag_init_f)==3) {
-    prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / rowSums(prop_eversex_m[,,1]*meanpop_tot_m[,,1])
+    ###prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / rowSums(prop_eversex_m[,,1]*meanpop_tot_m[,,1])
+    prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / rowSums(meanpop_tot_m[,,1])
   } else {
     if(is.matrix(diag_init_f) & sum(dim(diag_init_f)==c(3,6))==2) {
-      prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / (prop_eversex_m[,,1]*meanpop_tot_m[,,1])
-    } else {
+      ###prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / (prop_eversex_m[,,1]*meanpop_tot_m[,,1])
+      prev_m[,,1] <- diag_init_m * dur_inf_m / prop_diag_m / (meanpop_tot_m[,,1])    } else {
       stop(" diag_init_m must be either a vector of length 3 or a matrix of dim (3,6).")
     }
   }
@@ -127,28 +130,40 @@ a10 <- function(n_f, n_m,
     # Get weighted avg of prevalence in age range among those eversex, in or out of school 
     #  Differs from in school bc age population weights are different, even though age-specific prevs are the same.
     #  This is all needed to make consistent with the tool.
-    overall_prev_f <- rowSums(prev_f[,,i-1]*meanpop_tot_f[,,i-1]*prop_eversex_f[,,i-1]) /   
-                                rowSums(meanpop_tot_f[,,i-1]*prop_eversex_f[,,i-1])
-    overall_prev_m <- rowSums(prev_m[,,i-1]*meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1]) / 
-                                rowSums(meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1])
     
+    ###overall_prev_f <- rowSums(prev_f[,,i-1]*meanpop_tot_f[,,i-1]*prop_eversex_f[,,i-1]) /   
+    ###                            rowSums(meanpop_tot_f[,,i-1]*prop_eversex_f[,,i-1])
+    ###overall_prev_m <- rowSums(prev_m[,,i-1]*meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1]) / 
+    ###                            rowSums(meanpop_tot_m[,,i-1]*prop_eversex_m[,,i-1])
+    
+    overall_prev_f <- rowSums(prev_f[,,i-1]*meanpop_tot_f[,,i-1]) /   
+                                rowSums(meanpop_tot_f[,,i-1])
+    overall_prev_m <- rowSums(prev_m[,,i-1]*meanpop_tot_m[,,i-1]) / 
+                                rowSums(meanpop_tot_m[,,i-1])
+
     n_inc_insch_f[,,i] <- (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from BM
-                    (1-(1-overall_prev_m[1]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,1])) + 
+    ####n_inc_insch_f[,,i] <- (n_eversex_f[,,i-1]) *           # Transm from BM
+                        (1-(1-overall_prev_m[1]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,1])) + 
 
-                    (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from HM
-                    (1-(1-overall_prev_m[2]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,2])) + 
+                        (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from HM
+                        ####(n_eversex_f[,,i-1]) *           # Transm from HM
+                        (1-(1-overall_prev_m[2]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,2])) + 
 
-                    (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from WM
-                    (1-(1-overall_prev_m[3]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,3]))  
+                        (n_eversex_f[,,i-1]*(1-prev_f[,,i-1])) *           # Transm from WM
+                        ####(n_eversex_f[,,i-1]) *           # Transm from WM
+                        (1-(1-overall_prev_m[3]*part_prev_ratio_f*beta_m2f)^(cl_acts_f[,,i-1]*p_ethn_f[,3]))  
       
     n_inc_insch_m[,,i] <- (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from BF
-                    (1-(1-overall_prev_f[1]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,1])) + 
+    ####n_inc_insch_m[,,i] <- (n_eversex_m[,,i-1]) *           # Transm from BF
+                        (1-(1-overall_prev_f[1]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,1])) + 
                     
-                    (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from HF
-                    (1-(1-overall_prev_f[2]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,2])) + 
+                        (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from HF
+                        ####(n_eversex_m[,,i-1]) *           # Transm from HF
+                        (1-(1-overall_prev_f[2]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,2])) + 
                     
-                    (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from WF
-                    (1-(1-overall_prev_f[3]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,3]))  
+                        (n_eversex_m[,,i-1]*(1-prev_m[,,i-1])) *           # Transm from WF
+                        ####(n_eversex_m[,,i-1]) *           # Transm from WF
+                        (1-(1-overall_prev_f[3]*part_prev_ratio_m*beta_f2m)^(cl_acts_m[,,i-1]*p_ethn_m[,3]))  
 
     n_diag_insch_f[,,i] <- n_inc_insch_f[,,i] * prop_diag_f
     n_diag_insch_m[,,i] <- n_inc_insch_m[,,i] * prop_diag_m
@@ -158,23 +173,32 @@ a10 <- function(n_f, n_m,
     n_diag_total_f[,,i] <- n_diag_insch_f[,,i] * meanpop_tot_f[,,1] / n_f[,,1]
     n_diag_total_m[,,i] <- n_diag_insch_m[,,i] * meanpop_tot_m[,,1] / n_m[,,1]
 
-    prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_eversex_f[,,i]                # Old way with no aging
-    prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_eversex_m[,,i]
+    #prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_eversex_f[,,i]                # Old way with no aging
+    #prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_eversex_m[,,i]
     
-    #prev_f_num_temp <- n_inc_insch_f[,,i]*dur_inf_f                                # Prev number
-    #prev_m_num_temp <- n_inc_insch_m[,,i]*dur_inf_m 
+    prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_f[,,i]                        
+    prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_m[,,i]
+    
+    ##prev_f_num_temp <- n_inc_insch_f[,,i]*dur_inf_f                                # Prev number
+    ##prev_m_num_temp <- n_inc_insch_m[,,i]*dur_inf_m 
   
-    #prev_f_num_temp <- cbind(c(0,0,0), prev_f_num_temp[,1:5])                      # Advance one age
-    #prev_m_num_temp <- cbind(c(0,0,0), prev_m_num_temp[,1:5])                      # Advance one age
-    
+    #prev_f_num_temp <- cbind(c(0,0,0), prev_f_num_temp[,1:5])                     # Advance one age
+    #prev_m_num_temp <- cbind(c(0,0,0), prev_m_num_temp[,1:5])                     # Advance one age
+
     #aging_ratio_f <- n_eversex_f[,1:5,i-1]/n_eversex_f[,2:6,i]
     #aging_ratio_m <- n_eversex_m[,1:5,i-1]/n_eversex_m[,2:6,i]
     
-    #denom_f <- n_eversex_f[,,i]                                                    # Growing pops (i.e. more 15 yos in Y1 than 14 yos in Y0) mean new people entering, who had not previously sexually devuted, so are all uninfected; they should be added to denominator
+    ##aging_ratio_f <- n_eversex_f[,,i-1]/n_eversex_f[,,i]
+    ##aging_ratio_m <- n_eversex_m[,,i-1]/n_eversex_m[,,i]
+
+    #denom_f <- n_eversex_f[,,i]                                                   # Growing pops (i.e. more 15 yos in Y1 than 14 yos in Y0) mean new people entering, who had not previously sexually devuted, so are all uninfected; they should be added to denominator
     #denom_m <- n_eversex_m[,,i]
     
-    #denom_f[,2:6][aging_ratio_f>1] <- n_eversex_f[,1:5,i-1][aging_ratio_f>1]       # Shrinking pops (i.e. fewer 18 yos in Y1 than 17 yos in Y0) mean people are leaving school through aging out or dropout; they *are* sexually experienced, and the prevalence rate calcuated on the old pop size should carry forward
-    #denom_m[,2:6][aging_ratio_m>1] <- n_eversex_m[,1:5,i-1][aging_ratio_m>1]      
+    ##denom_f <- n_eversex_f[,,i]                                                    # Growing pops (i.e. more 15 yos in Y1 than 14 yos in Y0) mean new people entering, who had not previously sexually devuted, so are all uninfected; they should be added to denominator
+    ##denom_m <- n_eversex_m[,,i]
+
+    ##denom_f[aging_ratio_f>1] <- n_eversex_f[,,i-1][aging_ratio_f>1]                # Shrinking pops (i.e. fewer 18 yos in Y1 than 17 yos in Y0) mean people are leaving school through aging out or dropout; they *are* sexually experienced, and the prevalence rate calcuated on the old pop size should carry forward
+    ##denom_m[aging_ratio_m>1] <- n_eversex_m[,,i-1][aging_ratio_m>1]      
 
     #prev_f[,,i] <- prev_f_num_temp / denom_f
     #prev_m[,,i] <- prev_m_num_temp / denom_m
