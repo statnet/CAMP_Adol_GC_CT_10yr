@@ -56,12 +56,14 @@ colnames(prop_eversex_f_df) <- c('ethn', 'age', 'year')
 prop_eversex_f_df$prop_eversex <- as.vector(prop_eversex_f)
 prop_eversex_f_df$wts <- as.vector(wts_f)
 prop_eversex_f_df$agefac <- relevel(as.factor(prop_eversex_f_df$age), ref='16')
-eversex_f_reg <- suppressWarnings(glm(prop_eversex ~ agefac + year + ethn + year*ethn,
+prop_eversex_f_df$ym2007 <- prop_eversex_f_df$year - 2007
+eversex_f_reg <- suppressWarnings(glm(prop_eversex ~ agefac + ym2007 + ethn + ym2007*ethn,
                     data=prop_eversex_f_df, weights=wts, 
                     family="binomial"))
 pred_eversex_f_df_indep <- expand.grid(c('B','H','W'), 13:18, 2007:2017)
 colnames(pred_eversex_f_df_indep) <- c('ethn', 'age', 'year')
 pred_eversex_f_df_indep$agefac <- relevel(as.factor(pred_eversex_f_df_indep$age), ref='16')
+pred_eversex_f_df_indep$ym2007 <- pred_eversex_f_df_indep$year - 2007
 pred_eversex_f <- array(predict(eversex_f_reg, type='response', 
                                 newdata= pred_eversex_f_df_indep), dim=c(3,6,11))
 
@@ -73,12 +75,14 @@ colnames(prop_eversex_m_df) <- c('ethn', 'age', 'year')
 prop_eversex_m_df$prop_eversex <- as.vector(prop_eversex_m)
 prop_eversex_m_df$wts <- as.vector(wts_m)
 prop_eversex_m_df$agefac <- relevel(as.factor(prop_eversex_m_df$age), ref='16')
-eversex_m_reg <- suppressWarnings(glm(prop_eversex ~ agefac + year + ethn + year*ethn,
-                                      data=prop_eversex_f_df, weights=wts, 
+prop_eversex_m_df$ym2007 <- prop_eversex_m_df$year - 2007
+eversex_m_reg <- suppressWarnings(glm(prop_eversex ~ agefac + ym2007 + ethn + ym2007*ethn,
+                                      data=prop_eversex_m_df, weights=wts, 
                                       family="binomial"))
 pred_eversex_m_df_indep <- expand.grid(c('B','H','W'), 13:18, 2007:2017)
 colnames(pred_eversex_m_df_indep) <- c('ethn', 'age', 'year')
 pred_eversex_m_df_indep$agefac <- relevel(as.factor(pred_eversex_m_df_indep$age), ref='16')
+pred_eversex_m_df_indep$ym2007 <- pred_eversex_m_df_indep$year - 2007
 pred_eversex_m <- array(predict(eversex_m_reg, type='response', 
                                 newdata= pred_eversex_m_df_indep), dim=c(3,6,11))
                         
@@ -91,12 +95,14 @@ colnames(condom_f_df) <- c('ethn', 'age', 'year')
 condom_f_df$condom <- as.vector(condom_f)
 condom_f_df$wts <- as.vector(condom_wts_f)
 condom_f_df$agefac <- relevel(as.factor(condom_f_df$age), ref='16')
-condom_f_reg <- suppressWarnings(glm(condom ~ agefac + year + ethn + year*ethn,
+condom_f_df$ym2007 <- condom_f_df$year - 2007
+condom_f_reg <- suppressWarnings(glm(condom ~ agefac + ym2007 + ethn + ym2007*ethn,
                      data=condom_f_df, weights=wts, 
                      family="binomial"))
 pred_condom_f_df_indep <- expand.grid(c('B','H','W'), 13:18, 2007:2017)
 colnames(pred_condom_f_df_indep) <- c('ethn', 'age', 'year')
 pred_condom_f_df_indep$agefac <- relevel(as.factor(pred_condom_f_df_indep$age), ref='16')
+pred_condom_f_df_indep$ym2007 <- pred_condom_f_df_indep$year - 2007
 pred_condom_f <- array(predict(condom_f_reg, type='response',
                                   newdata=pred_condom_f_df_indep), dim=c(3,6,11))
 
@@ -105,12 +111,14 @@ colnames(condom_m_df) <- c('ethn', 'age', 'year')
 condom_m_df$condom <- as.vector(condom_m)
 condom_m_df$wts <- as.vector(condom_wts_m)
 condom_m_df$agefac <- relevel(as.factor(condom_m_df$age), ref='16')
-condom_m_reg <- suppressWarnings(glm(condom ~ agefac + year + ethn + year*ethn,
+condom_m_df$ym2007 <- condom_m_df$year - 2007
+condom_m_reg <- suppressWarnings(glm(condom ~ agefac + ym2007 + ethn + ym2007*ethn,
                     data=condom_m_df, weights=wts, 
                     family="binomial"))
 pred_condom_m_df_indep <- expand.grid(c('B','H','W'), 13:18, 2007:2017)
 colnames(pred_condom_m_df_indep) <- c('ethn', 'age', 'year')
 pred_condom_m_df_indep$agefac <- relevel(as.factor(pred_condom_m_df_indep$age), ref='16')
+pred_condom_m_df_indep$ym2007 <- pred_condom_m_df_indep$year - 2007
 pred_condom_m <- array(predict(condom_m_reg, type='response',
                                   newdata=pred_condom_m_df_indep), dim=c(3,6,11))
 
@@ -153,13 +161,13 @@ colnames(mnppy_f_df) <- c('ethn', 'age', 'year')
 mnppy_f_df$mnppy <- as.vector(mnppy_f)
 mnppy_f_df$wts <- as.vector(mnppy_wts_f)
 mnppy_f_df$agefac <- relevel(as.factor(mnppy_f_df$age), ref='16')
-mnppy_f_df$y2k <- mnppy_f_df$year - 2000
-mnppy_f_reg <- suppressWarnings(glm(mnppy ~ ethn + y2k + ethn*y2k + age + I(age^2),
+mnppy_f_df$ym2007 <- mnppy_f_df$year - 2007
+mnppy_f_reg <- suppressWarnings(glm(mnppy ~ ethn + ym2007 + ethn*ym2007 + age + I(age^2),
                    data=mnppy_f_df, weights=wts, na.action=na.exclude, family="poisson"))
 pred_mnppy_f_df_indep <- expand.grid(c('B','H','W'), 13:18, 2007:2017)
 colnames(pred_mnppy_f_df_indep) <- c('ethn', 'age', 'year')
 pred_mnppy_f_df_indep$agefac <- relevel(as.factor(pred_mnppy_f_df_indep$age), ref='16')
-pred_mnppy_f_df_indep$y2k <- pred_mnppy_f_df_indep$year - 2000
+pred_mnppy_f_df_indep$ym2007 <- pred_mnppy_f_df_indep$year - 2007
 pred_mnppy_f <- array(predict(mnppy_f_reg, type='response',
                               newdata=pred_mnppy_f_df_indep), dim=c(3,6,11))
 
@@ -168,13 +176,13 @@ colnames(mnppy_m_df) <- c('ethn', 'age', 'year')
 mnppy_m_df$mnppy <- as.vector(mnppy_m)
 mnppy_m_df$wts <- as.vector(mnppy_wts_m)
 mnppy_m_df$agefac <- relevel(as.factor(mnppy_m_df$age), ref='16')
-mnppy_m_df$y2k <- mnppy_m_df$year - 2000
-mnppy_m_reg <- suppressWarnings(glm(mnppy ~ ethn + y2k + ethn*y2k + age + I(age^2),
+mnppy_m_df$ym2007 <- mnppy_m_df$year - 2007
+mnppy_m_reg <- suppressWarnings(glm(mnppy ~ ethn + ym2007 + ethn*ym2007 + age + I(age^2),
                    data=mnppy_m_df, weights=wts, na.action=na.exclude, family="poisson"))
 pred_mnppy_m_df_indep <- expand.grid(c('B','H','W'), 13:18, 2007:2017)
 colnames(pred_mnppy_m_df_indep) <- c('ethn', 'age', 'year')
 pred_mnppy_m_df_indep$agefac <- relevel(as.factor(pred_mnppy_m_df_indep$age), ref='16')
-pred_mnppy_m_df_indep$y2k <- pred_mnppy_m_df_indep$year - 2000
+pred_mnppy_m_df_indep$ym2007 <- pred_mnppy_m_df_indep$year - 2007
 pred_mnppy_m <- array(predict(mnppy_m_reg, type='response',
                                  newdata=pred_mnppy_m_df_indep), dim=c(3,6,11))
 
