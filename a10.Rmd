@@ -392,11 +392,14 @@ Sniff test seems to be reasonably OK in the sense that the overall declines in e
 
 ### Aug 8
 
-In writing up the methods, I realize that recoding the year variable from year to y2k (year-2000) might actually impact results given the presence of interaction terms.  I made a quick spreadsheet to see that this is indeed true. So it may be wise to redo all models so that year is consistently defined, perhaps as (year - 2005) so that we start with 1.
+In writing up the methods, I realize that recoding the year variable from year to y2k (year-2000) might actually impact results given the presence of interaction terms.  I made a quick spreadsheet to see that this is indeed true. So it may be wise to redo all models so that year is consistently defined, perhaps as (year - 2012) so that our data are centered.
+
+Ok, redid them all.  Turns out it doesn't matter (must have made a miscalculation in my quick excel check), which is good news, because it really ought to be independent of that.  Nonetheless, adding it in and making it consistent does make the coefficients more interpretable, and I'd lik to include them in the paper.
+
+Bug found! Eversex was the same for M and F because of a single letter typo: having the predicted values for M be drawn form the F regression.  Rerunning the whole project right now.  Thank heavens for reproducible code!!!!
+
 
 ### Tasks:
-- why is eversex the same for f and m????
-- redo regression analyses with ym2005 (year - 2005)
 - recheck the behavior with this correction and only pred.eversex varying by year
 - once that works, add in each element of time-changing behavior one by one to excel (or perhaps to R), to see model behavior each time.
 
