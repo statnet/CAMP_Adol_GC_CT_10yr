@@ -1,7 +1,7 @@
 #########################################################################
 ### Call main function
 
-a10_gc01 <- a10(n_f = n_f, 
+a10_gc_obs <- a10(n_f = n_f, 
                 n_m = n_m,
                 prop_eversex_f = pred_eversex_f_dyn,
                 prop_eversex_m = pred_eversex_m_dyn,
@@ -31,5 +31,5 @@ a10_gc01 <- a10(n_f = n_f,
 #########################################################################
 ### Process results
 
-save(a10_gc01, file='../output/a10_gc01.rda')
+save(a10_gc_obs, file='../output/a10_gc_obs.rda')
 
