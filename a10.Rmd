@@ -399,8 +399,10 @@ Ok, redid them all.  Turns out it doesn't matter (must have made a miscalculatio
 Bug found! Eversex was the same for M and F because of a single letter typo: having the predicted values for M be drawn form the F regression.  Rerunning the whole project right now.  Thank heavens for reproducible code!!!!
 
 
+### Aug 19
+NME has happened.  In the meanwhile, I figured out how to sample from the regression coefficients using the var/covar matrix, and have written that all up.  I've also worked on the paper text exensively.  And I've written code to process outputs.  I've pulled both of those pieces out into separate scripts that are called from the whole_project file.
+
 ### Tasks:
-- recheck the behavior with this correction and only pred.eversex varying by year
-- once that works, add in each element of time-changing behavior one by one to excel (or perhaps to R), to see model behavior each time.
+Look into year 2 - is it 0 or just close?
 
 
