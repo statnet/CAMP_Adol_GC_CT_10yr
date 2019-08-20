@@ -25,7 +25,7 @@
 #' @param meanpop_tot_f Total female population in and out of school across the relevant ages
 #' @param meanpop_tot_m Total male population in and out of school across the relevant ages
 #'
-#' @return A list comprising two arrays of dimensions [3,6,11], containing the estimated number of
+#' @return A list comprising two arrays of dimensions [3,6,12], containing the estimated number of
 #'   incident cases of STI per age per year. The three rows represent the
 #'   three race/ethnicity groups (B, H, W); the six columns represent the ages (13:18);
 #'   the 11 layers represent the years (baseline, years 1:10). The first array in the list is F,
@@ -77,23 +77,23 @@ a10 <- function(n_f, n_m,
   n_eversex_m <- n_m * prop_eversex_m
 
   # Create arrays to store number of incident cases per year **in school8 and *total*
-  n_inc_insch_f <- n_inc_insch_m <- n_inc_total_f <- n_inc_total_m <- array(dim=c(3,6,11))
+  n_inc_insch_f <- n_inc_insch_m <- n_inc_total_f <- n_inc_total_m <- array(dim=c(3,6,12))
   n_inc_insch_f[,,1] <- n_inc_insch_m[,,1] <- n_inc_total_f[,,1] <- n_inc_total_m[,,1] <- NA
   
   # Create arrays to store number of diagnoses per year *total* (in and out of HS)
-  n_diag_total_f <- n_diag_total_m <- array(dim=c(3,6,11))
+  n_diag_total_f <- n_diag_total_m <- array(dim=c(3,6,12))
   if(is.matrix(diag_init_f) & sum(dim(diag_init_f)==c(3,6))==2) {
     n_diag_total_f[,,1] <- diag_init_f
     n_diag_total_m[,,1] <- diag_init_m
   } else n_diag_total_f[,,1] <- n_diag_total_m[,,1] <- NA
 
   # Create arrays to store number of diagnoses per year *in HS*
-  n_diag_insch_f <- n_diag_insch_m <- array(dim=c(3,6,11))
+  n_diag_insch_f <- n_diag_insch_m <- array(dim=c(3,6,12))
   n_diag_insch_f[,,1] <- NA
   n_diag_insch_m[,,1] <- NA
 
   # Create arrays to store prevalence in the cross-section (value should be same in sch and tot)
-  prev_f <- prev_m <- array(dim=c(3,6,11))
+  prev_f <- prev_m <- array(dim=c(3,6,12))
   
   if(is.vector(diag_init_f) & length(diag_init_f)==3) {
     ###prev_f[,,1] <- diag_init_f * dur_inf_f / prop_diag_f / rowSums(prop_eversex_f[,,1]*meanpop_tot_f[,,1])
@@ -125,7 +125,7 @@ a10 <- function(n_f, n_m,
   ##########################################################################
   # Advancement
 
-  for (i in 2:11) {
+  for (i in 2:12) {
     
     # Get weighted avg of prevalence in age range among those eversex, in or out of school 
     #  Differs from in school bc age population weights are different, even though age-specific prevs are the same.
@@ -176,8 +176,8 @@ a10 <- function(n_f, n_m,
     #prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_eversex_f[,,i]                # Old way with no aging
     #prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_eversex_m[,,i]
     
-    prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_f[,,i]                        
-    prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_m[,,i]
+    prev_f[,,i] <- n_inc_insch_f[,,i]*dur_inf_f / n_f[,,i-1]                        
+    prev_m[,,i] <- n_inc_insch_m[,,i]*dur_inf_m / n_m[,,i-1]
     
     ##prev_f_num_temp <- n_inc_insch_f[,,i]*dur_inf_f                                # Prev number
     ##prev_m_num_temp <- n_inc_insch_m[,,i]*dur_inf_m 

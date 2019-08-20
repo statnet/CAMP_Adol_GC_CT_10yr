@@ -8,7 +8,7 @@
 #########################################################################
 ### Basics
 
-#setwd("C:/git/CAMP_10yr_proj/scripts/")
+setwd("C:/git/CAMP_10yr_proj/scripts/")
 years <- seq(2007, 2017, by=2)          # Set years info
 nyears <- length(years)
 

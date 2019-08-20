@@ -3,7 +3,7 @@ calib_test_gc <- function(obj, filename_f, filename_m) {
 
   nsims <- nrow(obj$param)
   
-  calib_test_gc_f <- calib_test_gc_m <- array(dim=c(3,11,nsims))
+  calib_test_gc_f <- calib_test_gc_m <- array(dim=c(3,12,nsims))
   
   for (i in 1:nsims) {
     part_prev_ratio_f <- as.vector(obj$param[i,1:3])
