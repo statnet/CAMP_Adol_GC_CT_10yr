@@ -410,3 +410,10 @@ Adding in costs from Li Yan.
 
 Spent lots of time writing more code to process outputs.  Especially across the 100 draws from the parameters.  This makes the whole thing a 4-way array, with the need to sum or average across different dimensions in diferent analyses, which gets a bit tricky.
 
+Going to dive in and tackle chlamydia now!!!!
+
+
+
+## To Do
+
+Think harder about the CIs and whether I need to redo the calibration for each one!!! 
