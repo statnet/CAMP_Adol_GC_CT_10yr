@@ -202,14 +202,27 @@ capp_m <- array11(mat3(c( 11.9, 11.9, 11.9, 19.3, 19.3, 29.3,
 #########################################################################
 ### Small inputs
 
-beta_rpv_gc <- 0.50 # 0.5856
-beta_ipv_gc <- 0.25 # 0.1164
+# NB: we use the median betas from the literature (see teen-SPARC manual)
+#     rather than the final calibrated values in teen-SPARC itself
+
+beta_rpv_gc <- 0.50
+beta_ipv_gc <- 0.25
 
 prop_diag_f_gc <- 0.523
 prop_diag_m_gc <- 0.490
 
 dur_f_gc <- 0.46
 dur_m_gc <- 0.23
+
+beta_rpv_ct <- 0.12
+beta_ipv_ct <- 0.11
+
+prop_diag_f_ct <- 0.450
+prop_diag_m_ct <- 0.234
+
+dur_f_ct <- 0.69
+dur_m_ct <- 0.41
+
 
 #########################################################################
 ### NOTES
