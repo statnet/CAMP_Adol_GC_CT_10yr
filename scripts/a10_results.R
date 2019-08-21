@@ -76,36 +76,22 @@ nia_gc_m_year_pt <- (asum(fns[,,3:12],3) - asum(fcs[,,3:12],3))
 nia_gc_m_year_lb <- apply((temp_nbc-temp_obs), 1, quantile, c(0.025))
 nia_gc_m_year_ub <- apply((temp_nbc-temp_obs), 1, quantile, c(0.975))
 table2b <- round(cbind(nia_gc_m_year_pt, nia_gc_m_year_lb, nia_gc_m_year_ub),1)
-matplot(table2b, type='l')
 
+colSums(table2a * costs$GC_F) + colSums(table2b * costs$GC_M)
 
+annual_savings_GC <- table2a * costs$GC_F + table2b * costs$GC_M
 
+bmp("../output/costs.gc.bmp")
+plot(plotyears, annual_savings_GC[,1]/1e6, pch=15, 
+     xlim=c(min(plotyears)-0.5, max(plotyears)+0.5), 
+     ylim=c(min(annual_savings_GC/1e6), max(annual_savings_GC/1e6)), 
+     xaxp=c(min(plotyears),max(plotyears),length(plotyears)-1),
+     xlab="Year", ylab="Costs saved (US $mil)",
+     main="Costs saved, Gonorrhea"
+)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+errbar(plotyears, annual_savings_GC[,2]/1e6, annual_savings_GC[,3]/1e6)
+dev.off()
 
 
 
