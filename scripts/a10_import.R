@@ -230,3 +230,7 @@ p_ethn_m[2,] <- unname(unlist(p_ethn %>% filter(Ego=="HM") %>% dplyr::select(B, 
 p_ethn_m[3,] <- unname(unlist(p_ethn %>% filter(Ego=="WM") %>% dplyr::select(B, H, W)))
 
 save.image("../output/a10_inputs_raw.rda")
+
+### Costs
+filename <- paste(datapath, "/costs.csv", sep="")
+costs <- read.csv(filename)
