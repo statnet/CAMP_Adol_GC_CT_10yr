@@ -402,7 +402,11 @@ Bug found! Eversex was the same for M and F because of a single letter typo: hav
 ### Aug 19
 NME has happened.  In the meanwhile, I figured out how to sample from the regression coefficients using the var/covar matrix, and have written that all up.  I've also worked on the paper text exensively.  And I've written code to process outputs.  I've pulled both of those pieces out into separate scripts that are called from the whole_project file.
 
-### Tasks:
-Look into year 2 - is it 0 or just close?
+### Aug 21
 
+Discovered that the model was really only running for 9 years of behavior change. That is fixed. Now the output all has 12 layers - layer 1 is the input data (only existing for diagnoses); layer 2 is 2007 (which is the same between the Obs and NBC scenarios), and layers 3-12 are years 2008-2017, which reflect 10 years of accumulated behavior change.
+
+Adding in costs from Li Yan.
+
+Spent lots of time writing more code to process outputs.  Especially across the 100 draws from the parameters.  This makes the whole thing a 4-way array, with the need to sum or average across different dimensions in diferent analyses, which gets a bit tricky.
 
