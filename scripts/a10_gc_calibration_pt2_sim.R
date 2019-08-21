@@ -47,4 +47,4 @@ save(part_prev_ratio_gc_f_calib,
 
 save(dx_gc_init_tot_f, 
      dx_gc_init_tot_m, 
-     file="../output/a10_init_dx_age.rda")
+     file="../output/a10_init_dx_age_gc.rda")
