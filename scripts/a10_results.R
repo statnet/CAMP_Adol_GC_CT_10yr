@@ -15,82 +15,149 @@ round(summary(condom_m_reg)$coef[,c(1,2,4)],3)
 ############################################################
 ### Short names for ease
 
-fns <- a10_gc_nbc$n_inc_insch_f  # Female no behavior change, school
-fcs <- a10_gc_obs$n_inc_insch_f    # etc.
-fnt <- a10_gc_nbc$n_inc_total_f
-fct <- a10_gc_obs$n_inc_total_f
-mns <- a10_gc_nbc$n_inc_insch_m
-mcs <- a10_gc_obs$n_inc_insch_m
-mnt <- a10_gc_nbc$n_inc_total_m
-mct <- a10_gc_obs$n_inc_total_m
+fns_gc <- a10_gc_nbc$n_inc_insch_f  # Female no behavior change, school
+fcs_gc <- a10_gc_obs$n_inc_insch_f    # etc.
+fnt_gc <- a10_gc_nbc$n_inc_total_f
+fct_gc <- a10_gc_obs$n_inc_total_f
+mns_gc <- a10_gc_nbc$n_inc_insch_m
+mcs_gc <- a10_gc_obs$n_inc_insch_m
+mnt_gc <- a10_gc_nbc$n_inc_total_m
+mct_gc <- a10_gc_obs$n_inc_total_m
 
+fns_ct <- a10_ct_nbc$n_inc_insch_f  # Female no behavior change, school
+fcs_ct <- a10_ct_obs$n_inc_insch_f    # etc.
+fnt_ct <- a10_ct_nbc$n_inc_total_f
+fct_ct <- a10_ct_obs$n_inc_total_f
+mns_ct <- a10_ct_nbc$n_inc_insch_m
+mcs_ct <- a10_ct_obs$n_inc_insch_m
+mnt_ct <- a10_ct_nbc$n_inc_total_m
+mct_ct <- a10_ct_obs$n_inc_total_m
+
+plotyears <- 2008:2017
 
 ############################################################
 ## Helper functions
 asum <- function(x, y) apply(x, y, sum)
 
-sum_nbc_f <- function(x, dim) asum(a10_gc_nbc_100[[x]]$n_inc_insch_f[,,3:12], dim)
-sum_nbc_m <- function(x, dim) asum(a10_gc_nbc_100[[x]]$n_inc_insch_m[,,3:12], dim)
-sum_obs_f <- function(x, dim) asum(a10_gc_obs_100[[x]]$n_inc_insch_f[,,3:12], dim)
-sum_obs_m <- function(x, dim) asum(a10_gc_obs_100[[x]]$n_inc_insch_m[,,3:12], dim)
+sum_nbc_f_gc <- function(x, dim) asum(a10_gc_nbc_100[[x]]$n_inc_insch_f[,,3:12], dim)
+sum_nbc_m_gc <- function(x, dim) asum(a10_gc_nbc_100[[x]]$n_inc_insch_m[,,3:12], dim)
+sum_obs_f_gc <- function(x, dim) asum(a10_gc_obs_100[[x]]$n_inc_insch_f[,,3:12], dim)
+sum_obs_m_gc <- function(x, dim) asum(a10_gc_obs_100[[x]]$n_inc_insch_m[,,3:12], dim)
+
+sum_nbc_f_ct <- function(x, dim) asum(a10_ct_nbc_100[[x]]$n_inc_insch_f[,,3:12], dim)
+sum_nbc_m_ct <- function(x, dim) asum(a10_ct_nbc_100[[x]]$n_inc_insch_m[,,3:12], dim)
+sum_obs_f_ct <- function(x, dim) asum(a10_ct_obs_100[[x]]$n_inc_insch_f[,,3:12], dim)
+sum_obs_m_ct <- function(x, dim) asum(a10_ct_obs_100[[x]]$n_inc_insch_m[,,3:12], dim)
 
 #array(sapply(1:100, function(x) sum_nbc_f(x,c(1,3))), c(3,10,100))
+errbar <- function(x, up, low) arrows(x, low, x, up, length=0.05, angle=90, code=3)
+
 
 ##############################################################
 ## Total NIAs with CIs
 
 # Have to do colSums because helper fxn can't sum across all dimesions at once
-temp_nbc <- colSums(sapply(1:100, function(x) sum_nbc_f(x,1) + sum_nbc_m(x,1))) 
-temp_obs <- colSums(sapply(1:100, function(x) sum_obs_f(x,1) + sum_obs_m(x,1))) 
-nia_gc_tot_pt <- sum(fns[,,3:12]) - sum(fcs[,,3:12]) + sum(mns[,,3:12]) - sum(mcs[,,3:12])
-nia_gc_tot_lb <- quantile(temp_nbc - temp_obs, 0.025)
-nia_gc_tot_ub <- quantile(temp_nbc - temp_obs, 0.975)
-c(nia_gc_tot_pt, nia_gc_tot_lb, nia_gc_tot_ub)
+temp_nbc_gc <- colSums(sapply(1:100, function(x) sum_nbc_f_gc(x,1) + sum_nbc_m_gc(x,1))) 
+temp_obs_gc <- colSums(sapply(1:100, function(x) sum_obs_f_gc(x,1) + sum_obs_m_gc(x,1))) 
+nia_gc_tot_pt <- sum(fns_gc[,,3:12]) - sum(fcs_gc[,,3:12]) + 
+                 sum(mns_gc[,,3:12]) - sum(mcs_gc[,,3:12])
+nia_gc_tot_lb <- quantile(temp_nbc_gc - temp_obs_gc, 0.025)
+nia_gc_tot_ub <- quantile(temp_nbc_gc - temp_obs_gc, 0.975)
+round(c(nia_gc_tot_pt, nia_gc_tot_lb, nia_gc_tot_ub),1)
+
+temp_nbc_ct <- colSums(sapply(1:100, function(x) sum_nbc_f_ct(x,1) + sum_nbc_m_ct(x,1))) 
+temp_obs_ct <- colSums(sapply(1:100, function(x) sum_obs_f_ct(x,1) + sum_obs_m_ct(x,1))) 
+nia_ct_tot_pt <- sum(fns_ct[,,3:12]) - sum(fcs_ct[,,3:12]) + 
+                 sum(mns_ct[,,3:12]) - sum(mcs_ct[,,3:12])
+nia_ct_tot_lb <- quantile(temp_nbc_ct - temp_obs_ct, 0.025)
+nia_ct_tot_ub <- quantile(temp_nbc_ct - temp_obs_ct, 0.975)
+round(c(nia_ct_tot_pt, nia_ct_tot_lb, nia_ct_tot_ub),1)
+
 
 ##############################################################
 ## Total PIAs with CIs
 
-temp_nbc <- colSums(sapply(1:100, function(x) sum_nbc_f(x,1) + sum_nbc_m(x,1))) 
-temp_obs <- colSums(sapply(1:100, function(x) sum_obs_f(x,1) + sum_obs_m(x,1))) 
-pia_gc_tot_pt <- (sum(fns[,,3:12]) - sum(fcs[,,3:12]) + sum(mns[,,3:12]) - sum(mcs[,,3:12])) / 
-                   (sum(fns[,,3:12]) + sum(mns[,,3:12]))
-pia_gc_tot_lb <- quantile((temp_nbc-temp_obs)/temp_nbc, 0.025)
-pia_gc_tot_ub <- quantile((temp_nbc-temp_obs)/temp_nbc, 0.975)
+temp_nbc_gc <- colSums(sapply(1:100, function(x) sum_nbc_f_gc(x,1) + sum_nbc_m_gc(x,1))) 
+temp_obs_gc <- colSums(sapply(1:100, function(x) sum_obs_f_gc(x,1) + sum_obs_m_gc(x,1))) 
+pia_gc_tot_pt <- (sum(fns_gc[,,3:12]) - sum(fcs_gc[,,3:12]) + 
+                  sum(mns_gc[,,3:12]) - sum(mcs_gc[,,3:12])) / 
+                 (sum(fns_gc[,,3:12]) + sum(mns_gc[,,3:12]))
+pia_gc_tot_lb <- quantile((temp_nbc_gc-temp_obs_gc)/temp_nbc_gc, 0.025)
+pia_gc_tot_ub <- quantile((temp_nbc_gc-temp_obs_gc)/temp_nbc_gc, 0.975)
 round(100*c(pia_gc_tot_pt, pia_gc_tot_lb, pia_gc_tot_ub),1)
 
+temp_nbc_ct <- colSums(sapply(1:100, function(x) sum_nbc_f_ct(x,1) + sum_nbc_m_ct(x,1))) 
+temp_obs_ct <- colSums(sapply(1:100, function(x) sum_obs_f_ct(x,1) + sum_obs_m_ct(x,1))) 
+pia_ct_tot_pt <- (sum(fns_ct[,,3:12]) - sum(fcs_ct[,,3:12]) + 
+                    sum(mns_ct[,,3:12]) - sum(mcs_ct[,,3:12])) / 
+  (sum(fns_ct[,,3:12]) + sum(mns_ct[,,3:12]))
+pia_ct_tot_lb <- quantile((temp_nbc_ct-temp_obs_ct)/temp_nbc_ct, 0.025)
+pia_ct_tot_ub <- quantile((temp_nbc_ct-temp_obs_ct)/temp_nbc_ct, 0.975)
+round(100*c(pia_ct_tot_pt, pia_ct_tot_lb, pia_ct_tot_ub),1)
 
 ##############################################################
 ## Total NIAs by year and sex
 
-temp_nbc <- sapply(1:100, function(x) sum_nbc_f(x,3)) 
-temp_obs <- sapply(1:100, function(x) sum_obs_f(x,3)) 
-nia_gc_f_year_pt <- (asum(fns[,,3:12],3) - asum(fcs[,,3:12],3))
-nia_gc_f_year_lb <- apply((temp_nbc-temp_obs), 1, quantile, c(0.025))
-nia_gc_f_year_ub <- apply((temp_nbc-temp_obs), 1, quantile, c(0.975))
+temp_nbc_gc <- sapply(1:100, function(x) sum_nbc_f_gc(x,3)) 
+temp_obs_gc <- sapply(1:100, function(x) sum_obs_f_gc(x,3)) 
+nia_gc_f_year_pt <- (asum(fns_gc[,,3:12],3) - asum(fcs_gc[,,3:12],3))
+nia_gc_f_year_lb <- apply((temp_nbc_gc-temp_obs_gc), 1, quantile, c(0.025))
+nia_gc_f_year_ub <- apply((temp_nbc_gc-temp_obs_gc), 1, quantile, c(0.975))
 table2a <- round(cbind(nia_gc_f_year_pt, nia_gc_f_year_lb, nia_gc_f_year_ub),1)
 matplot(table2a, type='l')
 
-temp_nbc <- sapply(1:100, function(x) sum_nbc_m(x,3)) 
-temp_obs <- sapply(1:100, function(x) sum_obs_m(x,3)) 
-nia_gc_m_year_pt <- (asum(fns[,,3:12],3) - asum(fcs[,,3:12],3))
-nia_gc_m_year_lb <- apply((temp_nbc-temp_obs), 1, quantile, c(0.025))
-nia_gc_m_year_ub <- apply((temp_nbc-temp_obs), 1, quantile, c(0.975))
+temp_nbc_gc <- sapply(1:100, function(x) sum_nbc_m_gc(x,3)) 
+temp_obs_gc <- sapply(1:100, function(x) sum_obs_m_gc(x,3)) 
+nia_gc_m_year_pt <- (asum(fns_gc[,,3:12],3) - asum(fcs_gc[,,3:12],3))
+nia_gc_m_year_lb <- apply((temp_nbc_gc-temp_obs_gc), 1, quantile, c(0.025))
+nia_gc_m_year_ub <- apply((temp_nbc_gc-temp_obs_gc), 1, quantile, c(0.975))
 table2b <- round(cbind(nia_gc_m_year_pt, nia_gc_m_year_lb, nia_gc_m_year_ub),1)
+matplot(table2b, type='l')
 
 colSums(table2a * costs$GC_F) + colSums(table2b * costs$GC_M)
+annual_savings_gc <- table2a * costs$GC_F + table2b * costs$GC_M
 
-annual_savings_GC <- table2a * costs$GC_F + table2b * costs$GC_M
+# CT
+
+temp_nbc_ct <- sapply(1:100, function(x) sum_nbc_f_ct(x,3)) 
+temp_obs_ct <- sapply(1:100, function(x) sum_obs_f_ct(x,3)) 
+nia_ct_f_year_pt <- (asum(fns_ct[,,3:12],3) - asum(fcs_ct[,,3:12],3))
+nia_ct_f_year_lb <- apply((temp_nbc_ct-temp_obs_ct), 1, quantile, c(0.025))
+nia_ct_f_year_ub <- apply((temp_nbc_ct-temp_obs_ct), 1, quantile, c(0.975))
+table3a <- round(cbind(nia_ct_f_year_pt, nia_ct_f_year_lb, nia_ct_f_year_ub),1)
+matplot(table3a, type='l')
+
+temp_nbc_ct <- sapply(1:100, function(x) sum_nbc_m_ct(x,3)) 
+temp_obs_ct <- sapply(1:100, function(x) sum_obs_m_ct(x,3)) 
+nia_ct_m_year_pt <- (asum(fns_ct[,,3:12],3) - asum(fcs_ct[,,3:12],3))
+nia_ct_m_year_lb <- apply((temp_nbc_ct-temp_obs_ct), 1, quantile, c(0.025))
+nia_ct_m_year_ub <- apply((temp_nbc_ct-temp_obs_ct), 1, quantile, c(0.975))
+table3b <- round(cbind(nia_ct_m_year_pt, nia_ct_m_year_lb, nia_ct_m_year_ub),1)
+matplot(table3b, type='l')
+
+colSums(table3a * costs$GC_F) + colSums(table3b * costs$GC_M)
+annual_savings_ct <- table2a * costs$GC_F + table2b * costs$GC_M
+
 
 bmp("../output/costs.gc.bmp")
-plot(plotyears, annual_savings_GC[,1]/1e6, pch=15, 
+plot(plotyears, annual_savings_gc[,1]/1e6, pch=15, 
      xlim=c(min(plotyears)-0.5, max(plotyears)+0.5), 
-     ylim=c(min(annual_savings_GC/1e6), max(annual_savings_GC/1e6)), 
+     ylim=c(min(annual_savings_gc/1e6), max(annual_savings_gc/1e6)), 
      xaxp=c(min(plotyears),max(plotyears),length(plotyears)-1),
      xlab="Year", ylab="Costs saved (US $mil)",
      main="Costs saved, Gonorrhea"
 )
+errbar(plotyears, annual_savings_gc[,2]/1e6, annual_savings_gc[,3]/1e6)
 
-errbar(plotyears, annual_savings_GC[,2]/1e6, annual_savings_GC[,3]/1e6)
+plot(plotyears, annual_savings_ct[,1]/1e6, pch=15, 
+     xlim=c(min(plotyears)-0.5, max(plotyears)+0.5), 
+     ylim=c(min(annual_savings_ct/1e6), max(annual_savings_ct/1e6)), 
+     xaxp=c(min(plotyears),max(plotyears),length(plotyears)-1),
+     xlab="Year", ylab="Costs saved (US $mil)",
+     main="Costs saved, Chlamydia"
+)
+errbar(plotyears, annual_savings_ct[,2]/1e6, annual_savings_ct[,3]/1e6)
+
 dev.off()
 
 
@@ -149,8 +216,6 @@ ptest <- (asum(fns[,,3:12], c(1,3)) - asum(fcs[,,3:12], c(1,3)))/
 ub <- apply((aaa-bbb)/aaa, 1:2, quantile, c(0.975))
 lb <- apply((aaa-bbb)/aaa, 1:2, quantile, c(0.025))
 
-plotyears <- 2008:2017
-errbar <- function(x, up, low) arrows(x, low, x, up, length=0.05, angle=90, code=3)
 
 plot(plotyears-0.1, ptest[1,], pch=15, 
      xlim=c(min(plotyears)-0.5, max(plotyears)+0.5), ylim=c(0,1), 
