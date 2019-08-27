@@ -12,6 +12,36 @@ round(summary(condom_f_reg)$coef[,c(1,2,4)],3)
 round(summary(condom_m_reg)$coef[,c(1,2,4)],3)
 
 
+#### Figure 1: predicted values
+plot(13:18,prop_eversex_f[1,,1], pch=16, ylim=c(0,1))
+points(13:18,prop_eversex_f[2,,1], pch=1)
+points(13:18,prop_eversex_f[3,,1], pch=3)
+lines(13:18,pred_eversex_f[1,,1], pch=1)
+lines(13:18,pred_eversex_f[2,,1], pch=2)
+lines(13:18,pred_eversex_f[3,,1], pch=3)
+
+surveyyears <- seq(2007, 2017, by=2)
+
+bmp("../output/predicted.bmp")
+
+  matplot(surveyyears, t(prop_eversex_f[2,,]), pch=16, ylim=c(0,1), 
+          xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+          xlab= "Survey year", 
+          ylab="Prop. reporting ever having had sexual intercourse")
+  
+  matplot(surveyyears, t(pred_eversex_f_dyn[2,,c(1,3,5,7,9,11)]), 
+          pch=16, type='b', add=T, lty=2, col=rainbow(6))
+  
+  legend(2011, y=1, 
+         legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
+                  'Age 16 reported', 'Age 17 reported', 'Age 18 reported',
+                  'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
+                  'Age 16 predicted', 'Age 17 predicted', 'Age 18 predicted'),
+         lty=rep(1:2,each=6),
+         col=rep(rainbow(6),2), cex=0.75, ncol=2)
+dev.off()
+
+
 ############################################################
 ### Short names for ease
 
@@ -95,8 +125,9 @@ pia_ct_tot_lb <- quantile((temp_nbc_ct-temp_obs_ct)/temp_nbc_ct, 0.025)
 pia_ct_tot_ub <- quantile((temp_nbc_ct-temp_obs_ct)/temp_nbc_ct, 0.975)
 round(100*c(pia_ct_tot_pt, pia_ct_tot_lb, pia_ct_tot_ub),1)
 
+
 ##############################################################
-## Total NIAs by year and sex
+## Total NIAs by year and sex (Table 2)
 
 temp_nbc_gc <- sapply(1:100, function(x) sum_nbc_f_gc(x,3)) 
 temp_obs_gc <- sapply(1:100, function(x) sum_obs_f_gc(x,3)) 
@@ -104,18 +135,15 @@ nia_gc_f_year_pt <- (asum(fns_gc[,,3:12],3) - asum(fcs_gc[,,3:12],3))
 nia_gc_f_year_lb <- apply((temp_nbc_gc-temp_obs_gc), 1, quantile, c(0.025))
 nia_gc_f_year_ub <- apply((temp_nbc_gc-temp_obs_gc), 1, quantile, c(0.975))
 table2a <- round(cbind(nia_gc_f_year_pt, nia_gc_f_year_lb, nia_gc_f_year_ub),1)
-matplot(table2a, type='l')
 
 temp_nbc_gc <- sapply(1:100, function(x) sum_nbc_m_gc(x,3)) 
 temp_obs_gc <- sapply(1:100, function(x) sum_obs_m_gc(x,3)) 
-nia_gc_m_year_pt <- (asum(fns_gc[,,3:12],3) - asum(fcs_gc[,,3:12],3))
+nia_gc_m_year_pt <- (asum(mns_gc[,,3:12],3) - asum(mcs_gc[,,3:12],3))
 nia_gc_m_year_lb <- apply((temp_nbc_gc-temp_obs_gc), 1, quantile, c(0.025))
 nia_gc_m_year_ub <- apply((temp_nbc_gc-temp_obs_gc), 1, quantile, c(0.975))
 table2b <- round(cbind(nia_gc_m_year_pt, nia_gc_m_year_lb, nia_gc_m_year_ub),1)
-matplot(table2b, type='l')
 
-colSums(table2a * costs$GC_F) + colSums(table2b * costs$GC_M)
-annual_savings_gc <- table2a * costs$GC_F + table2b * costs$GC_M
+#colSums(table2a * costs$GC_F) + colSums(table2b * costs$GC_M)
 
 # CT
 
@@ -124,19 +152,17 @@ temp_obs_ct <- sapply(1:100, function(x) sum_obs_f_ct(x,3))
 nia_ct_f_year_pt <- (asum(fns_ct[,,3:12],3) - asum(fcs_ct[,,3:12],3))
 nia_ct_f_year_lb <- apply((temp_nbc_ct-temp_obs_ct), 1, quantile, c(0.025))
 nia_ct_f_year_ub <- apply((temp_nbc_ct-temp_obs_ct), 1, quantile, c(0.975))
-table3a <- round(cbind(nia_ct_f_year_pt, nia_ct_f_year_lb, nia_ct_f_year_ub),1)
-matplot(table3a, type='l')
+table2c <- round(cbind(nia_ct_f_year_pt, nia_ct_f_year_lb, nia_ct_f_year_ub),1)
 
 temp_nbc_ct <- sapply(1:100, function(x) sum_nbc_m_ct(x,3)) 
 temp_obs_ct <- sapply(1:100, function(x) sum_obs_m_ct(x,3)) 
-nia_ct_m_year_pt <- (asum(fns_ct[,,3:12],3) - asum(fcs_ct[,,3:12],3))
+nia_ct_m_year_pt <- (asum(mns_ct[,,3:12],3) - asum(mcs_ct[,,3:12],3))
 nia_ct_m_year_lb <- apply((temp_nbc_ct-temp_obs_ct), 1, quantile, c(0.025))
 nia_ct_m_year_ub <- apply((temp_nbc_ct-temp_obs_ct), 1, quantile, c(0.975))
-table3b <- round(cbind(nia_ct_m_year_pt, nia_ct_m_year_lb, nia_ct_m_year_ub),1)
-matplot(table3b, type='l')
+table2d <- round(cbind(nia_ct_m_year_pt, nia_ct_m_year_lb, nia_ct_m_year_ub),1)
 
-colSums(table3a * costs$GC_F) + colSums(table3b * costs$GC_M)
-annual_savings_ct <- table2a * costs$GC_F + table2b * costs$GC_M
+colSums(table2c * costs$CT_F) + colSums(table2d * costs$CT_M)
+annual_savings_ct <- table2c * costs$CT_F + table2d * costs$CT_M
 
 
 bmp("../output/costs.gc.bmp")
@@ -161,7 +187,7 @@ errbar(plotyears, annual_savings_ct[,2]/1e6, annual_savings_ct[,3]/1e6)
 dev.off()
 
 
-
+if(F) {
 ##############################################################
 ## Total PIAs with CIs
 
@@ -254,3 +280,4 @@ points(plotyears+0.1, ptest[3,], pch=17)
 errbar(plotyears+0.1, ub[3,], lb[3,])
 abline(h=0)
 
+}
