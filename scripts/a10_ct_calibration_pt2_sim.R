@@ -33,11 +33,11 @@ a10_calib_ct_pt2_sim <- a10(n_f = n_f,
 
 #apply(a10_calib_ct_pt2_sim$n_diag_insch_f, c(1,3), sum)
 
-part_prev_ratio_ct_f_calib <- part_prev_ratio_ct_f
-part_prev_ratio_ct_m_calib <- part_prev_ratio_ct_m
-save(part_prev_ratio_ct_f_calib, 
-     part_prev_ratio_ct_m_calib, 
-     file="../output/part_prev_ratios_ct_calib.rda")
+#part_prev_ratio_ct_f_calib <- part_prev_ratio_ct_f
+#part_prev_ratio_ct_m_calib <- part_prev_ratio_ct_m
+#save(part_prev_ratio_ct_f_calib, 
+#     part_prev_ratio_ct_m_calib, 
+#     file="../output/part_prev_ratios_ct_calib.rda")
 
 #dx_ct_init_tot_f_calib <- a10_calib_ct_pt2_sim$n_diag_total_f[,,11] * 
 #              dx_ct_init_tot_f_step1 / rowSums(dx_ct_init_tot_f_calib)
@@ -45,6 +45,6 @@ save(part_prev_ratio_ct_f_calib,
 #dx_ct_init_tot_m_calib <- a10_nbc_abc_step3$n_diag_total_m[,,11] * 
 #              dx_ct_init_tot_m_step1 / rowSums(dx_ct_init_tot_m_calib)
 
-save(dx_ct_init_tot_f, 
-     dx_ct_init_tot_m, 
-     file="../output/a10_init_dx_age_ct.rda")
+#save(dx_ct_init_tot_f, 
+#     dx_ct_init_tot_m, 
+#     file="../output/a10_init_dx_age_ct.rda")
