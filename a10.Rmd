@@ -410,10 +410,14 @@ Adding in costs from Li Yan.
 
 Spent lots of time writing more code to process outputs.  Especially across the 100 draws from the parameters.  This makes the whole thing a 4-way array, with the need to sum or average across different dimensions in diferent analyses, which gets a bit tricky.
 
-Going to dive in and tackle chlamydia now!!!!
+Going to dive in and tackle chlamydia now!! 
 
-
+Mostly done, but it has trouble calibrating (can only go up to Step 12 on calib2), and the part prev numbers are much further away from 1 than they are for GC.
 
 ## To Do
 
-Think harder about the CIs and whether I need to redo the calibration for each one!!! 
+- Figure out why CT is behaving as it is in terms of calib
+- Figure out why CT is behaving as it is in terms of male upper bound vs observer
+- Finish carrying CT through the results file.
+- Think harder about CIs and whether I need to redo the calibration for each one!!! 
+
