@@ -20,12 +20,6 @@ dx_ct_init_tot_m <- correction_m *
 
 calib_ct_pt2_tolerance <- calib_ct_pt1_tolerance
 calib_ct_pt2_priors <- calib_ct_pt1_priors 
-calib_ct_pt2_tolerance=c(10, 5, 2.5, 1, 
-                         0.5, 0.25, 0.1, 
-                         0.05, 0.025, 0.01, 
-                         0.005, 0.0025
-)
-
 
 ### ABC run
 a10_calib_ct_pt2 <- ABC_sequential(method="Beaumont",
