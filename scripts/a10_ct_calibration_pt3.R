@@ -3,14 +3,14 @@
 
 ##########################################################
 ## Set diagnoses by age for next stage; correct it for any 
-## discrepancy between total from the original nad the ABC
+## discrepancy between total from the original and the ABC
 
-correction_f <- dx_ct_init_tot_f/
+correction_f <- rowSums(dx_ct_init_tot_f)/
   rowSums(a10_calib_ct_pt2_sim$n_diag_total_f[,,max(cal_times)])
-dx_ct_init_tot_f <- correction_f *
+# dx_ct_init_tot_f <- correction_f *
   a10_calib_ct_pt2_sim$n_diag_total_f[,,max(cal_times)]
 
-correction_m <- dx_ct_init_tot_m/
+correction_m <- rowSums(dx_ct_init_tot_m)/
   rowSums(a10_calib_ct_pt2_sim$n_diag_total_m[,,max(cal_times)])
 dx_ct_init_tot_m <- correction_m *
   a10_calib_ct_pt2_sim$n_diag_total_m[,,max(cal_times)]
