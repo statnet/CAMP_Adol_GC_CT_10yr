@@ -13,13 +13,6 @@ round(summary(condom_m_reg)$coef[,c(1,2,4)],3)
 
 
 #### Figure 1: predicted values
-plot(13:18,prop_eversex_f[1,,1], pch=16, ylim=c(0,1))
-points(13:18,prop_eversex_f[2,,1], pch=1)
-points(13:18,prop_eversex_f[3,,1], pch=3)
-lines(13:18,pred_eversex_f[1,,1], pch=1)
-lines(13:18,pred_eversex_f[2,,1], pch=2)
-lines(13:18,pred_eversex_f[3,,1], pch=3)
-
 surveyyears <- seq(2007, 2017, by=2)
 
 bmp("../output/predicted.bmp")
