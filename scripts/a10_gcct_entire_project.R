@@ -31,14 +31,14 @@ calib_test_gc(a10_calib_gc_pt1,
 
 source("a10_gc_calibration_pt1_sim.R")          # simulate from GC calib pt 1 to get starting age-specific dx
 
-source("a10_gc_calibration_pt2.R")              # GC calib pt 2 (starting with age-specific dx)
+source("a10_gc_calibration_pt2.R")              # GC calib pt 2 (starting with non-age-specific dx)
 
 boxplot(a10_calib_gc_pt2$param)                 # Check pt 2 calibration
 calib_test_gc(a10_calib_gc_pt2, 
   "../output/a10_calib_test_gc_step2_f.pdf", 
   "../output/a10_calib_test_gc_step2_m.pdf")
 
-source("a10_gc_calibration_pt2_sim.R")          # GC calib pt 2 (starting with non-age-specific dx)
+source("a10_gc_calibration_pt2_sim.R")          # GC calib pt 2 (starting with age-specific dx)
 
 
 ########################################################################
@@ -69,7 +69,17 @@ calib_test_ct(a10_calib_ct_pt2,
               "../output/a10_calib_test_ct_step2_f.pdf", 
               "../output/a10_calib_test_ct_step2_m.pdf")
 
-source("a10_ct_calibration_pt2_sim.R")          # CT calib pt 2 (starting with non-age-specific dx)
+source("a10_ct_calibration_pt2_sim.R")          # CT calib pt 3 (starting with non-age-specific dx)
+
+source("a10_ct_calibration_pt3.R")              # CT calib pt 3 (starting with age-specific dx)
+
+boxplot(a10_calib_ct_pt3$param)                 # Check pt 3 calibration
+calib_test_ct(a10_calib_ct_pt3, 
+              "../output/a10_calib_test_ct_step3_f.pdf", 
+              "../output/a10_calib_test_ct_step3_m.pdf")
+
+source("a10_ct_calibration_pt3_sim.R")          # CT calib pt 3 (starting with non-age-specific dx)
+
 
 
 ########################################################################
