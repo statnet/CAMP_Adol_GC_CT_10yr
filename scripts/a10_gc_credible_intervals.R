@@ -149,3 +149,4 @@ for (i in 1:100) {
 #plot(sapply(1:100, function(x) sum(a10_gc_nbc_temp[[x]]$n_inc_insch_f[,,11])), 
 #     sapply(1:100, function(x) sum(a10_gc_obs_100[[x]]$n_inc_insch_f[,,11])))
 
+save(a10_gc_nbc_100, a10_gc_obs_100, file='../output/a100_gc_ci.rda')
