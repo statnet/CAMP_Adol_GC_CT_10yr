@@ -35,22 +35,26 @@ matplot(surveyyears, t(prop_eversex_f[1,,]), pch=16, ylim=c(0,1),
 matplot(surveyyears, t(pred_eversex_f_dyn[1,,c(1,3,5,7,9,11)]), 
         pch=16, type='b', add=T, lty=2, col=rainbow(6))
 
+#bmp("../output/fig1.bmp", width=400, height=420)
+
 matplot(surveyyears, t(prop_eversex_f[2,,]), pch=16, ylim=c(0,1), 
           xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
           xlab= "Survey year", 
           ylab="Prop. reporting ever having had sexual intercourse",
-          main = "Hispanic females")
-  
+          main = "Fig. 1")
+
 matplot(surveyyears, t(pred_eversex_f_dyn[2,,c(1,3,5,7,9,11)]), 
           pch=16, type='b', add=T, lty=2, col=rainbow(6))
   
-legend(2011, y=1, x=2007,
+legend(x=2008, y=1, 
          legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
                   'Age 16 reported', 'Age 17 reported', 'Age 18 reported',
                   'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
                   'Age 16 predicted', 'Age 17 predicted', 'Age 18 predicted'),
          lty=rep(1:2,each=6),
-         col=rep(rainbow(6),2), cex=0.75, ncol=2)
+         col=rep(rainbow(6),2), cex=0.85, ncol=2)
+
+#dev.off()
 
 matplot(surveyyears, t(prop_eversex_f[3,,]), pch=16, ylim=c(0,1), 
         xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
@@ -311,6 +315,16 @@ rowSums(nia_gc_raceyr_pt)
 prop.table(rowSums(nia_gc_raceyr_pt))
 rowSums(nia_ct_raceyr_pt + nia_gc_raceyr_pt)
 prop.table(rowSums(nia_ct_raceyr_pt + nia_gc_raceyr_pt))
+
+### For PAA
+nia_ct_race_pt <- 
+  rowSums((asum(fns_ct[,,3:12], c(1,3)) - asum(fcs_ct[,,3:12], c(1,3)) +
+             asum(mns_ct[,,3:12], c(1,3)) - asum(mcs_ct[,,3:12], c(1,3))))
+
+### For PAA
+nia_gc_race_pt <- 
+  rowSums((asum(fns_gc[,,3:12], c(1,3)) - asum(fcs_gc[,,3:12], c(1,3)) +
+             asum(mns_gc[,,3:12], c(1,3)) - asum(mcs_gc[,,3:12], c(1,3))))
 
 pia_ct_race_pt <- 
   rowSums((asum(fns_ct[,,3:12], c(1,3)) - asum(fcs_ct[,,3:12], c(1,3)) +
