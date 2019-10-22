@@ -20,48 +20,46 @@ round(summary(mnppy_m_reg)$coef[,c(1,2,4)],3)
 
 
 #################################################################################
-#### Figure 1: predicted values
+#### Figure 1: predicted values for eversex
 surveyyears <- seq(2007, 2017, by=2)
 
-bmp("../output/predicted.bmp", width=640, height=360)
+bmp("../output/predicted.bmp", width=920, height=700)
 
-par(mfrow=c(1,3))
+layout(matrix(c(1,1,1,2,3,4), 2, 3, byrow = TRUE))
+
+par(mar=c(0, 0, 0, 0))
+plot(0:1, 0:1, xaxt = 'n', yaxt = 'n', bty = 'n', 
+     pch = '', ylab = '', xlab = '')
+legend(x=0.18, y=0.15, 
+   legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
+            'Age 16 reported', 'Age 17 reported', 'Age 18 reported',
+            'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
+            'Age 16 predicted', 'Age 17 predicted', 'Age 18 predicted'),
+   lty=rep(1:2,each=6), col=rep(rainbow(6),2), ncol=4, cex=1.5)
+
+par(mar=c(5.1, 5.1, 2.1, 2.1))
 matplot(surveyyears, t(prop_eversex_f[1,,]), pch=16, ylim=c(0,1), 
         xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
         xlab= "Survey year", 
-        ylab="Prop. reporting ever having had sexual intercourse",
-        main = "Black females")
-
+        ylab="Prop. reporting previous sexual intercourse",
+        main = "Black females", cex.axis=1.75, cex.lab = 1.75, cex.main=1.75)
 matplot(surveyyears, t(pred_eversex_f_dyn[1,,c(1,3,5,7,9,11)]), 
         pch=16, type='b', add=T, lty=2, col=rainbow(6))
 
-#bmp("../output/fig1.bmp", width=400, height=420)
-
+par(mar=c(5.1, 1.5, 2.1, 2.1))
 matplot(surveyyears, t(prop_eversex_f[2,,]), pch=16, ylim=c(0,1), 
-          xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
-          xlab= "Survey year", 
-          ylab="Prop. reporting ever having had sexual intercourse",
-          main = "Fig. 1")
-
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "Hispanic females", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
 matplot(surveyyears, t(pred_eversex_f_dyn[2,,c(1,3,5,7,9,11)]), 
           pch=16, type='b', add=T, lty=2, col=rainbow(6))
   
-legend(x=2008, y=1, 
-         legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
-                  'Age 16 reported', 'Age 17 reported', 'Age 18 reported',
-                  'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
-                  'Age 16 predicted', 'Age 17 predicted', 'Age 18 predicted'),
-         lty=rep(1:2,each=6),
-         col=rep(rainbow(6),2), cex=0.85, ncol=2)
-
-#dev.off()
-
 matplot(surveyyears, t(prop_eversex_f[3,,]), pch=16, ylim=c(0,1), 
         xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
         xlab= "Survey year", 
-        ylab="Prop. reporting ever having had sexual intercourse",
-        main = "White females")
-
+        ylab="",
+        main = "White females", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
 matplot(surveyyears, t(pred_eversex_f_dyn[3,,c(1,3,5,7,9,11)]), 
         pch=16, type='b', add=T, lty=2, col=rainbow(6))
 
