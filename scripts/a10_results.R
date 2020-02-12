@@ -152,7 +152,7 @@ round(100*c(pia_gc_tot_pt, pia_gc_tot_lb, pia_gc_tot_ub),1)
 
 
 ##############################################################
-## Table 2: Total NIAs by year and sex
+## Table 2 and Table S5: Total NIAs by year and sex
 
 temp_nbc_ct <- sapply(1:100, function(x) sum_nbc_f_ct(x,3)) 
 temp_obs_ct <- sapply(1:100, function(x) sum_obs_f_ct(x,3)) 
@@ -470,10 +470,6 @@ pia_gcct_age_pt <-
 pia_ct_age_pt
 pia_gc_age_pt
 pia_gcct_age_pt
-
-
-
-
 
 
 #####################################
