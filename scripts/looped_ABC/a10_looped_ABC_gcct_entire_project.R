@@ -46,7 +46,7 @@ source("a10_looped_ABC_gc_calibration_pt2_sim.R")          # GC calib pt 2 (star
 
 source("a10_looped_ABC_gc_no_behav_change_script.R")       # No behavior change
 source("a10_looped_ABC_gc_obs_behav_change.R")             # Observed behavior change
-source("a10_looped_ABC_gc_credible_intervals.R")           # Observed behavior change
+#source("a10_looped_ABC_gc_credible_intervals.R")           # Observed behavior change
 
 ########################################################################
 ### Calibrate CT
@@ -85,9 +85,19 @@ source("a10_looped_ABC_ct_calibration_pt3_sim.R")          # CT calib pt 3 (star
 
 source("a10_looped_ABC_ct_no_behav_change_script.R")       # No behavior change
 source("a10_looped_ABC_ct_obs_behav_change.R")             # Observed behavior change
-source("a10_looped_ABC_ct_credible_intervals.R")             # Observed behavior change
+#source("a10_looped_ABC_ct_credible_intervals.R")             # Observed behavior change
 
 ########################################################
 ## Generate results for paper 
 
 source("a10_looped_ABC_results.R")
+
+########################################################
+save.image("a10_gcct_results_from_main_run.r")
+
+
+########################################################
+### Run entire model multiple times with 
+
+source("a10_looped_ABC_looped_ABC.R")
+  
