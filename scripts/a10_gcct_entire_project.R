@@ -4,6 +4,8 @@
 
 setwd("C:/git/CAMP_10yr_proj/scripts/")  # Change depending on machine
 rm(list=ls())
+
+#install.packages("EasyABC")
 library(EasyABC)
 library(MASS)
 set.seed(0)
