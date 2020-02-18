@@ -1,11 +1,11 @@
-Package: adol10yr
-Title: What The Package Does (one line, title case required)
+Package: statnet/CAMP_10yr_GC_CT_model
+Title: Model of behavoral change and gonorrhea and chlamydia transmission among US adolescents, 2007-2017
 Version: 0.1
-Authors@R: person("First", "Last", email = "first.last@example.com",
+Authors@R: person("Steven M.", "Goodreau", email = "goodreau@uw.edu",
                   role = c("aut", "cre"))
-Description: What the package does (one paragraph)
+Description: to be completed before publication
 Depends: R (>= 3.1.0)
-License: What license is it under?
+License: TBD
 LazyData: true
 RoxygenNote: 6.1.1
 Encoding: UTF-8
