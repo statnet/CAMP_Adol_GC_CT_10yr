@@ -1,4 +1,4 @@
-**Code to accompany the manuscript:** ***Reductions in chlamydia and gonorrhea burden and treatment costs resulting from sexual health behavior change among high school-attending adolescents in the US, 2007-2017.s***
+**Code to accompany the manuscript:** ***Reductions in chlamydia and gonorrhea burden and treatment costs resulting from sexual health behavior change among high school-attending adolescents in the US, 2007-2017.***
 
 Quick instructions to run the entire model, and recreate the results in the manusript:
 
