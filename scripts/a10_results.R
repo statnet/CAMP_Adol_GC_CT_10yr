@@ -23,7 +23,7 @@ round(summary(mnppy_m_reg)$coef[,c(1,2,4)],3)
 #### Figure 1: predicted values for eversex
 surveyyears <- seq(2007, 2017, by=2)
 
-bmp("../output/predicted.bmp", width=920, height=700)
+bmp("../output/predicted_eversex_f.bmp", width=920, height=700)
 
 layout(matrix(c(1,1,1,2,3,4), 2, 3, byrow = TRUE))
 
@@ -42,7 +42,7 @@ matplot(surveyyears, t(prop_eversex_f[1,,]), pch=16, ylim=c(0,1),
         xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
         xlab= "Survey year", 
         ylab="Prop. reporting previous sexual intercourse",
-        main = "Black females", cex.axis=1.75, cex.lab = 1.75, cex.main=1.75)
+        main = "Black female students", cex.axis=1.75, cex.lab = 1.75, cex.main=1.75)
 matplot(surveyyears, t(pred_eversex_f_dyn[1,,c(1,3,5,7,9,11)]), 
         pch=16, type='b', add=T, lty=2, col=rainbow(6))
 
@@ -51,7 +51,7 @@ matplot(surveyyears, t(prop_eversex_f[2,,]), pch=16, ylim=c(0,1),
         xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
         xlab= "Survey year", 
         ylab="",
-        main = "Hispanic females", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+        main = "Hispanic female students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
 matplot(surveyyears, t(pred_eversex_f_dyn[2,,c(1,3,5,7,9,11)]), 
           pch=16, type='b', add=T, lty=2, col=rainbow(6))
   
@@ -59,7 +59,7 @@ matplot(surveyyears, t(prop_eversex_f[3,,]), pch=16, ylim=c(0,1),
         xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
         xlab= "Survey year", 
         ylab="",
-        main = "White females", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+        main = "White female students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
 matplot(surveyyears, t(pred_eversex_f_dyn[3,,c(1,3,5,7,9,11)]), 
         pch=16, type='b', add=T, lty=2, col=rainbow(6))
 
@@ -105,8 +105,6 @@ sum_obs_m_gc <- function(x, dim) asum(a10_gc_obs_100[[x]]$n_inc_insch_m[,,3:12],
 #array(sapply(1:100, function(x) sum_nbc_f(x,c(1,3))), c(3,10,100))
 errbar <- function(x, up, low, ...) arrows(x, low, x, up, 
                                       length=0.00, angle=90, code=3, ...)
-
-
 
 ##############################################################
 ## Text: Total NIAs with CIs
@@ -249,10 +247,13 @@ pia_gc_raceyr_ub <- apply((temp_nbc_gc-temp_obs_gc)/temp_nbc_gc,
 pia_gc_raceyr_lb <- apply((temp_nbc_gc-temp_obs_gc)/temp_nbc_gc, 
                           1:2, quantile, c(0.025))
 
+mycolors <- c('black', 'gray40', 'gray60')
+mylty <- 3:1
+
 bmp("../output/a10_race.bmp", width=800, height=800)
 plotoffset = 0.07
 par(mfrow=c(2,1))
-plot(plotyears-plotoffset*3, nia_ct_raceyr_pt[1,], pch=16, col='red',
+plot(plotyears-plotoffset*3, nia_ct_raceyr_pt[1,], pch=16, col=mycolors[1], 
      xlim=c(min(plotyears)-0.5, max(plotyears)+0.5), ylim=c(0,3e5), 
      xaxp=c(min(plotyears),max(plotyears),length(plotyears)-1),
      yaxt = 'n',
@@ -261,46 +262,48 @@ plot(plotyears-plotoffset*3, nia_ct_raceyr_pt[1,], pch=16, col='red',
 )
 axis(2, at = seq(0,3e5,5e4), las=1,
      labels=c('0k', '50k', '100k', '150k', '200k', '250k', '300k'))
-errbar(plotyears-plotoffset*3, nia_ct_raceyr_ub[1,], nia_ct_raceyr_lb[1,], col='red')
-points(plotyears-plotoffset*2, nia_ct_raceyr_pt[2,], pch=16, col='blue')
-errbar(plotyears-plotoffset*2, nia_ct_raceyr_ub[2,], nia_ct_raceyr_lb[2,], col='blue')
-points(plotyears-plotoffset*1, nia_ct_raceyr_pt[3,], pch=16, col='green')
-errbar(plotyears-plotoffset*1, nia_ct_raceyr_ub[3,], nia_ct_raceyr_lb[3,], col='green')
-points(plotyears+plotoffset*1, nia_gc_raceyr_pt[1,], pch=4, col='red')
-errbar(plotyears+plotoffset*1, nia_gc_raceyr_ub[1,], nia_gc_raceyr_lb[1,], col='red')
-points(plotyears+plotoffset*2, nia_gc_raceyr_pt[2,], pch=4, col='blue')
-errbar(plotyears+plotoffset*2, nia_gc_raceyr_ub[2,], nia_gc_raceyr_lb[2,], col='blue')
-points(plotyears+plotoffset*3, nia_gc_raceyr_pt[3,], pch=4, col='green')
-errbar(plotyears+plotoffset*3, nia_gc_raceyr_ub[3,], nia_gc_raceyr_lb[3,], col='green')
+errbar(plotyears-plotoffset*3, nia_ct_raceyr_ub[1,], nia_ct_raceyr_lb[1,], col=mycolors[1], lty=mylty[1])
+points(plotyears-plotoffset*2, nia_ct_raceyr_pt[2,], pch=16, col=mycolors[2])
+errbar(plotyears-plotoffset*2, nia_ct_raceyr_ub[2,], nia_ct_raceyr_lb[2,], col=mycolors[2], lty=mylty[2])
+points(plotyears-plotoffset*1, nia_ct_raceyr_pt[3,], pch=16, col=mycolors[3])
+errbar(plotyears-plotoffset*1, nia_ct_raceyr_ub[3,], nia_ct_raceyr_lb[3,], col=mycolors[3], lty=mylty[3])
+points(plotyears+plotoffset*1, nia_gc_raceyr_pt[1,], pch=4, col=mycolors[1])
+errbar(plotyears+plotoffset*1, nia_gc_raceyr_ub[1,], nia_gc_raceyr_lb[1,], col=mycolors[1], lty=mylty[1])
+points(plotyears+plotoffset*2, nia_gc_raceyr_pt[2,], pch=4, col=mycolors[2])
+errbar(plotyears+plotoffset*2, nia_gc_raceyr_ub[2,], nia_gc_raceyr_lb[2,], col=mycolors[2], lty=mylty[2])
+points(plotyears+plotoffset*3, nia_gc_raceyr_pt[3,], pch=4, col=mycolors[3])
+errbar(plotyears+plotoffset*3, nia_gc_raceyr_ub[3,], nia_gc_raceyr_lb[3,], col=mycolors[3], lty=mylty[3])
 legend(2008, 3e5, 
        legend=c('Black, chlamydia', 'Hispanic, chlamydia', 'White, chlamdyia',
                 'Black, gonorrhea', 'Hispanic, gonorrhea', 'White, gonorrhea'),
        pch = rep(c(16,4), each=3),
-       col = rep(c('red', 'blue', 'green'),2),
+       col = rep(mycolors, 2),
+       lty = rep(mylty, 2),
        ncol=2)
 
-plot(plotyears-plotoffset*3, pia_ct_raceyr_pt[1,], pch=16, col='red',
+plot(plotyears-plotoffset*3, pia_ct_raceyr_pt[1,], pch=16, col=mycolors[1],
      xlim=c(min(plotyears)-0.5, max(plotyears)+0.5), ylim=c(0,0.8), 
      xaxp=c(min(plotyears),max(plotyears),length(plotyears)-1),
      xlab="Year", ylab="PIA (mean and CI)",
      main="PIA by race/ethnicity and year"
 )
-errbar(plotyears-plotoffset*3, pia_ct_raceyr_ub[1,], pia_ct_raceyr_lb[1,], col='red')
-points(plotyears-plotoffset*2, pia_ct_raceyr_pt[2,], pch=16, col='blue')
-errbar(plotyears-plotoffset*2, pia_ct_raceyr_ub[2,], pia_ct_raceyr_lb[2,], col='blue')
-points(plotyears-plotoffset*1, pia_ct_raceyr_pt[3,], pch=16, col='green')
-errbar(plotyears-plotoffset*1, pia_ct_raceyr_ub[3,], pia_ct_raceyr_lb[3,], col='green')
-points(plotyears+plotoffset*1, pia_gc_raceyr_pt[1,], pch=4, col='red')
-errbar(plotyears+plotoffset*1, pia_gc_raceyr_ub[1,], pia_gc_raceyr_lb[1,], col='red')
-points(plotyears+plotoffset*2, pia_gc_raceyr_pt[2,], pch=4, col='blue')
-errbar(plotyears+plotoffset*2, pia_gc_raceyr_ub[2,], pia_gc_raceyr_lb[2,], col='blue')
-points(plotyears+plotoffset*3, pia_gc_raceyr_pt[3,], pch=4, col='green')
-errbar(plotyears+plotoffset*3, pia_gc_raceyr_ub[3,], pia_gc_raceyr_lb[3,], col='green')
+errbar(plotyears-plotoffset*3, pia_ct_raceyr_ub[1,], pia_ct_raceyr_lb[1,], col=mycolors[1], lty=mylty[1])
+points(plotyears-plotoffset*2, pia_ct_raceyr_pt[2,], pch=16, col=mycolors[2])
+errbar(plotyears-plotoffset*2, pia_ct_raceyr_ub[2,], pia_ct_raceyr_lb[2,], col=mycolors[2], lty=mylty[2])
+points(plotyears-plotoffset*1, pia_ct_raceyr_pt[3,], pch=16, col=mycolors[3])
+errbar(plotyears-plotoffset*1, pia_ct_raceyr_ub[3,], pia_ct_raceyr_lb[3,], col=mycolors[3], lty=mylty[3])
+points(plotyears+plotoffset*1, pia_gc_raceyr_pt[1,], pch=4, col=mycolors[1])
+errbar(plotyears+plotoffset*1, pia_gc_raceyr_ub[1,], pia_gc_raceyr_lb[1,], col=mycolors[1], lty=mylty[1])
+points(plotyears+plotoffset*2, pia_gc_raceyr_pt[2,], pch=4, col=mycolors[2])
+errbar(plotyears+plotoffset*2, pia_gc_raceyr_ub[2,], pia_gc_raceyr_lb[2,], col=mycolors[2], lty=mylty[2])
+points(plotyears+plotoffset*3, pia_gc_raceyr_pt[3,], pch=4, col=mycolors[3])
+errbar(plotyears+plotoffset*3, pia_gc_raceyr_ub[3,], pia_gc_raceyr_lb[3,], col=mycolors[3], lty=mylty[3])
 legend(2008, 0.8, 
        legend=c('Black, chlamydia', 'Hispanic, chlamydia', 'White, chlamdyia',
                          'Black, gonorrhea', 'Hispanic, gonorrhea', 'White, gonorrhea'),
        pch = rep(c(16,4), each=3),
-       col = rep(c('red', 'blue', 'green'),2),
+       col = rep(mycolors, 2),
+       lty = rep(mylty, 2),
        ncol=2)
 dev.off()
 
@@ -398,9 +401,13 @@ pia_gc_age_lb <- apply((temp_nbc_gc-temp_obs_gc)/temp_nbc_gc,
                           1:2, quantile, c(0.025))
 
 bmp("../output/a10_age.bmp", width=500, height=800)
+
+mycolors <- c('black', 'gray50')
+mylty = 2:1
+  
 plotoffset = 0.07
 par(mfrow=c(2,1))
-plot((13:18)-plotoffset, nia_ct_age_pt, pch=16, col='red',
+plot((13:18)-plotoffset, nia_ct_age_pt, pch=16, col=mycolors[1],
      ylim=c(0,8e5), 
      yaxt = 'n',
      xlab="Age", ylab="NIA (mean and CI)",
@@ -408,29 +415,31 @@ plot((13:18)-plotoffset, nia_ct_age_pt, pch=16, col='red',
 )
 axis(2, at = seq(0,8e5,1e5), las=1,
      labels=c('0k', '100k', '200k', '300k', '400k', '500k', '600k', '700k', '800k'))
-errbar((13:18)-plotoffset, nia_ct_age_ub, nia_ct_age_lb, col='red')
-points((13:18)+plotoffset, nia_gc_age_pt, pch=4, col='blue')
-errbar((13:18)+plotoffset, nia_gc_age_ub, nia_gc_age_lb, col='blue')
+errbar((13:18)-plotoffset, nia_ct_age_ub, nia_ct_age_lb, col=mycolors[1], lty=mylty[1])
+points((13:18)+plotoffset, nia_gc_age_pt, pch=4, col=mycolors[2])
+errbar((13:18)+plotoffset, nia_gc_age_ub, nia_gc_age_lb, col=mycolors[2], lty=mylty[2])
 
 legend(13, 8e5, 
        legend=c('Chlamydia', 'Gonorrhea'),
        pch = c(16,4),
-       col = c('red', 'blue')
+       col = mycolors, 
+       lty= mylty
 )
 
-plot((13:18)-plotoffset, pia_ct_age_pt, pch=16, col='red',
+plot((13:18)-plotoffset, pia_ct_age_pt, pch=16, col=mycolors[1],
      ylim=c(0, 0.5),
      xlab="Age", ylab="PIA (mean and CI)",
      main="PIA by age"
 )
-errbar((13:18)-plotoffset, pia_ct_age_ub, pia_ct_age_lb, col='red')
-points((13:18)+plotoffset, pia_gc_age_pt, pch=4, col='blue')
-errbar((13:18)+plotoffset, pia_gc_age_ub, pia_gc_age_lb, col='blue')
+errbar((13:18)-plotoffset, pia_ct_age_ub, pia_ct_age_lb, col=mycolors[1], lty=mylty[1])
+points((13:18)+plotoffset, pia_gc_age_pt, pch=4, col=mycolors[2])
+errbar((13:18)+plotoffset, pia_gc_age_ub, pia_gc_age_lb, col=mycolors[2], lty=mylty[2])
 
 legend(17, 0.5, 
        legend=c('Chlamydia', 'Gonorrhea'),
        pch = c(16,4),
-       col = c('red', 'blue')
+       col = mycolors, 
+       lty= mylty
 )
 
 dev.off()
@@ -472,28 +481,332 @@ pia_gc_age_pt
 pia_gcct_age_pt
 
 
-#####################################
-#  Boneyard
 
-#bmp("../output/costs.gc.bmp")
-#plot(plotyears, annual_savings_gc[,1]/1e6, pch=15, 
-#     xlim=c(min(plotyears)-0.5, max(plotyears)+0.5), 
-#     ylim=c(min(annual_savings_gc/1e6), max(annual_savings_gc/1e6)), 
-#     xaxp=c(min(plotyears),max(plotyears),length(plotyears)-1),
-#     xlab="Year", ylab="Costs saved (US $mil)",
-#     main="Costs saved, Gonorrhea"
-#)
-#errbar(plotyears, annual_savings_gc[,2]/1e6, annual_savings_gc[,3]/1e6)
+#####################
+# Figure S1
+
+
+surveyyears <- seq(2007, 2017, by=2)
+
+bmp("../output/predicted_eversex_m.bmp", width=920, height=700)
+
+layout(matrix(c(1,1,1,2,3,4), 2, 3, byrow = TRUE))
+
+par(mar=c(0, 0, 0, 0))
+plot(0:1, 0:1, xaxt = 'n', yaxt = 'n', bty = 'n', 
+     pch = '', ylab = '', xlab = '')
+legend(x=0.18, y=0.15, 
+       legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
+                'Age 16 reported', 'Age 17 reported', 'Age 18 reported',
+                'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
+                'Age 16 predicted', 'Age 17 predicted', 'Age 18 predicted'),
+       lty=rep(1:2,each=6), col=rep(rainbow(6),2), ncol=4, cex=1.5)
+
+par(mar=c(5.1, 5.1, 2.1, 2.1))
+matplot(surveyyears, t(prop_eversex_m[1,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="Prop. reporting previous sexual intercourse",
+        main = "Black male students", cex.axis=1.75, cex.lab = 1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_eversex_m_dyn[1,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+par(mar=c(5.1, 1.5, 2.1, 2.1))
+matplot(surveyyears, t(prop_eversex_m[2,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "Hispanic male students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_eversex_m_dyn[2,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+matplot(surveyyears, t(prop_eversex_m[3,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "White male students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_eversex_m_dyn[3,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+dev.off()
+
+###
+
+surveyyears <- seq(2007, 2017, by=2)
+
+bmp("../output/predicted_condom_f.bmp", width=920, height=700)
+
+layout(matrix(c(1,1,1,2,3,4), 2, 3, byrow = TRUE))
+
+par(mar=c(0, 0, 0, 0))
+plot(0:1, 0:1, xaxt = 'n', yaxt = 'n', bty = 'n', 
+     pch = '', ylab = '', xlab = '')
+legend(x=0.18, y=0.15, 
+       legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
+                'Age 16 reported', 'Age 17 reported', 'Age 18 reported',
+                'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
+                'Age 16 predicted', 'Age 17 predicted', 'Age 18 predicted'),
+       lty=rep(1:2,each=6), col=rep(rainbow(6),2), ncol=4, cex=1.5)
+
+par(mar=c(5.1, 5.1, 2.1, 2.1))
+matplot(surveyyears, t(condom_f[1,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="Prop. reporting condom use at last sexual intercourse",
+        main = "Black female students", cex.axis=1.75, cex.lab = 1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_condom_f_dyn[1,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+par(mar=c(5.1, 1.5, 2.1, 2.1))
+matplot(surveyyears, t(condom_f[2,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "Hispanic female students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_condom_f_dyn[2,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+matplot(surveyyears, t(condom_f[3,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "White female students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_condom_f_dyn[3,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+dev.off()
+
+
+###
+
+surveyyears <- seq(2007, 2017, by=2)
+
+bmp("../output/predicted_condom_m.bmp", width=920, height=700)
+
+layout(matrix(c(1,1,1,2,3,4), 2, 3, byrow = TRUE))
+
+par(mar=c(0, 0, 0, 0))
+plot(0:1, 0:1, xaxt = 'n', yaxt = 'n', bty = 'n', 
+     pch = '', ylab = '', xlab = '')
+legend(x=0.18, y=0.15, 
+       legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
+                'Age 16 reported', 'Age 17 reported', 'Age 18 reported',
+                'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
+                'Age 16 predicted', 'Age 17 predicted', 'Age 18 predicted'),
+       lty=rep(1:2,each=6), col=rep(rainbow(6),2), ncol=4, cex=1.5)
+
+par(mar=c(5.1, 5.1, 2.1, 2.1))
+matplot(surveyyears, t(condom_m[1,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="Prop. reporting condom use at last sexual intercourse",
+        main = "Black male students", cex.axis=1.75, cex.lab = 1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_condom_m_dyn[1,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+par(mar=c(5.1, 1.5, 2.1, 2.1))
+matplot(surveyyears, t(condom_m[2,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "Hispanic male students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_condom_m_dyn[2,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+matplot(surveyyears, t(condom_m[3,,]), pch=16, ylim=c(0,1), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "White male students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_condom_m_dyn[3,,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6))
+
+dev.off()
+
+###
+
+surveyyears <- seq(2007, 2017, by=2)
+
+bmp("../output/predicted_mnnppy_f.bmp", width=920, height=700)
+
+layout(matrix(c(1,1,1,2,3,4), 2, 3, byrow = TRUE))
+
+par(mar=c(0, 0, 0, 0))
+plot(0:1, 0:1, xaxt = 'n', yaxt = 'n', bty = 'n', 
+     pch = '', ylab = '', xlab = '')
+legend(x=0.18, y=0.15, 
+       legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
+                'Age 16 reported', 'Age 17 reported', '',
+                'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
+                'Age 16 predicted', 'Age 17 predicted', ''),
+       lty=rep(1:2,each=6), col=rep(c(rainbow(6)[1:5],'white'),2), ncol=4, cex=1.5)
+
+par(mar=c(5.1, 5.1, 2.1, 2.1))
+matplot(surveyyears, t(mnppy_f[1,,]), pch=16, ylim=c(0,2), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="Est. mean number of new partners per year",
+        main = "Black female students", cex.axis=1.75, cex.lab = 1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_mnppy_f_dyn[1,1:5,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6)[1:5])
+
+par(mar=c(5.1, 1.5, 2.1, 2.1))
+matplot(surveyyears, t(mnppy_f[2,,]), pch=16, ylim=c(0,2), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "Hispanic female students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_mnppy_f_dyn[2,1:5,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6)[1:5])
+
+matplot(surveyyears, t(mnppy_f[3,,]), pch=16, ylim=c(0,2), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "White female students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_mnppy_f_dyn[3,1:5,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6)[1:5])
+
+dev.off()
+
+###
+
+surveyyears <- seq(2007, 2017, by=2)
+
+bmp("../output/predicted_mnnppy_m.bmp", width=920, height=700)
+
+layout(matrix(c(1,1,1,2,3,4), 2, 3, byrow = TRUE))
+
+par(mar=c(0, 0, 0, 0))
+plot(0:1, 0:1, xaxt = 'n', yaxt = 'n', bty = 'n', 
+     pch = '', ylab = '', xlab = '')
+legend(x=0.18, y=0.15, 
+       legend=c('Age 13 reported', 'Age 14 reported', 'Age 15 reported',
+                'Age 16 reported', 'Age 17 reported', '',
+                'Age 13 predicted', 'Age 14 predicted', 'Age 15 predicted',
+                'Age 16 predicted', 'Age 17 predicted', ''),
+       lty=rep(1:2,each=6), col=rep(c(rainbow(6)[1:5],'white'),2), ncol=4, cex=1.5)
+
+par(mar=c(5.1, 5.1, 2.1, 2.1))
+matplot(surveyyears, t(mnppy_m[1,,]), pch=16, ylim=c(0,2), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="Est. mean number of new partners per year",
+        main = "Black male students", cex.axis=1.75, cex.lab = 1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_mnppy_m_dyn[1,1:5,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6)[1:5])
+
+par(mar=c(5.1, 1.5, 2.1, 2.1))
+matplot(surveyyears, t(mnppy_m[2,,]), pch=16, ylim=c(0,2), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "Hispanic male students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_mnppy_m_dyn[2,1:5,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6)[1:5])
+
+matplot(surveyyears, t(mnppy_m[3,,]), pch=16, ylim=c(0,2), 
+        xaxp=c(2007, 2017, 5), type='b', lty=1, col=rainbow(6),
+        xlab= "Survey year", 
+        ylab="",
+        main = "White male students", cex.axis=1.75, cex.lab=1.75, cex.main=1.75)
+matplot(surveyyears, t(pred_mnppy_m_dyn[3,1:5,c(1,3,5,7,9,11)]), 
+        pch=16, type='b', add=T, lty=2, col=rainbow(6)[1:5])
+
+dev.off()
+
+######################################################################
+
+bmp("../output/incidence.bmp", width=800, height=800)
+
+par(mfrow=c(2,1))
+
+#matplot(plotyears, t(apply(fns_ct[,,2:12], c(1,3), sum)), type='b', ylim = c(0, 3e5), 
+#        pch=16, xaxp=c(2007, 2017, 10), lty=1, col=c('black', 'red', 'blue'),
+#        xlab= "Year", 
+#        yaxt = 'n',
+#        ylab="Incident cases",
+#        main = "Chlamydia"
+#        )
+#axis(2, at = seq(0,3e5,5e4), las=1,
+#     labels=c('0k', '50k', '100k', '150k', '200k', '250k', '300k'))
 #
-#plot(plotyears, annual_savings_ct[,1]/1e6, pch=15, 
-#     xlim=c(min(plotyears)-0.5, max(plotyears)+0.5), 
-#     ylim=c(min(annual_savings_ct/1e6), max(annual_savings_ct/1e6)), 
-#     xaxp=c(min(plotyears),max(plotyears),length(plotyears)-1),
-#     xlab="Year", ylab="Costs saved (US $mil)",
-#     main="Costs saved, Chlamydia"
-#)
-#errbar(plotyears, annual_savings_ct[,2]/1e6, annual_savings_ct[,3]/1e6)
-#
-#dev.off()
+#matplot(plotyears, t(apply(fcs_ct[,,2:12], c(1,3), sum)), type='b', ylim = c(0, 3e5), 
+#        pch=21, xaxp=c(2007, 2017, 10), lty=1, col=c('black', 'red', 'blue'),
+#        xlab= "Year", 
+#        ylab="",
+#        main = "Chlamydia", cex.axis=1.75, cex.lab=1.75, cex.main=1.75,
+#        add=TRUE
+#        )
+
+#matplot(2007:2017, t(apply(mns_ct[,,2:12], c(1,3), sum)), type='b', ylim = c(0, 3e5), 
+#        pch=17, xaxp=c(2007, 2017, 10), lty=1, col=c('black', 'red', 'blue'),
+#        xlab= "Year", 
+#        ylab="",
+#        main = "Chlamydia", cex.axis=1.75, cex.lab=1.75, cex.main=1.75,
+#        add=TRUE
+#        )
+
+#matplot(2007:2017, t(apply(mcs_ct[,,2:12], c(1,3), sum)), type='b', ylim = c(0, 3e5), 
+#        pch=2, xaxp=c(2007, 2017, 10), lty=1, col=c('black', 'red', 'blue'),
+#        xlab= "Year", 
+#        ylab="",
+#        main = "Chlamydia", cex.axis=1.75, cex.lab=1.75, cex.main=1.75,
+#        add=TRUE
+#        )
+
+matplot(2007:2017, t(apply(fns_gc[,,2:12], c(1,3), sum)), type='b', ylim = c(0, 8e4), 
+        pch=16, xaxp=c(2007, 2017, 10), lty=1, col=c('black', 'red', 'blue'),
+        xlab= "Year", 
+        yaxt = 'n',
+        ylab="Incident cases of Gonorrhea",
+        main = "Female students"
+)
+axis(2, at = seq(0,8e4,1e4), las=1,
+     labels=c('0k', '10k', '20k', '30k', '40k', '50k', '60k', '70k', '80k'))
+
+matplot(2007:2017, t(apply(fcs_gc[,,2:12], c(1,3), sum)), type='b',
+        pch=21, lty=1, col=c('black', 'red', 'blue'),
+        add=TRUE
+)
+legend(x=2007, y=8e4, 
+       legend=c('Black female students, no behavior change',
+                'Hisp. female students, no behavior change',
+                'White female students, no behavior change',
+                'Black female students, est. behavior change',
+                'Hisp. female students, est. behavior change',
+                'White female students, est. behavior change'),
+       pch = rep(c(16,21),each=3), 
+       col=rep(c('black', 'red', 'blue'),2), ncol=2)
+
+matplot(2007:2017, t(apply(mns_gc[,,2:12], c(1,3), sum)), type='b', ylim = c(0, 8e4), 
+        pch=16, xaxp=c(2007, 2017, 10), lty=1, col=c('black', 'red', 'blue'),
+        xlab= "Year", 
+        yaxt = 'n',
+        ylab="Incident cases of Gonorrhea",
+        main = "Male students",
+        add=FALSE
+)
+axis(2, at = seq(0,8e4,1e4), las=1,
+     labels=c('0k', '10k', '20k', '30k', '40k', '50k', '60k', '70k', '80k'))
+
+matplot(2007:2017, t(apply(mcs_gc[,,2:12], c(1,3), sum)), type='b', 
+        pch=21, lty=1, col=c('black', 'red', 'blue'),
+        add=TRUE
+)
+legend(x=2007, y=8e4, 
+       legend=c('Black male students, no behavior change',
+                'Hisp. male students, no behavior change',
+                'White male students, no behavior change',
+                'Black male students, est. behavior change',
+                'Hisp. male students, est. behavior change',
+                'White male students, est. behavior change'),
+       pch = rep(c(16,21),each=3), 
+       col=rep(c('black', 'red', 'blue'),2), ncol=2)
+
+
+
+
+dev.off()
 
 
