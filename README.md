@@ -10,4 +10,4 @@ Instructions:
 4. Open the file scripts/a10_gcct_entire_project.R
 5. Edit the first line of code (line 9) to use the appropriate path on your machine, ending with the directory CAMP_10yr_proj/scripts.
 6. Install any needed R packages (listed at top of the script) not currently on your machine by copying the relevant line without the comment marker # into your RStudio window.
-7. Source or run the script file "scripts/a10_gcct_entire_project.R".
+7. Source or run the script.
