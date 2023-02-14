@@ -1,6 +1,10 @@
 
 ########################################################################
-## Code for manuscript "XXXXX"
+## Code for manuscript:
+## Goodreau SM, Pollock ED Wang L, Aslam MV, Barrios LC, Dunville RL, Rosenthal EM, 
+## Hamilton DT, Rosenberg ES. 2021. Impacts of changing sexual behavior on chlamydia 
+## and gonorrhea burden among US high school students, 2007-2017. Sexually Transmitted 
+## Diseases 48(9):635-42.
 
 setwd("C:/git/CAMP_10yr_proj/scripts/")  # Change depending on machine
 rm(list=ls())
