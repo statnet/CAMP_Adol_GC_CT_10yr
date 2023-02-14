@@ -6,7 +6,7 @@
 ## and gonorrhea burden among US high school students, 2007-2017. Sexually Transmitted 
 ## Diseases 48(9):635-42.
 
-setwd("C:/git/CAMP_10yr_proj/scripts/")  # Change depending on machine
+setwd("C:/git/CAMP_Adol_GC_CT_10yr/scripts/")  # Change depending on machine
 rm(list=ls())
 
 #install.packages("EasyABC")

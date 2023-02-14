@@ -8,7 +8,6 @@
 #########################################################################
 ### Basics
 
-setwd("C:/git/CAMP_10yr_proj/scripts/")
 years <- seq(2007, 2017, by=2)          # Set years info
 nyears <- length(years)
 
@@ -16,9 +15,14 @@ nyears <- length(years)
 ### HS-attending pop sizes by age/race/sex (averaged across years)
 
 meanschoolpop <- mean(schoolpops$totschoolpop)             # Tot pop size from census, avgd across years
+
+wts_f[is.na(wts_f)] <- 0
+wts_m[is.na(wts_m)] <- 0
+
 mean_prop_age_race <- apply(wts_f+wts_m, 1:2, mean) / 
           sum(apply(wts_f+wts_m, 1:2, mean))               # Tot % age/race from YRBS, avgd across years and sexes
 prop_f <- sum(wts_f) / (sum(wts_f) + sum(wts_m))            # Tot % female from YRBS, avgd across years
+
 
 n_f <- array11(mean_prop_age_race * prop_f * meanschoolpop)
 n_m <- array11(mean_prop_age_race * (1-prop_f) * meanschoolpop)
